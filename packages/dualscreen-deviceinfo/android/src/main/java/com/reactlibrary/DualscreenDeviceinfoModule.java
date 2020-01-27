@@ -11,12 +11,12 @@ import android.app.Activity;
 import android.graphics.Rect;
 import java.util.List;
 
-public class DualscreenModule extends ReactContextBaseJavaModule {
+public class DualscreenDeviceinfoModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private DisplayMask displayMask = null;
 
-    public DualscreenModule(ReactApplicationContext reactContext) {
+    public DualscreenDeviceinfoModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
 
@@ -28,11 +28,11 @@ public class DualscreenModule extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "Dualscreen";
+        return "DualscreenDeviceinfo";
     }
 
     @ReactMethod
-    public void sampleMethod(String stringArgument, int numberArgument, Callback callback) {
+    public void sampleMethodTODORemoveThis(String stringArgument, int numberArgument, Callback callback) {
         // TODO: Implement some actually useful functionality
         callback.invoke("Received numberArgument: " + numberArgument + " stringArgument: " + stringArgument);
     }

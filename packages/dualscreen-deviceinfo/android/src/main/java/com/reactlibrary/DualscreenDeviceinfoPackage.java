@@ -10,10 +10,10 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
 
-public class DualscreenPackage implements ReactPackage {
+public class DualscreenDeviceinfoPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new DualscreenModule(reactContext));
+        return Arrays.<NativeModule>asList(new DualscreenDeviceinfoModule(reactContext));
     }
 
     @Override
