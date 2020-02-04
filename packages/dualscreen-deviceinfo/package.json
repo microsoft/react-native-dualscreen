@@ -3,9 +3,12 @@
   "title": "React Native Dualscreen Deviceinfo",
   "version": "1.0.0",
   "description": "TODO",
+  "types": "lib/typescript/index.d.ts",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "ts-check": "npx tsc --noEmit",
+    "lint": "npx eslint ./ --ignore-pattern example --ignore-pattern node_modules --fix --quiet"
   },
   "repository": {
     "type": "git",
@@ -22,13 +25,16 @@
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
-  "peerDependencies": {
-    "react": "^16.8.1",
-    "react-native": ">=0.59.0-rc.0 <1.0.x",
-    "react-native-windows": "^0.60.0-vnext.127"
-  },
   "devDependencies": {
+    "@react-native-community/eslint-config": "^0.0.7",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "^0.61.10",
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
     "react": "^16.8.3",
-    "react-native": "0.60"
+    "react-native": "^0.60.6",
+    "react-native-windows": "^0.60.0-vnext.127",
+    "typescript": "^3.7.5"
   }
 }
