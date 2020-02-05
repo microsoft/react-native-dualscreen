@@ -3,37 +3,37 @@
  * Licensed under the MIT License.
  */
 
-import DualScreenInfo from './nativeinterface';
-import { DualScreenInfoModule } from './privateTypes';
-import { DualScreenInfoEvent, SpannedChangeHandler } from './types';
+import NativeInterface from './internal/nativeInterface';
+import { DualScreenInfoModule } from './internal/privateTypes';
+import { DualScreenInfoEvent, SpannedChangeHandler } from './internal/types';
 
 export function getWindowRects() {
-  return DualScreenInfo.getWindowRects();
+  return NativeInterface.getWindowRects();
 }
 
 export function isSpanned() {
-  return DualScreenInfo.isSpanned;
+  return NativeInterface.isSpanned;
 }
 
 export function addEventListener(
   type: DualScreenInfoEvent,
   handler: SpannedChangeHandler
 ) {
-  return DualScreenInfo.addListener(type, handler);
+  return NativeInterface.eventEmitter.addListener(type, handler);
 }
 
 export function removeEventListener(
   type: DualScreenInfoEvent,
   handler: SpannedChangeHandler
 ) {
-  return DualScreenInfo.removeListener(type, handler);
+  return NativeInterface.eventEmitter.removeListener(type, handler);
 }
 
 const dualScreenInfoModule: DualScreenInfoModule = {
   getWindowRects,
   isSpanned,
   addEventListener,
-  removeEventListener
+  removeEventListener,
 };
 
 export default dualScreenInfoModule;

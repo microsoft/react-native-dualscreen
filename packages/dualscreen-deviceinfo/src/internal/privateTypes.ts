@@ -2,26 +2,24 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
-
 import { NativeEventEmitter } from 'react-native';
 import * as Types from './types';
 
-interface NativeConstants {
+export interface NativeConstants {
   isDualScreenDevice: boolean;
   isSpanned: boolean;
 }
 
-interface HiddenNativeMethods {}
+export interface HiddenNativeMethods {}
 
-interface ExposedNativeMethods {
+export interface ExposedNativeMethods {
   getWindowRects: () => Types.WindowRect[];
 }
 
 export interface DualScreenInfoNativeModule
   extends NativeConstants,
     HiddenNativeMethods,
-    ExposedNativeMethods,
-    NativeEventEmitter {}
+    ExposedNativeMethods {}
 
 export interface DualScreenInfoModule extends ExposedNativeMethods {
   isSpanned: () => boolean;
