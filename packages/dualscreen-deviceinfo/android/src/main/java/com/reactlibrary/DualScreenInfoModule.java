@@ -11,12 +11,12 @@ import android.app.Activity;
 import android.graphics.Rect;
 import java.util.List;
 
-public class DualscreenDeviceinfoModule extends ReactContextBaseJavaModule {
+public class DualScreenInfoModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private DisplayMask displayMask = null;
 
-    public DualscreenDeviceinfoModule(ReactApplicationContext reactContext) {
+    public DualScreenInfoModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
 
@@ -28,7 +28,7 @@ public class DualscreenDeviceinfoModule extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "DualscreenDeviceinfo";
+        return "DualScreenInfo";
     }
 
     @ReactMethod

@@ -8,7 +8,7 @@ import NativeInterface from '../internal/nativeInterface';
 
 jest.mock('NativeModules', () => {
   return {
-    DualscreenDeviceinfo: {
+    DualScreenInfo: {
       getWindowRects: jest.fn(),
       isSpanned: jest.fn(),
       addListener: jest.fn(),

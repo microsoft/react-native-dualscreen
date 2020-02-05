@@ -1,17 +1,18 @@
-# react-native-dualscreen-deviceinfo
+# react-native-dualscreeninfo
 
 ## Getting started
 
-`$ npm install react-native-dualscreen-deviceinfo --save`
+`$ npm install react-native-dualscreeninfo --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-dualscreen-deviceinfo`
+`$ react-native link react-native-dualscreeninfo`
 
 ## Usage
+
 ```javascript
-import DualscreenDeviceinfo from 'react-native-dualscreen-deviceinfo';
+import DualScreenInfo from 'react-native-dualscreeninfo';
 
 // TODO: What to do with the module?
-DualscreenDeviceinfo;
+DualScreenInfo;
 ```

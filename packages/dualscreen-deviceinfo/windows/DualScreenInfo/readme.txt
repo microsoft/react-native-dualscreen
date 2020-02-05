@@ -1,5 +1,5 @@
 ========================================================================
-    C++/WinRT DualscreenDeviceinfo Project Overview
+    C++/WinRT DualScreenInfo Project Overview
 ========================================================================
 
 This project demonstrates how to get started authoring Windows Runtime 

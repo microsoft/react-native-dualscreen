@@ -5,11 +5,12 @@
 
 #include "NativeModules.h"
 
-namespace DualscreenDeviceinfo {
+namespace DualScreenInfo
+{
 
-REACT_MODULE(DualscreenDeviceinfo);
-struct DualscreenDeviceinfo {
-
+REACT_MODULE(DualScreenInfo);
+struct DualScreenInfo
+{
 };
 
-}
+} // namespace DualScreenInfo

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DualscreenDeviceinfo", "DualscreenDeviceinfo\DualscreenDeviceinfo.vcxproj", "{62AD0399-3EC7-4A9D-ABDA-DB3ED73EED52}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DualScreenInfo", "DualScreenInfo\DualScreenInfo.vcxproj", "{62AD0399-3EC7-4A9D-ABDA-DB3ED73EED52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactNative", "ReactNative", "{6F6BBB8E-EE61-4244-9ACE-F10B706E2DCF}"
 EndProject

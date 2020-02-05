@@ -1,7 +1,7 @@
-#import "DualscreenDeviceinfo.h"
+#import "DualScreenInfo.h"
 
 
-@implementation DualscreenDeviceinfo
+@implementation DualScreenInfo
 
 RCT_EXPORT_MODULE()
 

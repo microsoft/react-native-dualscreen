@@ -7,8 +7,8 @@
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{62ad0399-3ec7-4a9d-abda-db3ed73eed52}</ProjectGuid>
-    <ProjectName>DualscreenDeviceinfo</ProjectName>
-    <RootNamespace>DualscreenDeviceinfo</RootNamespace>
+    <ProjectName>DualScreenInfo</ProjectName>
+    <RootNamespace>DualScreenInfo</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -92,7 +92,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>DualscreenDeviceinfo.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>DualScreenInfo.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -110,7 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DualscreenDeviceinfo.h" />
+    <ClInclude Include="DualScreenInfo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
@@ -129,7 +129,7 @@
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DualscreenDeviceinfo.def" />
+    <None Include="DualScreenInfo.def" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

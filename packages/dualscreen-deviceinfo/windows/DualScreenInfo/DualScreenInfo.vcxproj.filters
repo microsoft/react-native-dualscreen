@@ -15,10 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="DualscreenDeviceinfo.h" />
+    <ClInclude Include="DualScreenInfo.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DualscreenDeviceinfo.def" />
+    <None Include="DualScreenInfo.def" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ import { Platform, NativeModules, NativeEventEmitter } from 'react-native';
 import { DualScreenInfoNativeModule } from './privateTypes';
 
 const DualScreenInfo: DualScreenInfoNativeModule | undefined =
-  NativeModules.DualscreenDeviceinfo;
+  NativeModules.DualScreenInfo;
 
 if (!DualScreenInfo) {
   if (Platform.OS === 'android' || Platform.OS === 'windows') {
