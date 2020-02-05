@@ -1,5 +1,7 @@
-#import "DualScreenInfo.h"
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
+#import "DualScreenInfo.h"
 
 @implementation DualScreenInfo
 
