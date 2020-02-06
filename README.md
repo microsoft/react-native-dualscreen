@@ -1,3 +1,4 @@
+# React Native dual-screen
 This repo contains Microsoft's offerings to streamline [dual-screen](https://docs.microsoft.com/en-us/dual-screen/) cross-platform development using React Native. The modules in the repo are targetting Windows and Adroid.
 
 **Current status**: early stubs / placeholders
