@@ -3,13 +3,15 @@
   "title": "React Native DualScreenInfo",
   "version": "1.0.0",
   "description": "TODO",
-  "types": "lib/index.d.ts",
-  "main": "lib/index.js",
+  "react-native": "src\\index.ts",
+  "types": "lib\\typescript\\src\\index.d.ts",
+  "main": "lib\\commonjs\\index.js",
+  "module": "lib\\module\\index.js",
   "scripts": {
-    "build": "tsc",
     "test": "jest \"/src/\"",
     "ts-check": "npx tsc --noEmit",
-    "lint": "npx eslint ./ --ignore-pattern example --ignore-pattern node_modules --fix --quiet"
+    "lint": "npx eslint ./ --ignore-pattern example --ignore-pattern node_modules --fix --quiet",
+    "prepare": "bob build"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,8 @@
     "baseUrl": "https://github.com/microsoft/react-native-dualscreeninfo"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "dual-screen"
   ],
   "author": {
     "name": "Your Name",
@@ -29,6 +32,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "@react-native-community/bob": "^0.8.0",
     "@react-native-community/eslint-config": "^0.0.7",
     "@types/jest": "^25.1.1",
     "@types/react": "^16.9.19",
@@ -44,5 +48,14 @@
     "react-native-windows": "^0.60.0-vnext.127",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }

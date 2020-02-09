@@ -3,9 +3,20 @@
 
 namespace DualScreenInfo
 {
-[webhosthidden]
+    [webhosthidden]
     [default_interface] runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
-{
-  ReactPackageProvider();
-};
+    {
+      ReactPackageProvider();
+    };
 } // namespace DualScreenInfo
+
+// TODO: Once IApplicationViewSpanningRects is available in the official SDK, remove this.
+namespace Windows.UI.ViewManagement
+{
+    [webhosthidden]
+    [uuid(645737E4-A882-4E16-B289-FD860560106A)]
+    interface IApplicationViewSpanningRects : IInspectable
+    {
+        Windows.Foundation.Collections.IVectorView<Windows.Foundation.Rect> GetSpanningRects();
+    }
+}

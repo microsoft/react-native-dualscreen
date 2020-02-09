@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  */
-import { NativeEventEmitter } from 'react-native';
 import * as Types from './types';
 
 export interface NativeConstants {
@@ -22,6 +21,7 @@ export interface DualScreenInfoNativeModule
     ExposedNativeMethods {}
 
 export interface DualScreenInfoModule extends ExposedNativeMethods {
+  isDualScreenDevice: () => boolean;
   isSpanned: () => boolean;
   addEventListener: (
     type: Types.DualScreenInfoEvent,

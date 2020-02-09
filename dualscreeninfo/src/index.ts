@@ -7,12 +7,16 @@ import NativeInterface from './internal/nativeInterface';
 import { DualScreenInfoModule } from './internal/privateTypes';
 import { DualScreenInfoEvent, SpannedChangeHandler } from './internal/types';
 
-export function getWindowRects() {
-  return NativeInterface.getWindowRects();
+export function isDualScreenDevice() {
+  return NativeInterface.isDualScreenDevice;
 }
 
 export function isSpanned() {
   return NativeInterface.isSpanned;
+}
+
+export function getWindowRects() {
+  return NativeInterface.getWindowRects();
 }
 
 export function addEventListener(
@@ -30,8 +34,9 @@ export function removeEventListener(
 }
 
 const dualScreenInfoModule: DualScreenInfoModule = {
-  getWindowRects,
+  isDualScreenDevice,
   isSpanned,
+  getWindowRects,
   addEventListener,
   removeEventListener,
 };
