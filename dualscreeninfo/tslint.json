@@ -1,0 +1,24 @@
+{
+  "extends": ["tslint-config-standard", "tslint-react"],
+  "rules": {
+    "jsx-no-multiline-js": false,
+    "jsx-space-before-trailing-slash": true,
+    "no-parameter-reassignment": true,
+    "no-shadowed-variable": true,
+    "max-line-length": [true, 100],
+    "max-file-line-count": [true, 300],
+    "ter-indent": [true, 4, { "SwitchCase": true }],
+    "no-null-keyword": true,
+    "no-any": false,
+    "prefer-const": true,
+    "no-import-side-effect": true,
+    "switch-default": true,
+    "ban-ts-ignore": false,
+    "jsx-no-lambda": false,
+    "space-before-function-paren": [true, {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }]
+  }
+}
