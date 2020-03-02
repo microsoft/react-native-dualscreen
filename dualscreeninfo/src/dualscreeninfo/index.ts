@@ -3,52 +3,70 @@
  * Licensed under the MIT License.
  */
 
-import { DualScreenInfoEvent, SpannedChangeHandler, WindowRect } from '../types';
+import { DualScreenInfoEvent, DualScreenInfoPayload, SpannedChangeHandler, WindowRect } from "../types";
 import { EmitterSubscription, NativeEventEmitter, NativeModules } from "react-native";
 
+declare module 'react-native' {
+	namespace NativeModules {
+		export interface DualScreenInfo {
+			isDualScreenDevice: boolean
+			hingeWidth: number
+		}
+	}
+}
+
 export interface ExposedNativeMethods {
-    getWindowRects: () => Promise<WindowRect[]>;
-		isSpanned: () => Promise<boolean>;
+	addEventListener: (
+		type: DualScreenInfoEvent,
+		handler: SpannedChangeHandler
+	) => void;
+	removeEventListener: (
+		type: DualScreenInfoEvent,
+		handler: SpannedChangeHandler
+	) => void;
 }
 
 interface IDualScreenInfoModule extends ExposedNativeMethods {
-    isDualScreenDevice: boolean;
-		hingeWidth: number;
-    addEventListener: (
-        type: DualScreenInfoEvent,
-        handler: SpannedChangeHandler
-    ) => void;
-    removeEventListener: (
-        type: DualScreenInfoEvent,
-        handler: SpannedChangeHandler
-    ) => void;
+	isDualScreenDevice: boolean;
+	hingeWidth: number;
+	isSpanning: boolean;
+	windowRects: WindowRect[];
 }
 
 class RNDualScreenInfoModule implements IDualScreenInfoModule {
+	private mIsSpanning: boolean = false;
+	private mWindowRects: WindowRect[] = [];
 	private eventEmitter: NativeEventEmitter = new NativeEventEmitter(NativeModules.DualScreenInfo);
 
+	constructor() {
+		this.eventEmitter.addListener('didUpdateSpanning', (update: DualScreenInfoPayload) => {
+			this.mIsSpanning = update.isSpanning;
+			this.mWindowRects = update.windowRects;
+		});
+	}
+
 	addEventListener(type: DualScreenInfoEvent, handler: SpannedChangeHandler): EmitterSubscription {
-		return this.eventEmitter.addListener(type, handler)
+		return this.eventEmitter.addListener(type, handler);
 	}
 
 	removeEventListener(type: DualScreenInfoEvent, handler: SpannedChangeHandler): void {
-		this.eventEmitter.removeListener(type, handler)
+		this.eventEmitter.removeListener(type, handler);
 	}
 
 	get isDualScreenDevice(): boolean {
-		return NativeModules.DualScreenInfo.isDualScreenDevice
+		return NativeModules.DualScreenInfo.isDualScreenDevice;
 	}
 
 	get hingeWidth(): number {
-		return NativeModules.DualScreenInfo.hingeWidth
+		return NativeModules.DualScreenInfo.hingeWidth;
 	}
 
-	isSpanned(): Promise<boolean> {
-		return NativeModules.DualScreenInfo.isSpanned()
+	get isSpanning(): boolean {
+		return this.mIsSpanning;
 	}
 
-	getWindowRects(): Promise<WindowRect[]> {
-	    return NativeModules.DualScreenInfo.getWindowRects()
+	get windowRects(): WindowRect[] {
+		return this.mWindowRects;
 	};
 }
 

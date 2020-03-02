@@ -9,7 +9,7 @@ TestHelpers.runTests("DualScreenInfo", () => {
   describe('spannedChange event', () => {
     it('should call the listener when the native event is emitted', () => {
       const handler = jest.fn();
-      DualScreenInfo.addEventListener('spannedChange', handler);
+      DualScreenInfo.addEventListener('didUpdateSpanning', handler);
 
       const expectedWindowRectsType = { width: 50, height: 50 };
       const expectedDualScreenInfoEvent = {
