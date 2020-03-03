@@ -48,13 +48,14 @@ const list: Slide[] = [
 export default function () {
     const [ currentSlide, setCurrentSlide ] = useState(0)
     const context = useContext(DualScreenContext)
+    const pageMargin = DualScreenInfo.hingeWidth / 2
 
     return (
         <ViewPager
             style={{ flex: 1 }}
             initialPage={currentSlide}
             pageWidth={context.isDualMode ? 0.5 : 1.0}
-            pageMargin={DualScreenInfo.hingeWidth / 2}
+            pageMargin={pageMargin}
             onPageSelected={(event: NativeSyntheticEvent<ViewPagerOnPageSelectedEventData>) => {
                 setCurrentSlide(event.nativeEvent.position)
             }}

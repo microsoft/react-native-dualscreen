@@ -27,7 +27,7 @@ target 'ReactNativeDualScreenExample' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'react-native-dual-screen', :path => '../../'
+  pod 'react-native-dualscreen', :path => '../../'
 
   pod 'SwiftLint'
 

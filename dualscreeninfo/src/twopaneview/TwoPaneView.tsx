@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
 import { RNHinge as Hinge } from './RNHinge'
+import { StyleSheet, View } from "react-native";
 
 export interface TwoPaneViewProps {
   leftComponent: React.Component,

@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-export type DualScreenInfoEvent = 'spannedChange' | 'windowSizeChanged';
+export type DualScreenInfoEvent = 'didUpdateSpanning' | 'windowSizeChanged';
 
 export type WindowRect = {
   width: number;
@@ -12,9 +12,9 @@ export type WindowRect = {
   y: number;
 }
 
-export type SpannedChangeEvent = {
-  isSpanned: boolean,
+export type DualScreenInfoPayload = {
+  isSpanning: boolean,
   windowRects: [WindowRect]
 }
 
-export type SpannedChangeHandler = (event: SpannedChangeEvent) => void;
+export type SpannedChangeHandler = (event: DualScreenInfoPayload) => void;

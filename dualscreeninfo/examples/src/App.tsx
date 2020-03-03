@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { DualScreenInfo, SpannedChangeEvent } from 'react-native-dualscreen'
+import { DualScreenInfo, DualScreenInfoPayload } from 'react-native-dualscreen'
 import MasterDetail from './MasterDetail'
 import TwoPage from './TwoPage'
 import CompanionPane from './CompanionPane'
 import DualScreenContext from './DualScreenContext'
 
 export default function App() {
-    const [isDualMode, setDualMode] = useState(false);
+    const [isDualMode, setDualMode] = useState(DualScreenInfo.isSpanning);
     useEffect(() => {
-        DualScreenInfo.isSpanned().then((isDual: boolean) => {
-            setDualMode(isDual)
-        });
-
-        DualScreenInfo.addEventListener('spannedChange', ({ isSpanned }: SpannedChangeEvent) => {
-            if (isDualMode !== isSpanned) {
-                setDualMode(isSpanned)
+        DualScreenInfo.addEventListener('didUpdateSpanning', ({ isSpanning }: DualScreenInfoPayload) => {
+            if (isDualMode !== isSpanning) {
+                setDualMode(isSpanning)
             }
         })
     });
