@@ -11,13 +11,13 @@
 
 [Documentation](https://github.com/react-native-community/discussions-and-proposals/issues/197)
 - `Auto` 
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/paneModesDemo/auto.JPG)
+![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/auto.JPG)
 - `Single`
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/paneModesDemo/single.JPG)
+![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/single.JPG)
 - `Dual`
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/paneModesDemo/dual.JPG)
+![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/dual.JPG)
 - `panePriority='pane2'`
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/paneModesDemo/priority2.JPG)
+![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/priority2.JPG)
 - `onModeChanged={()=>{console.log('onModeChanged');}`
 
 ## Installation
