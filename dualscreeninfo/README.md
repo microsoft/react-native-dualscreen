@@ -57,16 +57,14 @@ React Native package for dual screen devices support (Surface Neo/Duo)
 ```jsx
 import * as React from 'react'
 import { View } from 'react-native'
-import { DualScreenInfo, Hinge, SpannedChangeEvent } from 'react-native-dual-screen'
+import { DualScreenInfo, Hinge, DualScreenInfoPayload } from 'react-native-dual-screen'
 
 export default function App() {
-  const [isDualMode, setDualMode] = useState(false)
+  const [isDualMode, setDualMode] = useState(DualScreenInfo.isSpanning)
     useEffect(() => {
-        setDualMode(DualScreenInfo.isSpanned);
-        
-        DualScreenInfo.addEventListener('spannedChange', ({ isSpanned }: ) => {
-            if (isDualMode !== isSpanned) {
-                setDualMode(isSpanned)
+        DualScreenInfo.addEventListener('didUpdateSpanning', ({ isSpanning }: DualScreenInfoPayload) => {
+            if (isDualMode !== isSpanning) {
+                setDualMode(isSpanning)
             }
         })
     })
