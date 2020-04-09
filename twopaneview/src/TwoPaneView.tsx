@@ -8,6 +8,7 @@ import {
   Text,
   StatusBar,
   Dimensions,
+  ViewStyle,
 } from 'react-native';
 import { DualScreenInfo } from 'react-native-dualscreeninfo'
 
@@ -27,8 +28,27 @@ const PaneMode = {
   Dual: 'Dual',
 };
 
-export default class TwoPaneView extends Component {
-  state = {
+type Props = {
+} & Partial<DefaultProps>;
+
+type DefaultProps = Readonly<typeof defaultProps>;
+
+const defaultProps = { panePriority: 'pane1', panePriorityVerticalSpanning: 'horizontal', 
+  paneMode: 'Auto', twoPaneWidth: 640, onModeChanged: ()=>{}
+}
+
+type State = {
+  dims: any,
+  spanning: boolean, 
+  panePriority?: string,
+  panePriorityVerticalSpanning?: string,
+  paneMode: string,
+  twoPaneWidth: number,
+  onModeChanged: any,
+};
+
+export class TwoPaneView extends Component<Props, State> {
+  state: State = {
     dims: Dimensions.get('window'),
     spanning: DualScreenInfo.isSpanning, 
     panePriority: this.props.panePriority,
@@ -46,7 +66,7 @@ export default class TwoPaneView extends Component {
     Dimensions.removeEventListener('change', this._handleDimensionsChange);
   }
 
-  _handleDimensionsChange = dimensions => {
+  _handleDimensionsChange = (dimensions: { window: any; }) => {
     this.setState({
       dims: dimensions.window,
       spanning: DualScreenInfo.isSpanning 
@@ -56,7 +76,7 @@ export default class TwoPaneView extends Component {
 
   render() {    
 
-    let direction ='row';
+    let direction:any  ='row';
 
     return (
       <View style={{flexDirection: direction, width: this.state.dims.width, height:this.state.dims.height}}>
@@ -122,7 +142,7 @@ export default class TwoPaneView extends Component {
     return items;
   }
 
-  renderPane1(size) {
+  renderPane1(size: any) {
     const children = React.Children.toArray(this.props.children);
     if (children.length > 0) {
       return (
@@ -133,7 +153,7 @@ export default class TwoPaneView extends Component {
     }
   }
 
-  renderPane2(size) {
+  renderPane2(size: any) {
     const children = React.Children.toArray(this.props.children);
     if (children.length > 1) {
       return (
@@ -201,7 +221,13 @@ export default class TwoPaneView extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+type Style = {
+  twoPaneView: ViewStyle;
+  pane1: ViewStyle;
+  pane2: ViewStyle;
+};
+
+const styles = StyleSheet.create<Style>({
     twoPaneView: {
       flexDirection: 'row',
     },

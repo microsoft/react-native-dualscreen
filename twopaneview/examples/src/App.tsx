@@ -24,7 +24,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import TwoPaneView from '../TwoPaneView';
+import { TwoPaneView } from 'react-native-twopaneview';
 
 // let MapControl = requireNativeComponent('MapControl');
 
