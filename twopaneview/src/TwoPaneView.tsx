@@ -4,31 +4,15 @@ import {
   Dimensions,
 } from 'react-native';
 import { DualScreenInfo } from 'react-native-dualscreeninfo'
-import {PaneOrientationTypes, PaneModeTypes, PanePriorityTypes} from "./types"
-
-const TPV_Orientation: PaneOrientationTypes = {
-  Horizontal: 'horizontal',
-  Vertical: 'vertical',
-};
-
-const TPV_PanePriority: PanePriorityTypes = {
-  Pane1: 'pane1',
-  Pane2: 'pane2',
-};
-
-const PaneMode: PaneModeTypes = {
-  Auto: 'Auto',
-  Single: 'Single',
-  Dual: 'Dual',
-};
+import {Orientation, PanePriority, PaneMode} from "./types"
 
 type Props = {
 } & Partial<DefaultProps>;
 
 type DefaultProps = Readonly<typeof defaultProps>;
 
-const defaultProps = { panePriority: TPV_PanePriority.Pane1, 
-  panePriorityVerticalSpanning: TPV_Orientation.Horizontal, 
+const defaultProps = { panePriority: PanePriority.Pane1, 
+  panePriorityVerticalSpanning: Orientation.Horizontal, 
   paneMode: PaneMode.Auto
 }
 
@@ -81,7 +65,7 @@ export class TwoPaneView extends Component<Props, State> {
     if (this.state.spanning) {
       if (this.state.paneMode === PaneMode.Single || 
         this.state.dims.height > this.state.dims.width  && this.state.panePriorityVerticalSpanning) {
-        if (this.state.panePriorityVerticalSpanning === TPV_PanePriority.Pane1) {
+        if (this.state.panePriorityVerticalSpanning === PanePriority.Pane1) {
           return this.renderPane1(this.getEntireSize());
         }
         else {
@@ -93,7 +77,7 @@ export class TwoPaneView extends Component<Props, State> {
     if (this.state.paneMode === PaneMode.Dual) {
       return this.renderDualPanes();
     }
-    if (this.state.panePriority === TPV_PanePriority.Pane1) {
+    if (this.state.panePriority === PanePriority.Pane1) {
       return this.renderPane1(this.getEntireSize());
     }
     return this.renderPane2(this.getEntireSize());
@@ -137,7 +121,7 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
     if (children.length > 0) {
       return (
-        <View key={TPV_PanePriority.Pane1} style={{width:size.width, height:size.height}}>
+        <View key={PanePriority.Pane1} style={{width:size.width, height:size.height}}>
           {children[0]}
         </View>
       );
@@ -148,7 +132,7 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
     if (children.length > 1) {
       return (
-        <View key={TPV_PanePriority.Pane2} style={{width:size.width, height:size.height}}>
+        <View key={PanePriority.Pane2} style={{width:size.width, height:size.height}}>
           {children[1]}
         </View>
       );
