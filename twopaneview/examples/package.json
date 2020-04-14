@@ -1,0 +1,45 @@
+{
+  "name": "ReactNativeDualScreenExample",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "lint": "../node_modules/.bin/tslint -p ./src",
+    "reset:packager": "watchman watch-del-all && react-native start --reset-cache",
+    "run:android": "react-native run-android --no-jetifier",
+    "clean:android": "cd android && ./gradlew clean",
+    "install:pods": "cd ios && which pod && pod install || echo '\\033[1;33m Warning: cocoapods not found!\\033[0m'",
+    "generate:android:signing-key": "keytool -genkey -v -keystore example.keystore -alias example -keyalg RSA -keysize 2048 -validity 10000 && mv example.keystore android/app",
+    "generate:android:apk": "npm run generate:android:bundle && cd android && ./gradlew assembleRelease",
+    "generate:android:bundle": "npm run build && react-native bundle --platform android --dev false --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle"
+  },
+  "dependencies": {
+    "@react-native-community/masked-view": "^0.1.6",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
+    "react-native-dualscreeninfo": "0.0.1",
+    "react-native-elements": "^1.2.7",
+    "react-native-gesture-handler": "^1.5.3",
+    "react-native-reanimated": "^1.7.0",
+    "react-native-safe-area-context": "^0.6.2",
+    "react-native-screens": "^2.0.0-alpha.29",
+    "react-native-twopaneview": "^0.0.1",
+    "react-native-vector-icons": "^6.6.0",
+    "react-native-windows": "^0.60.0-vnext.127",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^2.0.16"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "@types/jest": "^24.0.24",
+    "@types/react-native": "^0.60.25",
+    "@types/react-test-renderer": "16.9.1",
+    "@typescript-eslint/parser": "^2.12.0",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-test-renderer": "16.9.0",
+    "typescript": "^3.7.3"
+  }
+}
