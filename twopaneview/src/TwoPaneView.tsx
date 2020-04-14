@@ -29,7 +29,7 @@ type DefaultProps = Readonly<typeof defaultProps>;
 
 const defaultProps = { panePriority: TPV_PanePriority.Pane1, 
   panePriorityVerticalSpanning: TPV_Orientation.Horizontal, 
-  paneMode: PaneMode.Auto, twoPaneWidth: 640, onModeChanged: ()=>{}
+  paneMode: PaneMode.Auto
 }
 
 type State = {
@@ -38,8 +38,6 @@ type State = {
   panePriority?: string,
   panePriorityVerticalSpanning?: string,
   paneMode?: string,
-  twoPaneWidth?: number,
-  onModeChanged?: any,
 };
 
 export class TwoPaneView extends Component<Props, State> {
@@ -49,8 +47,6 @@ export class TwoPaneView extends Component<Props, State> {
     panePriority: this.props.panePriority,
     panePriorityVerticalSpanning: this.props.panePriorityVerticalSpanning,
     paneMode: this.props.paneMode,
-    twoPaneWidth: this.props.twoPaneWidth,
-    onModeChanged: this.props.onModeChanged,
   };
 
   componentDidMount() {
@@ -66,9 +62,6 @@ export class TwoPaneView extends Component<Props, State> {
       dims: dimensions.window,
       spanning: DualScreenInfo.isSpanning 
     });
-    if (typeof this.state.onModeChanged !== 'undefined') {
-      this.state.onModeChanged();
-    }
   };
 
   render() {    
