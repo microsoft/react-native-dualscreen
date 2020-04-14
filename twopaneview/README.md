@@ -28,6 +28,10 @@
 
 ## How to run sample app
 
+### 0. Clone the repo
+`$ git clone https://github.com/microsoft/react-native-dualscreen.git`
+and   
+`cd /twopaneview/examples`
 ### 1. npm install
 
 `$ npm install`

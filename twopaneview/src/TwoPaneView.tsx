@@ -1,28 +1,22 @@
 import React, {Fragment, Component} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   View,
-  ViewProps,
-  Text,
-  StatusBar,
   Dimensions,
-  ViewStyle,
 } from 'react-native';
 import { DualScreenInfo } from 'react-native-dualscreeninfo'
+import {PaneOrientationTypes, PaneModeTypes, PanePriorityTypes} from "./types"
 
-const TPV_Orientation = {
+const TPV_Orientation: PaneOrientationTypes = {
   Horizontal: 'horizontal',
   Vertical: 'vertical',
 };
 
-const TPV_PanePriority = {
+const TPV_PanePriority: PanePriorityTypes = {
   Pane1: 'pane1',
   Pane2: 'pane2',
 };
 
-const PaneMode = {
+const PaneMode: PaneModeTypes = {
   Auto: 'Auto',
   Single: 'Single',
   Dual: 'Dual',
@@ -33,8 +27,9 @@ type Props = {
 
 type DefaultProps = Readonly<typeof defaultProps>;
 
-const defaultProps = { panePriority: 'pane1', panePriorityVerticalSpanning: 'horizontal', 
-  paneMode: 'Auto', twoPaneWidth: 640, onModeChanged: ()=>{}
+const defaultProps = { panePriority: TPV_PanePriority.Pane1, 
+  panePriorityVerticalSpanning: TPV_Orientation.Horizontal, 
+  paneMode: PaneMode.Auto, twoPaneWidth: 640, onModeChanged: ()=>{}
 }
 
 type State = {
@@ -42,9 +37,9 @@ type State = {
   spanning: boolean, 
   panePriority?: string,
   panePriorityVerticalSpanning?: string,
-  paneMode: string,
-  twoPaneWidth: number,
-  onModeChanged: any,
+  paneMode?: string,
+  twoPaneWidth?: number,
+  onModeChanged?: any,
 };
 
 export class TwoPaneView extends Component<Props, State> {
@@ -53,9 +48,9 @@ export class TwoPaneView extends Component<Props, State> {
     spanning: DualScreenInfo.isSpanning, 
     panePriority: this.props.panePriority,
     panePriorityVerticalSpanning: this.props.panePriorityVerticalSpanning,
-    paneMode: this.props.paneMode ? this.props.paneMode: PaneMode.Auto,
-    twoPaneWidth: this.props.twoPaneWidth ? this.props.twoPaneWidth: 640,
-    onModeChanged: this.props.onModeChanged ? this.props.onModeChanged : ()=>{},
+    paneMode: this.props.paneMode,
+    twoPaneWidth: this.props.twoPaneWidth,
+    onModeChanged: this.props.onModeChanged,
   };
 
   componentDidMount() {
@@ -71,12 +66,14 @@ export class TwoPaneView extends Component<Props, State> {
       dims: dimensions.window,
       spanning: DualScreenInfo.isSpanning 
     });
-    this.state.onModeChanged();
+    if (typeof this.state.onModeChanged !== 'undefined') {
+      this.state.onModeChanged();
+    }
   };
 
   render() {    
 
-    let direction:any  ='row';
+    let direction:any ='row';
 
     return (
       <View style={{flexDirection: direction, width: this.state.dims.width, height:this.state.dims.height}}>
@@ -89,7 +86,8 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
 
     if (this.state.spanning) {
-      if (this.state.paneMode === PaneMode.Single || this.state.dims.height > this.state.dims.width  && this.state.panePriorityVerticalSpanning) {
+      if (this.state.paneMode === PaneMode.Single || 
+        this.state.dims.height > this.state.dims.width  && this.state.panePriorityVerticalSpanning) {
         if (this.state.panePriorityVerticalSpanning === TPV_PanePriority.Pane1) {
           return this.renderPane1(this.getEntireSize());
         }
@@ -146,7 +144,7 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
     if (children.length > 0) {
       return (
-        <View key="pane1" style={{width:size.width, height:size.height}}>
+        <View key={TPV_PanePriority.Pane1} style={{width:size.width, height:size.height}}>
           {children[0]}
         </View>
       );
@@ -157,7 +155,7 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
     if (children.length > 1) {
       return (
-        <View key="pane2" style={{width:size.width, height:size.height}}>
+        <View key={TPV_PanePriority.Pane2} style={{width:size.width, height:size.height}}>
           {children[1]}
         </View>
       );
@@ -220,22 +218,4 @@ export class TwoPaneView extends Component<Props, State> {
     return size;
   }
 }
-
-type Style = {
-  twoPaneView: ViewStyle;
-  pane1: ViewStyle;
-  pane2: ViewStyle;
-};
-
-const styles = StyleSheet.create<Style>({
-    twoPaneView: {
-      flexDirection: 'row',
-    },
-    pane1: {
-      backgroundColor: 'green',
-    },
-    pane2: {
-      backgroundColor: 'blue',
-    },
-  });
   
