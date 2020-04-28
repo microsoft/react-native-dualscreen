@@ -5,7 +5,7 @@ import React, { useContext } from 'react'
 import { createAppContainer, NavigationNavigatorProps } from 'react-navigation'
 import { View } from 'react-native'
 import DualScreenContext from '../DualScreenContext'
-import { Hinge } from 'react-native-dualscreen'
+import { Hinge } from 'react-native-dualscreeninfo'
 
 const MainNavigator = createStackNavigator(
     {

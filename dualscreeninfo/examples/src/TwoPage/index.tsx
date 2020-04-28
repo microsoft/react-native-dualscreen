@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { NativeSyntheticEvent, View } from 'react-native'
 import ViewPager, { ViewPagerOnPageSelectedEventData } from '@react-native-community/viewpager'
 import { PricingCard } from 'react-native-elements'
-import { Hinge, DualScreenInfo } from 'react-native-dualscreen'
+import { Hinge, DualScreenInfo } from 'react-native-dualscreeninfo'
 import DualScreenContext from '../DualScreenContext'
 
 type Slide = {
