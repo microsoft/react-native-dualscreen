@@ -23,7 +23,7 @@
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-screens": "^2.0.0-alpha.29",
-    "react-native-twopaneview": "^0.0.1",
+    "react-native-twopaneview": "0.0.2",
     "react-native-vector-icons": "^6.6.0",
     "react-native-windows": "^0.60.0-vnext.127",
     "react-navigation": "^4.0.10",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { DualScreenInfo, DualScreenInfoPayload } from 'react-native-dualscreen'
+import { DualScreenInfo, DualScreenInfoPayload } from 'react-native-dualscreeninfo'
 import MasterDetail from './MasterDetail'
 import TwoPage from './TwoPage'
 import CompanionPane from './CompanionPane'
