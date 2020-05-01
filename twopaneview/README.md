@@ -1,5 +1,9 @@
 # TwoPaneView
 
+### React-native control with intelligent layout for dual-screen devices
+
+![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/auto_small.jpg)
+
 ## Status
 
 - Android:
@@ -7,24 +11,16 @@
 - react-native:
   - supported versions "<strong>&gt;= 0.60.5</strong>"
 
+
+## Prerequisites
+react-native-twopaneview depends on the [react-native-dualscreeninfo](https://www.npmjs.com/package/react-native-dualscreeninfo) module.  Please first install react-native-dualscreeninfo.  
+
+Also, make sure to carefully follow the installation instructions to modify your Android project, otherwise your TwoPaneView control won't be very happy on a dual screen device!
+
 ## Installation
 
-### Please refer to the react-native-dualscreen page to install the latest version of DualScreenInfo first.
+`$ yarn add react-native-twopaneview`
 
-- npm install react-native-twopaneview
-
-## API
-
-[Documentation](https://github.com/react-native-community/discussions-and-proposals/issues/197)
-- `Auto` 
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/auto.JPG)
-- `Single`
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/single.JPG)
-- `Dual`
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/dual.JPG)
-- `panePriority='pane2'`
-![](https://github.com/microsoft/react-native-dualscreen/raw/master/twopaneview/examples/paneModesDemo/priority2.JPG)
-- `onModeChanged={()=>{console.log('onModeChanged');}`
 
 ## How to run sample app
 
@@ -46,5 +42,6 @@ Start emulator, then run
 `$ npm run run:android`
 
 ## Reference
+[API Documentation](https://github.com/react-native-community/discussions-and-proposals/issues/197)
 
-[Documentation](https://aka.ms/dualscreendocs)
+[Dual-Screen](https://aka.ms/dualscreendocs)
