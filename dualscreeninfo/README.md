@@ -1,29 +1,17 @@
-# react-native-dualscreen
-[![npm version](https://badge.fury.io/js/react-native-dualscreen.svg)](https://badge.fury.io/js/react-native-dualscreen)
-[![Dependency Status](https://david-dm.org/microsoft/react-native-dualscreen.svg)](https://david-dm.org/microsoft/react-native-dualscreen)
-[![devDependencies Status](https://david-dm.org/microsoft/react-native-dualscreen/dev-status.svg)](https://david-dm.org/microsoft/react-native-dualscreen?type=dev)
-[![typings included](https://img.shields.io/badge/typings-included-brightgreen.svg?t=1495378566925)](package.json)
-[![npm](https://img.shields.io/npm/l/express.svg)](https://www.npmjs.com/package/react-native-dualscreen)
+# react-native-dualscreeninfo
 
-React Native package for dual screen devices support (Surface Neo/Duo)
+React Native package for dual screen devices support (Surface Duo)
 
 ## Status
 
 - Android:
   - 10+
-- Windows:
-  - 10X  
 - react-native:
   - supported versions "<strong>&gt;= 0.60.5</strong>"
 
 ## Installation
 
-<table>
-<td>
-<details style="border: 1px solid; border-radius: 5px; padding: 5px">
-  <summary>with react-native "<strong>&gt;=0.60.5</strong>"</summary>
-
-### 0. Setup Swift and Kotlin
+### 0. Setup Kotlin
 
 - Modify `android/build.gradle`:
 
@@ -42,22 +30,19 @@ React Native package for dual screen devices support (Surface Neo/Duo)
 
 ### 1. Install latest version from npm
 
-`$ yarn add react-native-dual-screen`
+`$ yarn add react-native-dualscreeninfo`
 
-### 2. Modify android:configChanges of your activity
+### 2. Modify android:configChanges of your activity, in AndroidManifest.xml
 
 `android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"`
 
-</details>
-</td>
-</table>
 
 ## Example
 
 ```jsx
-import * as React from 'react'
-import { View } from 'react-native'
-import { DualScreenInfo, Hinge, DualScreenInfoPayload } from 'react-native-dual-screen'
+import React, { useState, useEffect } from 'react'
+import { View, Text } from 'react-native'
+import { DualScreenInfo, Hinge, DualScreenInfoPayload } from 'react-native-dualscreeninfo'
 
 export default function App() {
   const [isDualMode, setDualMode] = useState(DualScreenInfo.isSpanning)
@@ -94,4 +79,6 @@ export default function App() {
 
 ## Reference
 
-[Documentation](https://aka.ms/dualscreendocs)
+[API Documentation](https://github.com/react-native-community/discussions-and-proposals/issues/189)
+
+[Dual-Screen](https://aka.ms/dualscreendocs)
