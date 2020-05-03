@@ -1,8 +1,8 @@
 {
   "name": "react-native-dualscreeninfo",
   "title": "React Native DualScreenInfo",
-  "version": "0.0.1",
-  "description": "React Native package for dual screen devices support (Surface Neo/Duo)",
+  "version": "0.0.2",
+  "description": "React Native package for dual screen devices support (Surface Duo)",
   "react-native": "src/index.ts",
   "types": "lib/typescript/index.d.ts",
   "main": "lib/commonjs/index.js",
@@ -18,8 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microsoft/react-native-dualscreeninfo.git",
-    "baseUrl": "https://github.com/microsoft/react-native-dualscreeninfo"
+    "url": "git+https://github.com/microsoft/react-native-dualscreen.git",
+    "baseUrl": "https://github.com/microsoft/react-native-dualscreen"
   },
   "keywords": [
     "react-native",
@@ -31,8 +31,7 @@
   "peerDependencies": {
     "@babel/runtime": "*",
     "react": "*",
-    "react-native": "*",
-    "react-native-windows": "*"
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -45,7 +44,6 @@
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.58.0",
     "prettier": "^1.19.1",
-    "react-native-windows": "^0.61.0-beta.28",
     "ts-jest": "^25.2.0",
     "tslint": "5.19.0",
     "tslint-config-standard": "8.0.1",
