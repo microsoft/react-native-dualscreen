@@ -74,6 +74,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "react-native-dualscreeninfo": "^0.0.1"
+    "react-native-dualscreeninfo": "~0.0.1"
   }
 }
