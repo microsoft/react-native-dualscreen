@@ -4292,10 +4292,10 @@ react-is@^16.12.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-dualscreeninfo@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-dualscreeninfo/-/react-native-dualscreeninfo-0.0.1.tgz#6bde5be32dd6028832863b1adeeb8a1bf0de586d"
-  integrity sha512-TKYEJx/sUadvnkWRIWIP8atu8ghO7MioFSj4MKoWbPyYmF598rOTyQJD3tIc0WBEa8pEjDeYYrzmSSJOPIG/SQ==
+react-native-dualscreeninfo@~0.0.1:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-dualscreeninfo/-/react-native-dualscreeninfo-0.0.2.tgz#c9f5393017e311fe03ae0ef4b9f88c4f13056a0a"
+  integrity sha512-BtwsJ000u81k4AD69LXOnxDGGXyj2Tn+7KccULrWfCcSWPN+2RmxfG9UOr8ySYP4I+vMp21spxfXKxjo9xWgoA==
 
 react-native-windows@^0.61.0-beta.28:
   version "0.61.4"
