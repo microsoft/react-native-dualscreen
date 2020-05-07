@@ -11,14 +11,14 @@ type Props = {
 
 type DefaultProps = Readonly<typeof defaultProps>;
 
-const defaultProps = { panePriority: PanePriority.Pane1, 
-  panePriorityVerticalSpanning: Orientation.Horizontal, 
+const defaultProps = { panePriority: PanePriority.Pane1,
+  panePriorityVerticalSpanning: Orientation.Horizontal,
   paneMode: PaneMode.Auto
 }
 
 type State = {
   dims: any,
-  spanning: boolean, 
+  spanning: boolean,
   panePriority?: string,
   panePriorityVerticalSpanning?: string,
   paneMode?: string,
@@ -27,7 +27,7 @@ type State = {
 export class TwoPaneView extends Component<Props, State> {
   state: State = {
     dims: Dimensions.get('window'),
-    spanning: DualScreenInfo.isSpanning, 
+    spanning: DualScreenInfo.isSpanning,
     panePriority: this.props.panePriority,
     panePriorityVerticalSpanning: this.props.panePriorityVerticalSpanning,
     paneMode: this.props.paneMode,
@@ -44,11 +44,11 @@ export class TwoPaneView extends Component<Props, State> {
   _handleDimensionsChange = (dimensions: { window: any; }) => {
     this.setState({
       dims: dimensions.window,
-      spanning: DualScreenInfo.isSpanning 
+      spanning: DualScreenInfo.isSpanning
     });
   };
 
-  render() {    
+  render() {
 
     let direction:any ='row';
 
@@ -63,7 +63,7 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
 
     if (this.state.spanning) {
-      if (this.state.paneMode === PaneMode.Single || 
+      if (this.state.paneMode === PaneMode.Single ||
         this.state.dims.height > this.state.dims.width  && this.state.panePriorityVerticalSpanning) {
         if (this.state.panePriorityVerticalSpanning === PanePriority.Pane1) {
           return this.renderPane1(this.getEntireSize());
@@ -169,7 +169,7 @@ export class TwoPaneView extends Component<Props, State> {
   }
 
   getBottomSize() {
-    let topHeight = this.state.dims.height/2; 
+    let topHeight = this.state.dims.height/2;
     var size = {
       width: this.state.dims.width,
       height: topHeight,
@@ -178,21 +178,20 @@ export class TwoPaneView extends Component<Props, State> {
   }
 
   getLeftSize() {
-    let leftWidth = this.state.dims.width/2; 
+    let leftWidth = this.state.dims.width/2;
     var size = {
-      width: leftWidth,
+      width: leftWidth - DualScreenInfo.hingeWidth * .5,
       height: this.state.dims.height,
     }
     return size;
   }
 
   getRightSize() {
-    let rightWidth = this.state.dims.width/2; 
+    let rightWidth = this.state.dims.width/2;
     var size = {
-      width: rightWidth,
+      width: rightWidth - DualScreenInfo.hingeWidth * .5,
       height: this.state.dims.height,
     }
     return size;
   }
 }
-  
