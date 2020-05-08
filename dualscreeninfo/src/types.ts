@@ -14,7 +14,8 @@ export type WindowRect = {
 
 export type DualScreenInfoPayload = {
   isSpanning: boolean,
-  windowRects: [WindowRect]
+  windowRects: [WindowRect],
+  rotation: number
 }
 
 export type SpannedChangeHandler = (event: DualScreenInfoPayload) => void;

@@ -11,6 +11,7 @@ declare module 'react-native' {
 		export interface DualScreenInfo {
 			isDualScreenDevice: boolean
 			hingeWidth: number
+			rotation: number
 		}
 	}
 }
@@ -31,17 +32,20 @@ interface IDualScreenInfoModule extends ExposedNativeMethods {
 	hingeWidth: number;
 	isSpanning: boolean;
 	windowRects: WindowRect[];
+	rotation: number;
 }
 
 class RNDualScreenInfoModule implements IDualScreenInfoModule {
 	private mIsSpanning: boolean = false;
 	private mWindowRects: WindowRect[] = [];
+	private mRotation: number = 0;
 	private eventEmitter: NativeEventEmitter = new NativeEventEmitter(NativeModules.DualScreenInfo);
 
 	constructor() {
 		this.eventEmitter.addListener('didUpdateSpanning', (update: DualScreenInfoPayload) => {
 			this.mIsSpanning = update.isSpanning;
 			this.mWindowRects = update.windowRects;
+			this.mRotation = update.rotation;
 		});
 	}
 
@@ -68,6 +72,10 @@ class RNDualScreenInfoModule implements IDualScreenInfoModule {
 	get windowRects(): WindowRect[] {
 		return this.mWindowRects;
 	};
+
+	get rotation(): number {
+		return this.mRotation;
+	}
 }
 
 export const DualScreenInfo = new RNDualScreenInfoModule();

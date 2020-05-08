@@ -15,5 +15,5 @@ export enum PanePriority {
 export enum PaneMode {
     Auto = 'Auto',
     Single = 'Single',
-    Dual = 'Dual',
+    Double = 'Double',
   };
