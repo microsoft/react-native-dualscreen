@@ -3,34 +3,34 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import { DualScreenInfo, DualScreenInfoPayload, WindowRect } from 'react-native-dualscreeninfo'
+import { DualScreenInfo, DualScreenInfoPayload, WindowRect, DeviceRotation } from 'react-native-dualscreeninfo'
 import {Orientation, PanePriority, PaneMode} from "./types"
-
-type Props = {
-} & Partial<DefaultProps>;
-
-type DefaultProps = Readonly<typeof defaultProps>;
-
-const defaultProps = { panePriority: PanePriority.Pane1, 
-  paneMode: PaneMode.Auto
-}
 
 type State = {
   windowRects: WindowRect[],
   spanning: boolean, 
-  panePriority?: string,
-  paneMode?: string,
-  rotation: number,
-};
+  rotation: DeviceRotation,
+}
 
-export class TwoPaneView extends Component<Props, State> {
+export interface TwoPaneViewProps {
+  panePriority: PanePriority,
+  paneMode: PaneMode,
+}
+
+export class TwoPaneView extends Component<TwoPaneViewProps, State> {
   state: State = {
     windowRects: DualScreenInfo.windowRects,
     spanning: DualScreenInfo.isSpanning, 
-    panePriority: PanePriority.Pane1, // TODO:  how to get this.props as initial value?
-    paneMode: PaneMode.Auto,
     rotation: DualScreenInfo.rotation,
   };
+
+  getPanePriority() {
+    return this.props.panePriority || PanePriority.Pane1;
+  }
+
+  getPaneMode() {
+    return this.props.paneMode || PaneMode.Auto;    
+  }
 
   componentDidMount() {
     DualScreenInfo.addEventListener('didUpdateSpanning', this._handleSpanningChanged);
@@ -59,23 +59,24 @@ export class TwoPaneView extends Component<Props, State> {
   renderChildPanes() {
     const children = React.Children.toArray(this.props.children);
 
-    if (this.state.paneMode === PaneMode.Auto) {
+    const paneMode = this.getPaneMode();
+    if (paneMode === PaneMode.Auto) {
       // TODO:  add logic for auto-detecting width > threshold
       if (this.state.spanning) {
         return this.renderBothPanes();
       }
-      this.renderPaneWithPriority();
+      return this.renderPaneWithPriority();
     }
-    if (this.state.paneMode === PaneMode.Single) {
-      this.renderPaneWithPriority();
+    if (paneMode === PaneMode.Single) {
+      return this.renderPaneWithPriority();
     }
-    if (this.state.paneMode === PaneMode.Double) {
+    if (paneMode === PaneMode.Double) {
       return this.renderBothPanes();
     }
   }
 
   renderPaneWithPriority() {
-    if (this.state.panePriority === PanePriority.Pane1) {
+    if (this.getPanePriority() === PanePriority.Pane1) {
       return this.renderPane1();
     }
     else {
@@ -87,39 +88,29 @@ export class TwoPaneView extends Component<Props, State> {
     const children = React.Children.toArray(this.props.children);
 
     const items = [];
-    if (children.length > 0) {
-      items.push(this.renderPane1());
-    }
-
+    items.push(this.renderPane1());
     items.push(this.renderSeparator());
-
-    if (children.length > 1) {
-      items.push(this.renderPane2());
-    }
+    items.push(this.renderPane2());
 
     return items;
   }
 
   renderPane1() {
     const children = React.Children.toArray(this.props.children);
-    if (children.length > 0) {
-      return (
-        <View key={PanePriority.Pane1} style={{flex: 1}}>
-          {children[0]}
-        </View>
-      );
-    }
+    return (
+      <View key={PanePriority.Pane1} style={{flex: 1}}>
+        {children.length > 0 ? children[0] : null}
+      </View>
+    );
   }
 
   renderPane2() {
     const children = React.Children.toArray(this.props.children);
-    if (children.length > 1) {
-      return (
-        <View key={PanePriority.Pane2} style={{flex: 1}}>
-          {children[1]}
-        </View>
-      );
-    }
+    return (
+      <View key={PanePriority.Pane2} style={{flex: 1}}>
+        {children.length > 1 ? children[1] : null}
+      </View>
+    );
   }
 
   renderSeparator() {
@@ -136,7 +127,6 @@ export class TwoPaneView extends Component<Props, State> {
   }
 
   isHorizontalOrientation() {
-    return (this.state.rotation === 0 || this.state.rotation === 2);
+    return (this.state.rotation === 'rotation0' || this.state.rotation === 'rotation180');
   }
 }
-  

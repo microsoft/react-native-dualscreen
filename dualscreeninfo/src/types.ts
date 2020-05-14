@@ -12,10 +12,12 @@ export type WindowRect = {
   y: number;
 }
 
+export type DeviceRotation = 'rotation0' | 'rotation90' | 'rotation180' | 'rotation270';
+
 export type DualScreenInfoPayload = {
   isSpanning: boolean,
   windowRects: [WindowRect],
-  rotation: number
+  rotation: DeviceRotation,
 }
 
 export type SpannedChangeHandler = (event: DualScreenInfoPayload) => void;

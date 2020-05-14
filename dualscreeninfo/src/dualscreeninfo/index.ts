@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { DualScreenInfoEvent, DualScreenInfoPayload, SpannedChangeHandler, WindowRect } from "../types";
+import { DualScreenInfoEvent, DualScreenInfoPayload, SpannedChangeHandler, WindowRect, DeviceRotation } from "../types";
 import { EmitterSubscription, NativeEventEmitter, NativeModules } from "react-native";
 
 declare module 'react-native' {
@@ -11,7 +11,7 @@ declare module 'react-native' {
 		export interface DualScreenInfo {
 			isDualScreenDevice: boolean
 			hingeWidth: number
-			rotation: number
+			rotation: DeviceRotation
 		}
 	}
 }
@@ -32,13 +32,13 @@ interface IDualScreenInfoModule extends ExposedNativeMethods {
 	hingeWidth: number;
 	isSpanning: boolean;
 	windowRects: WindowRect[];
-	rotation: number;
+	rotation: DeviceRotation;
 }
 
 class RNDualScreenInfoModule implements IDualScreenInfoModule {
 	private mIsSpanning: boolean = false;
 	private mWindowRects: WindowRect[] = [];
-	private mRotation: number = 0;
+	private mRotation: DeviceRotation = 'rotation0';
 	private eventEmitter: NativeEventEmitter = new NativeEventEmitter(NativeModules.DualScreenInfo);
 
 	constructor() {
@@ -73,7 +73,7 @@ class RNDualScreenInfoModule implements IDualScreenInfoModule {
 		return this.mWindowRects;
 	};
 
-	get rotation(): number {
+	get rotation(): DeviceRotation {
 		return this.mRotation;
 	}
 }

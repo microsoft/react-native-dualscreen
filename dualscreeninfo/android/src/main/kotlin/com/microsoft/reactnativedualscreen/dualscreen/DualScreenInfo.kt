@@ -105,6 +105,15 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return false
 	}
 
+	private fun rotationToString(rotation : Int) : String {
+		if (rotation == Surface.ROTATION_0) return "rotation0";
+		if (rotation == Surface.ROTATION_90) return "rotation90";
+		if (rotation == Surface.ROTATION_180) return "rotation180";
+		if (rotation == Surface.ROTATION_270) return "rotation270";
+
+		return "rotation0";
+	}
+
 	private fun emitUpdateStateEvent() {
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
 			// Don't emit an event to JS if the dimensions haven't changed
@@ -130,7 +139,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 				params.putBoolean("isSpanning", isSpanning)
 				params.putArray("windowRects", windowRectsArray)
-				params.putInt("rotation", mRotation)
+				params.putString("rotation", rotationToString(mRotation))
 				reactApplicationContext
 						.getJSModule(RCTDeviceEventEmitter::class.java)
 						.emit("didUpdateSpanning", params)
