@@ -4101,8 +4101,10 @@ react-is@^16.12.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-"react-native-dualscreeninfo@file:../dualscreeninfo":
-  version "0.1.0"
+react-native-dualscreeninfo@0.1.1:
+  version "0.1.1"
+  resolved "http://localhost:4873/react-native-dualscreeninfo/-/react-native-dualscreeninfo-0.1.1.tgz#94577bed90ab0e68b57364f2174aea229f4d11ed"
+  integrity sha512-f6rqip3P8N/0Jd6vdkbGlWWchNGSY9VZUF9FmpJC/78114FkPUz0zPoQLQgIHJo0p5Y9lXhxRernfaNdijmC3A==
 
 react-refresh@^0.4.0:
   version "0.4.2"
