@@ -1,7 +1,7 @@
 {
   "name": "react-native-twopaneview",
   "title": "React Native TwoPaneView",
-  "version": "0.1.4",
+  "version": "0.1.0",
   "description": "react-native layout control for dual screen devices (Duo)",
   "react-native": "src/index.ts",
   "types": "lib/typescript/index.d.ts",
