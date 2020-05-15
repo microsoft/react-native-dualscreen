@@ -42,13 +42,12 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			return if (boundings == null  || boundings.size == 0) {
 				listOf(windowBounds)
 			} else {
-				val hingeRect = boundings.get(0)
+				val hingeRect = boundings[0]
 				if (hingeRect.top == 0) {
 					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
-				}
-				else {
+				} else {
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
 					listOf(topRect, bottomRect)
@@ -105,13 +104,12 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return false
 	}
 
-	private fun rotationToString(rotation : Int) : String {
-		if (rotation == Surface.ROTATION_0) return "rotation0";
-		if (rotation == Surface.ROTATION_90) return "rotation90";
-		if (rotation == Surface.ROTATION_180) return "rotation180";
-		if (rotation == Surface.ROTATION_270) return "rotation270";
-
-		return "rotation0";
+	private fun rotationToOrientationString(rotation : Int) : String {
+		if (rotation == Surface.ROTATION_0) return "portrait"
+		if (rotation == Surface.ROTATION_90) return "landscape"
+		if (rotation == Surface.ROTATION_180) return "portraitFlipped"
+		assert(rotation == Surface.ROTATION_270)
+		return "landscapeFlipped"
 	}
 
 	private fun emitUpdateStateEvent() {
@@ -139,7 +137,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 				params.putBoolean("isSpanning", isSpanning)
 				params.putArray("windowRects", windowRectsArray)
-				params.putString("rotation", rotationToString(mRotation))
+				params.putString("orientation", rotationToOrientationString(mRotation))
 				reactApplicationContext
 						.getJSModule(RCTDeviceEventEmitter::class.java)
 						.emit("didUpdateSpanning", params)

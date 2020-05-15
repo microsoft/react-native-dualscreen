@@ -1,15 +1,11 @@
 import React, {Fragment, Component} from 'react';
-import {
-  View,
-  Dimensions,
-} from 'react-native';
-import { DualScreenInfo, DualScreenInfoPayload, WindowRect, DeviceRotation } from 'react-native-dualscreeninfo'
+import { View, StyleSheet } from 'react-native';
+import { DualScreenInfo, DualScreenInfoPayload, DeviceOrientation } from 'react-native-dualscreeninfo'
 import {Orientation, PanePriority, PaneMode} from "./types"
 
 type State = {
-  windowRects: WindowRect[],
   spanning: boolean, 
-  rotation: DeviceRotation,
+  orientation: DeviceOrientation,
 }
 
 export interface TwoPaneViewProps {
@@ -19,9 +15,8 @@ export interface TwoPaneViewProps {
 
 export class TwoPaneView extends Component<TwoPaneViewProps, State> {
   state: State = {
-    windowRects: DualScreenInfo.windowRects,
     spanning: DualScreenInfo.isSpanning, 
-    rotation: DualScreenInfo.rotation,
+    orientation: DualScreenInfo.orientation,
   };
 
   getPanePriority() {
@@ -40,17 +35,16 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
     DualScreenInfo.removeEventListener('didUpdateSpanning', this._handleSpanningChanged);
   }
 
-  _handleSpanningChanged = (update: DualScreenInfoPayload) => {
+  private _handleSpanningChanged = (update: DualScreenInfoPayload) => {
     this.setState({
       spanning: update.isSpanning,
-      windowRects: update.windowRects,
-      rotation: update.rotation       
+      orientation: update.orientation       
     });
   };
 
   render() {    
     return (
-      <View style={{flexDirection: this.isHorizontalOrientation() ? 'row' : 'column'}}>
+      <View style={this.isHorizontalOrientation() ? styles.flexRow : styles.flexColumn}>
         {this.renderChildPanes()}
       </View>
     );
@@ -60,18 +54,17 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
     const children = React.Children.toArray(this.props.children);
 
     const paneMode = this.getPaneMode();
-    if (paneMode === PaneMode.Auto) {
-      // TODO:  add logic for auto-detecting width > threshold
-      if (this.state.spanning) {
+    switch (paneMode) {
+      case PaneMode.Auto:
+        // TODO:  add logic for auto-detecting width > threshold
+        if (this.state.spanning) {
+          return this.renderBothPanes();
+        }
+        return this.renderPaneWithPriority();
+      case PaneMode.Single:
+        return this.renderPaneWithPriority();
+      case PaneMode.Double:
         return this.renderBothPanes();
-      }
-      return this.renderPaneWithPriority();
-    }
-    if (paneMode === PaneMode.Single) {
-      return this.renderPaneWithPriority();
-    }
-    if (paneMode === PaneMode.Double) {
-      return this.renderBothPanes();
     }
   }
 
@@ -89,7 +82,9 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
 
     const items = [];
     items.push(this.renderPane1());
-    items.push(this.renderSeparator());
+    if (this.state.spanning) {
+      items.push(this.renderSeparator());
+    }
     items.push(this.renderPane2());
 
     return items;
@@ -98,7 +93,7 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
   renderPane1() {
     const children = React.Children.toArray(this.props.children);
     return (
-      <View key={PanePriority.Pane1} style={{flex: 1}}>
+      <View key={PanePriority.Pane1} style={styles.flexOne}>
         {children.length > 0 ? children[0] : null}
       </View>
     );
@@ -107,7 +102,7 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
   renderPane2() {
     const children = React.Children.toArray(this.props.children);
     return (
-      <View key={PanePriority.Pane2} style={{flex: 1}}>
+      <View key={PanePriority.Pane2} style={styles.flexOne}>
         {children.length > 1 ? children[1] : null}
       </View>
     );
@@ -117,7 +112,7 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
     // TODO - render Hinge
     let horizontal = this.isHorizontalOrientation();
     let separatorWidth = horizontal ? DualScreenInfo.hingeWidth: '100%';
-    let separatorHeight = '100%';
+    let separatorHeight = horizontal ? '100%' : DualScreenInfo.hingeWidth;
     return (
       <View
         key="separator"
@@ -127,6 +122,18 @@ export class TwoPaneView extends Component<TwoPaneViewProps, State> {
   }
 
   isHorizontalOrientation() {
-    return (this.state.rotation === 'rotation0' || this.state.rotation === 'rotation180');
+    return (this.state.orientation === DeviceOrientation.Portrait || this.state.orientation === DeviceOrientation.PortraitFlipped);
   }
 }
+
+const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: 'row',
+  },
+  flexColumn: {
+    flexDirection: 'column',
+  },
+  flexOne: {
+    flex: 1,
+  }
+});
