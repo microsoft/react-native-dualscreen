@@ -1,7 +1,7 @@
 {
   "name": "react-native-twopaneview",
   "title": "React Native TwoPaneView",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "react-native layout control for dual screen devices (Duo)",
   "react-native": "src/index.ts",
   "types": "lib/typescript/index.d.ts",
@@ -47,7 +47,6 @@
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.58.0",
     "prettier": "^1.19.1",
-    "react-native-windows": "^0.61.0-beta.28",
     "ts-jest": "^25.2.0",
     "tslint": "5.19.0",
     "tslint-config-standard": "8.0.1",
@@ -74,6 +73,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "react-native-dualscreeninfo": "~0.0.1"
+    "react-native-dualscreeninfo": "^0.1.0"
   }
 }

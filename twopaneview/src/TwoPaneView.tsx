@@ -1,59 +1,50 @@
 import React, {Fragment, Component} from 'react';
-import {
-  View,
-  Dimensions,
-} from 'react-native';
-import { DualScreenInfo } from 'react-native-dualscreeninfo'
+import { View, StyleSheet } from 'react-native';
+import { DualScreenInfo, DualScreenInfoPayload, DeviceOrientation } from 'react-native-dualscreeninfo'
 import {Orientation, PanePriority, PaneMode} from "./types"
 
-type Props = {
-} & Partial<DefaultProps>;
-
-type DefaultProps = Readonly<typeof defaultProps>;
-
-const defaultProps = { panePriority: PanePriority.Pane1, 
-  panePriorityVerticalSpanning: Orientation.Horizontal, 
-  paneMode: PaneMode.Auto
+type State = {
+  spanning: boolean, 
+  orientation: DeviceOrientation,
 }
 
-type State = {
-  dims: any,
-  spanning: boolean, 
-  panePriority?: string,
-  panePriorityVerticalSpanning?: string,
-  paneMode?: string,
-};
+export interface TwoPaneViewProps {
+  panePriority: PanePriority,
+  paneMode: PaneMode,
+}
 
-export class TwoPaneView extends Component<Props, State> {
+export class TwoPaneView extends Component<TwoPaneViewProps, State> {
   state: State = {
-    dims: Dimensions.get('window'),
     spanning: DualScreenInfo.isSpanning, 
-    panePriority: this.props.panePriority,
-    panePriorityVerticalSpanning: this.props.panePriorityVerticalSpanning,
-    paneMode: this.props.paneMode,
+    orientation: DualScreenInfo.orientation,
   };
 
+  getPanePriority() {
+    return this.props.panePriority || PanePriority.Pane1;
+  }
+
+  getPaneMode() {
+    return this.props.paneMode || PaneMode.Auto;    
+  }
+
   componentDidMount() {
-    Dimensions.addEventListener('change', this._handleDimensionsChange);
+    DualScreenInfo.addEventListener('didUpdateSpanning', this._handleSpanningChanged);
   }
 
   componentWillUnmount() {
-    Dimensions.removeEventListener('change', this._handleDimensionsChange);
+    DualScreenInfo.removeEventListener('didUpdateSpanning', this._handleSpanningChanged);
   }
 
-  _handleDimensionsChange = (dimensions: { window: any; }) => {
+  private _handleSpanningChanged = (update: DualScreenInfoPayload) => {
     this.setState({
-      dims: dimensions.window,
-      spanning: DualScreenInfo.isSpanning 
+      spanning: update.isSpanning,
+      orientation: update.orientation       
     });
   };
 
   render() {    
-
-    let direction:any ='row';
-
     return (
-      <View style={{flexDirection: direction, width: this.state.dims.width, height:this.state.dims.height}}>
+      <View style={this.isHorizontalOrientation() ? styles.flexRow : styles.flexColumn}>
         {this.renderChildPanes()}
       </View>
     );
@@ -62,87 +53,66 @@ export class TwoPaneView extends Component<Props, State> {
   renderChildPanes() {
     const children = React.Children.toArray(this.props.children);
 
-    if (this.state.spanning) {
-      if (this.state.paneMode === PaneMode.Single || 
-        this.state.dims.height > this.state.dims.width  && this.state.panePriorityVerticalSpanning) {
-        if (this.state.panePriorityVerticalSpanning === PanePriority.Pane1) {
-          return this.renderPane1(this.getEntireSize());
+    const paneMode = this.getPaneMode();
+    switch (paneMode) {
+      case PaneMode.Auto:
+        // TODO:  add logic for auto-detecting width > threshold
+        if (this.state.spanning) {
+          return this.renderBothPanes();
         }
-        else {
-          return this.renderPane2(this.getEntireSize());
-        }
-      }
-      return this.renderBothPanes();
+        return this.renderPaneWithPriority();
+      case PaneMode.Single:
+        return this.renderPaneWithPriority();
+      case PaneMode.Double:
+        return this.renderBothPanes();
     }
-    if (this.state.paneMode === PaneMode.Dual) {
-      return this.renderDualPanes();
-    }
-    if (this.state.panePriority === PanePriority.Pane1) {
-      return this.renderPane1(this.getEntireSize());
-    }
-    return this.renderPane2(this.getEntireSize());
   }
 
-  renderDualPanes() {
-    const children = React.Children.toArray(this.props.children);
-
-    const items = [];
-    if (children.length > 0) {
-      items.push(this.renderPane1(this.getLeftSize()));
+  renderPaneWithPriority() {
+    if (this.getPanePriority() === PanePriority.Pane1) {
+      return this.renderPane1();
     }
-
-
-    if (children.length > 1) {
-      items.push(this.renderPane2(this.getRightSize()));
+    else {
+      return this.renderPane2();
     }
-
-    return items;
   }
-
+  
   renderBothPanes() {
-    let horizontal = this.state.dims.width >= this.state.dims.height;
     const children = React.Children.toArray(this.props.children);
 
     const items = [];
-    if (children.length > 0) {
-      items.push(this.renderPane1(horizontal ? this.getLeftSize() : this.getTopSize()));
+    items.push(this.renderPane1());
+    if (this.state.spanning) {
+      items.push(this.renderSeparator());
     }
-
-    items.push(this.renderSeparator());
-
-    if (children.length > 1) {
-      items.push(this.renderPane2(horizontal ? this.getRightSize() : this.getBottomSize()));
-    }
+    items.push(this.renderPane2());
 
     return items;
   }
 
-  renderPane1(size: any) {
+  renderPane1() {
     const children = React.Children.toArray(this.props.children);
-    if (children.length > 0) {
-      return (
-        <View key={PanePriority.Pane1} style={{width:size.width, height:size.height}}>
-          {children[0]}
-        </View>
-      );
-    }
+    return (
+      <View key={PanePriority.Pane1} style={styles.flexOne}>
+        {children.length > 0 ? children[0] : null}
+      </View>
+    );
   }
 
-  renderPane2(size: any) {
+  renderPane2() {
     const children = React.Children.toArray(this.props.children);
-    if (children.length > 1) {
-      return (
-        <View key={PanePriority.Pane2} style={{width:size.width, height:size.height}}>
-          {children[1]}
-        </View>
-      );
-    }
+    return (
+      <View key={PanePriority.Pane2} style={styles.flexOne}>
+        {children.length > 1 ? children[1] : null}
+      </View>
+    );
   }
 
   renderSeparator() {
-    let horizontal = this.state.dims.width >= this.state.dims.height;
+    // TODO - render Hinge
+    let horizontal = this.isHorizontalOrientation();
     let separatorWidth = horizontal ? DualScreenInfo.hingeWidth: '100%';
-    let separatorHeight = '100%';
+    let separatorHeight = horizontal ? '100%' : DualScreenInfo.hingeWidth;
     return (
       <View
         key="separator"
@@ -151,48 +121,19 @@ export class TwoPaneView extends Component<Props, State> {
     );
   }
 
-  getEntireSize() {
-    var size = {
-      width: this.state.dims.width,
-      height: this.state.dims.height,
-    };
-    return size;
-  }
-
-  getTopSize() {
-    let topHeight = this.state.dims.height/2;
-    var size = {
-      width: this.state.dims.width,
-      height: topHeight,
-    }
-    return size;
-  }
-
-  getBottomSize() {
-    let topHeight = this.state.dims.height/2; 
-    var size = {
-      width: this.state.dims.width,
-      height: topHeight,
-    }
-    return size;
-  }
-
-  getLeftSize() {
-    let leftWidth = this.state.dims.width/2; 
-    var size = {
-      width: leftWidth,
-      height: this.state.dims.height,
-    }
-    return size;
-  }
-
-  getRightSize() {
-    let rightWidth = this.state.dims.width/2; 
-    var size = {
-      width: rightWidth,
-      height: this.state.dims.height,
-    }
-    return size;
+  isHorizontalOrientation() {
+    return (this.state.orientation === DeviceOrientation.Portrait || this.state.orientation === DeviceOrientation.PortraitFlipped);
   }
 }
-  
+
+const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: 'row',
+  },
+  flexColumn: {
+    flexDirection: 'column',
+  },
+  flexOne: {
+    flex: 1,
+  }
+});

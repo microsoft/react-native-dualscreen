@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-import { DualScreenInfoEvent, DualScreenInfoPayload, SpannedChangeHandler, WindowRect } from "../types";
+import { DualScreenInfoEvent, DualScreenInfoPayload, SpannedChangeHandler, WindowRect, DeviceOrientation } from "../types";
 import { EmitterSubscription, NativeEventEmitter, NativeModules } from "react-native";
 
 declare module 'react-native' {
@@ -11,6 +11,7 @@ declare module 'react-native' {
 		export interface DualScreenInfo {
 			isDualScreenDevice: boolean
 			hingeWidth: number
+			orientation: DeviceOrientation
 		}
 	}
 }
@@ -31,17 +32,20 @@ interface IDualScreenInfoModule extends ExposedNativeMethods {
 	hingeWidth: number;
 	isSpanning: boolean;
 	windowRects: WindowRect[];
+	orientation: DeviceOrientation;
 }
 
 class RNDualScreenInfoModule implements IDualScreenInfoModule {
 	private mIsSpanning: boolean = false;
 	private mWindowRects: WindowRect[] = [];
+	private mOrientation: DeviceOrientation = DeviceOrientation.Portrait;
 	private eventEmitter: NativeEventEmitter = new NativeEventEmitter(NativeModules.DualScreenInfo);
 
 	constructor() {
 		this.eventEmitter.addListener('didUpdateSpanning', (update: DualScreenInfoPayload) => {
 			this.mIsSpanning = update.isSpanning;
 			this.mWindowRects = update.windowRects;
+			this.mOrientation = update.orientation;
 		});
 	}
 
@@ -68,6 +72,10 @@ class RNDualScreenInfoModule implements IDualScreenInfoModule {
 	get windowRects(): WindowRect[] {
 		return this.mWindowRects;
 	};
+
+	get orientation(): DeviceOrientation {
+		return this.mOrientation;
+	}
 }
 
 export const DualScreenInfo = new RNDualScreenInfoModule();

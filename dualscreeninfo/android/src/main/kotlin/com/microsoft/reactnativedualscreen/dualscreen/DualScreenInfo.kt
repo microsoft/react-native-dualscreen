@@ -4,8 +4,12 @@ import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import android.view.WindowManager
-import com.facebook.react.bridge.*
+import android.view.Surface
+import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Arguments.createMap
+import com.facebook.react.bridge.LifecycleEventListener
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.microsoft.device.display.DisplayMask
 
@@ -22,7 +26,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val rotation: Int
 		get() {
 			val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
-			return wm?.defaultDisplay?.rotation ?: 0
+			return wm?.defaultDisplay?.rotation ?: Surface.ROTATION_0
 		}
 	private val hinge: Rect
 		get() {
@@ -31,8 +35,25 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				Rect(0, 0, 0, 0)
 			} else boundings[0]
 		}
-	private val windowRects: List<Rect>?
-		get() = mDisplayMask?.getBoundingRectsForRotation(rotation)
+	private val windowRects: List<Rect>
+		get() {
+			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
+			val windowBounds = windowRect;
+			return if (boundings == null  || boundings.size == 0) {
+				listOf(windowBounds)
+			} else {
+				val hingeRect = boundings[0]
+				if (hingeRect.top == 0) {
+					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
+					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
+					listOf(leftRect, rightRect)
+				} else {
+					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
+					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
+					listOf(topRect, bottomRect)
+				}
+			}
+		}
 	private val windowRect: Rect
 		get() {
 			val windowRect = Rect()
@@ -41,6 +62,8 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			return windowRect
 		}
 	private var mIsSpanning: Boolean = false
+	private var mWindowRects: List<Rect> = emptyList()
+	private var mRotation: Int = Surface.ROTATION_0
 
 	override fun getName() = "DualScreenInfo"
 
@@ -49,7 +72,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		reactApplicationContext.addLifecycleEventListener(this)
 
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
-		rootView?.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+		rootView?.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
 			emitUpdateStateEvent()
 		}
 	}
@@ -81,20 +104,32 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return false
 	}
 
+	private fun rotationToOrientationString(rotation : Int) : String {
+		if (rotation == Surface.ROTATION_0) return "portrait"
+		if (rotation == Surface.ROTATION_90) return "landscape"
+		if (rotation == Surface.ROTATION_180) return "portraitFlipped"
+		assert(rotation == Surface.ROTATION_270)
+		return "landscapeFlipped"
+	}
+
 	private fun emitUpdateStateEvent() {
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
 			// Don't emit an event to JS if the dimensions haven't changed
 			val isSpanning = isSpanning()
-			if (mIsSpanning != isSpanning) {
+			val newWindowRects = windowRects
+			val newRotation = rotation
+			if (mIsSpanning != isSpanning || mWindowRects != newWindowRects || mRotation != newRotation) {
 				mIsSpanning = isSpanning
+				mWindowRects = newWindowRects
+				mRotation = newRotation
 
 				val params = createMap()
 				val windowRectsArray = Arguments.createArray()
 
-				windowRects?.forEach {
+				windowRects.forEach {
 					val rectMap = createMap()
 					rectMap.putInt("width", it.right - it.left)
-					rectMap.putInt("height", it.top - it.bottom)
+					rectMap.putInt("height", it.bottom - it.top)
 					rectMap.putInt("x", it.left)
 					rectMap.putInt("y", it.top)
 					windowRectsArray.pushMap(rectMap)
@@ -102,6 +137,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 				params.putBoolean("isSpanning", isSpanning)
 				params.putArray("windowRects", windowRectsArray)
+				params.putString("orientation", rotationToOrientationString(mRotation))
 				reactApplicationContext
 						.getJSModule(RCTDeviceEventEmitter::class.java)
 						.emit("didUpdateSpanning", params)
