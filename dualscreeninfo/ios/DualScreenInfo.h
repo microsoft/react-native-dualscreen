@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
-@interface DualScreenInfo : NSObject <RCTBridgeModule>
+@interface DualScreenInfo : RCTEventEmitter <RCTBridgeModule>
 
 @end
