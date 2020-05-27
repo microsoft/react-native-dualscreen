@@ -13,4 +13,9 @@ RCT_EXPORT_METHOD(sampleMethod:(NSString *)stringArgument numberParameter:(nonnu
     callback(@[[NSString stringWithFormat: @"numberArgument: %@ stringArgument: %@", numberArgument, stringArgument]]);
 }
 
+- (NSArray<NSString *> *)supportedEvents
+{
+  return @[@"didUpdateSpanning"];
+}
+
 @end
