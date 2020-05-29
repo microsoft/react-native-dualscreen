@@ -21,7 +21,7 @@ const val FEATURE_NAME = "com.microsoft.device.display.displaymask"
 class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContextBaseJavaModule(context), LifecycleEventListener  {
 	private val mDisplayMask: DisplayMask?
 		get() {
-			return if(currentActivity != null) DisplayMask.fromResourcesRect(currentActivity) else null
+			return if(currentActivity != null && reactApplicationContext.packageManager.hasSystemFeature(FEATURE_NAME)) DisplayMask.fromResourcesRect(currentActivity) else null
 		}
 	private val rotation: Int
 		get() {
