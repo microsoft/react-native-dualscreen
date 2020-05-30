@@ -40,4 +40,5 @@ dependencies {
     compileOnly files('libs/com.microsoft.device.display.displaymask.jar')
     compileOnly "com.facebook.react:react-native:${_reactNativeVersion}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${_kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:${_kotlinVersion}"
 }

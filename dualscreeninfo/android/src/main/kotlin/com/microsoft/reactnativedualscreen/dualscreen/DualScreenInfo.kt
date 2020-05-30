@@ -11,7 +11,6 @@ import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
-import com.microsoft.device.display.DisplayMask
 
 
 const val HINGE_WIDTH_KEY = "hingeWidth"
@@ -19,9 +18,9 @@ const val IS_DUALSCREEN_DEVICE_KEY = "isDualScreenDevice"
 const val FEATURE_NAME = "com.microsoft.device.display.displaymask"
 
 class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContextBaseJavaModule(context), LifecycleEventListener  {
-	private val mDisplayMask: DisplayMask?
+	private val mDisplayMask: DisplayMaskProxy
 		get() {
-			return if(currentActivity != null && reactApplicationContext.packageManager.hasSystemFeature(FEATURE_NAME)) DisplayMask.fromResourcesRect(currentActivity) else null
+			return DisplayMaskProxy(currentActivity)
 		}
 	private val rotation: Int
 		get() {
@@ -30,16 +29,17 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 	private val hinge: Rect
 		get() {
-			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
-			return if (boundings == null || boundings.size == 0) {
+			val boundings = mDisplayMask.getBoundingRectsForRotation(rotation)
+
+			return if (boundings.size == 0) {
 				Rect(0, 0, 0, 0)
 			} else boundings[0]
 		}
 	private val windowRects: List<Rect>
 		get() {
-			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
+			val boundings = mDisplayMask.getBoundingRectsForRotation(rotation)
 			val windowBounds = windowRect;
-			return if (boundings == null  || boundings.size == 0) {
+			return if (boundings.size == 0) {
 				listOf(windowBounds)
 			} else {
 				val hingeRect = boundings[0]
