@@ -36,8 +36,15 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://pkgs.dev.azure.com/MicrosoftDeviceSDK/DuoSDK-Public/_packaging/Duo-SDK-Feed/maven/v1'
+    }
+}
+
 dependencies {
-    compileOnly files('libs/com.microsoft.device.display.displaymask.jar')
+//     compileOnly files('libs/com.microsoft.device.display.displaymask.jar')
     compileOnly "com.facebook.react:react-native:${_reactNativeVersion}"
+    implementation 'com.microsoft.device:dualscreen-layout:0.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${_kotlinVersion}"
 }
