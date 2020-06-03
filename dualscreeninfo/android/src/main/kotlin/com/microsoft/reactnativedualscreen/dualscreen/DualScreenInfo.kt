@@ -21,7 +21,7 @@ const val FEATURE_NAME = "com.microsoft.device.display.displaymask"
 class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContextBaseJavaModule(context), LifecycleEventListener  {
 	private val mDisplayMask: DisplayMask?
 		get() {
-			return if(currentActivity != null) DisplayMask.fromResourcesRect(currentActivity) else null
+			return if(currentActivity != null && isDualScreenDevice) DisplayMask.fromResourcesRect(currentActivity) else null
 		}
 	private val rotation: Int
 		get() {
@@ -61,6 +61,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			rootView?.getDrawingRect(windowRect)
 			return windowRect
 		}
+	private val isDualScreenDevice = reactApplicationContext.packageManager.hasSystemFeature(FEATURE_NAME)
 	private var mIsSpanning: Boolean = false
 	private var mWindowRects: List<Rect> = emptyList()
 	private var mRotation: Int = Surface.ROTATION_0
@@ -80,7 +81,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	override fun getConstants(): Map<String, Any>? {
         val constants: MutableMap<String, Any> = HashMap()
     	constants[HINGE_WIDTH_KEY] = 34
-		constants[IS_DUALSCREEN_DEVICE_KEY] = reactApplicationContext.packageManager.hasSystemFeature(FEATURE_NAME)
+		constants[IS_DUALSCREEN_DEVICE_KEY] = isDualScreenDevice
 
     	return constants
     }
