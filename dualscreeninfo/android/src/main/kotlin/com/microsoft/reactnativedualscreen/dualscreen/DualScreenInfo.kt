@@ -115,7 +115,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	}
 
 	private fun convertPixelsToDp(px: Int): Double {
-		val metrics = Resources.getSystem().displayMetrics
+		val metrics = reactApplicationContext.resources.displayMetrics
 		return (px / (metrics.density)).toDouble()
 	}
 
