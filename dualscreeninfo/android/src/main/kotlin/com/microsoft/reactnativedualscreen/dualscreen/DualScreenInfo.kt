@@ -12,7 +12,8 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.microsoft.device.display.DisplayMask
-
+import android.content.res.Resources
+import android.util.DisplayMetrics
 
 const val HINGE_WIDTH_KEY = "hingeWidth"
 const val IS_DUALSCREEN_DEVICE_KEY = "isDualScreenDevice"
@@ -113,6 +114,11 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return "landscapeFlipped"
 	}
 
+	private fun convertPixelsToDp(px: Int): Int {
+		val metrics = Resources.getSystem().displayMetrics
+		return (px / (metrics.density)).toInt()
+	}
+
 	private fun emitUpdateStateEvent() {
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
 			// Don't emit an event to JS if the dimensions haven't changed
@@ -129,8 +135,8 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 				windowRects.forEach {
 					val rectMap = createMap()
-					rectMap.putInt("width", it.right - it.left)
-					rectMap.putInt("height", it.bottom - it.top)
+					rectMap.putInt("width", convertPixelsToDp(it.right - it.left))
+					rectMap.putInt("height",  convertPixelsToDp(it.bottom - it.top))
 					rectMap.putInt("x", it.left)
 					rectMap.putInt("y", it.top)
 					windowRectsArray.pushMap(rectMap)
