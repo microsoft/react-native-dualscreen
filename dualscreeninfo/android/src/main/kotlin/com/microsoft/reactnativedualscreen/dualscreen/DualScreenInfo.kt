@@ -114,9 +114,9 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return "landscapeFlipped"
 	}
 
-	private fun convertPixelsToDp(px: Int): Int {
+	private fun convertPixelsToDp(px: Int): Double {
 		val metrics = Resources.getSystem().displayMetrics
-		return (px / (metrics.density)).toInt()
+		return (px / (metrics.density)).toDouble()
 	}
 
 	private fun emitUpdateStateEvent() {
@@ -135,10 +135,10 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 				windowRects.forEach {
 					val rectMap = createMap()
-					rectMap.putInt("width", convertPixelsToDp(it.right - it.left))
-					rectMap.putInt("height",  convertPixelsToDp(it.bottom - it.top))
-					rectMap.putInt("x", it.left)
-					rectMap.putInt("y", it.top)
+					rectMap.putDouble("width", convertPixelsToDp(it.right - it.left))
+					rectMap.putDouble("height",  convertPixelsToDp(it.bottom - it.top))
+					rectMap.putDouble("x", convertPixelsToDp(it.left))
+					rectMap.putDouble("y", convertPixelsToDp(it.top))
 					windowRectsArray.pushMap(rectMap)
 				}
 
