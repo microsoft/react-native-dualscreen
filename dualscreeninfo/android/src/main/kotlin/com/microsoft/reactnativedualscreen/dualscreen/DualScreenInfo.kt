@@ -12,8 +12,6 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.microsoft.device.display.DisplayMask
-import android.content.res.Resources
-import android.util.DisplayMetrics
 
 const val HINGE_WIDTH_KEY = "hingeWidth"
 const val IS_DUALSCREEN_DEVICE_KEY = "isDualScreenDevice"
@@ -116,7 +114,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 	private fun convertPixelsToDp(px: Int): Double {
 		val metrics = reactApplicationContext.resources.displayMetrics
-		return (px / (metrics.density)).toDouble()
+		return (px.toDouble() / (metrics.density))
 	}
 
 	private fun emitUpdateStateEvent() {
