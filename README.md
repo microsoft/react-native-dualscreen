@@ -2,11 +2,11 @@
 This repo contains Microsoft's offerings to streamline [dual-screen](https://docs.microsoft.com/en-us/dual-screen/) cross-platform development using React Native. The modules in the repo are targeting Windows and Android.
 
 ### Repo status
-Early stubs / placeholders
+See below.  We currently have two npm packages for dual screen devices.
 
 
 ## Planned offerings
-This repo will provide two modules
+This repo provides two modules
 * **TwoPaneView** layout component
 * **DualScreenInfo** lower-level module
 
