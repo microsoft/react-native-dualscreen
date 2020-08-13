@@ -1,0 +1,7 @@
+export const PUSH_DUEXELEMENT: string = 'PUSH_DUEXELEMENT';
+
+export const REMOVE_KEY_DUEXELEMENT: string = 'REMOVE_KEY_DUEXELEMENT';
+
+export const REPLACE_DUEXELEMENT: string = 'REPLACE_DUEXELEMENT';
+
+

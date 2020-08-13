@@ -1,0 +1,1 @@
+export const IS_DUALSCREEN: string = 'IS_DUALSCREEN';

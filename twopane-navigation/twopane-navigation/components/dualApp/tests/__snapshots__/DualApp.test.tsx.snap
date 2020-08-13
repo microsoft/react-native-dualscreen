@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DualApp Tests should render singleScreen 1`] = `
+<View
+  collapsable={true}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "black",
+            "bottom": 0,
+            "flex": 1,
+            "height": 720,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "width": 540,
+          },
+          Object {
+            "left": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": "10%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "flex-start",
+                },
+                Object {
+                  "backgroundColor": "#212121",
+                  "paddingHorizontal": 25,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#F2F2F2",
+                  "fontSize": 20,
+                  "fontWeight": "500",
+                  "marginLeft": 6,
+                }
+              }
+            >
+              singleScreenDefaultTitle
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": "85%",
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "black",
+            "bottom": 0,
+            "flex": 1,
+            "height": 720,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "width": 540,
+          },
+          Object {
+            "left": 570,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": "10%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "flex-start",
+                },
+                Object {
+                  "backgroundColor": "#212121",
+                  "paddingHorizontal": 25,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#F2F2F2",
+                  "fontSize": 20,
+                  "fontWeight": "500",
+                  "marginLeft": 6,
+                }
+              }
+            >
+              dualScreenDefaultTitle
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": "85%",
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
