@@ -70,3 +70,7 @@ buck-out/
 # test files
 /coverage/
 
+# generated files
+lib/
+
+.read-snapshot.txt
