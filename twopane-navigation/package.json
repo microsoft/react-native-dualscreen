@@ -1,4 +1,6 @@
 {
   "private":"true",
-  "workspaces": ["twopane-navigation"]
+  "workspaces":{
+  "packages":  ["twopane-navigation", "example"]
+  }
 }
