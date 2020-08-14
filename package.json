@@ -1,0 +1,12 @@
+{
+  "name": "react-native-dualscreen-repo",
+  "version": "0.0.1",
+  "repository": "https://github.com/microsoft/react-native-dualscreen.git",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
