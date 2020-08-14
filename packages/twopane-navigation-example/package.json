@@ -41,10 +41,5 @@
       "json",
       "node"
     ]
-  },
-  "workspaces": {
-  "nohoist": ["react-native", "react-native/**",
-              "react", "react/**",
-              "@babel/core", "@babel/core/**"]
   }
 }
