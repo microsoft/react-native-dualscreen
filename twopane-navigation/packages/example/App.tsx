@@ -16,6 +16,7 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
 } from 'react-native';
 
 import {
@@ -28,6 +29,7 @@ import {
 
 declare const global: {HermesInternal: null | {}};
 
+import { autoScreen } from "twopane-navigation"
 const App = () => {
   return (
     <>
@@ -44,7 +46,10 @@ const App = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
+              <Button onPress={() => autoScreen.Add('start',              <Text style={styles.sectionDescription}>
+                Edit <Text style={styles.highlight}>App.tsx</Text> to change
+                this screen and then come back to see your edits.
+              </Text>)} title={"press me"} ></Button>
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.tsx</Text> to change
                 this screen and then come back to see your edits.

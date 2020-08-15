@@ -1,12 +1,14 @@
 // components
-export * from './components/dualApp/DualApp'
-export * from './components/screenOverlay/ScreenOverlay'
+
+
+export {default as DualApp} from './components/dualApp/DualApp'
+export {default as ScreenOverlay} from './components/screenOverlay/ScreenOverlay'
 
 // methods
-export * from './singleScreen/singleScreenStore/singleScreen.methods'
-export * from './dualScreen/dualScreenStore/dualScreen.methods'
-export * from './utilities/auto.methods'
-export * from './utilities/utility.methods'
+export {default as singleScreen} from './singleScreen/singleScreenStore/singleScreen.methods'
+export {default as dualScreen} from './dualScreen/dualScreenStore/dualScreen.methods'
+export {default as autoScreen}from './utilities/auto.methods'
+export {default as utility} from './utilities/utility.methods'
 
 /// STORES ///
 // header
@@ -40,7 +42,6 @@ export * from './Shared/utilityStore/utilityStore.types'
 
 
 // misc
-
 export * from './utilities/interfaces'
 
 
