@@ -1,1 +1,1 @@
-export const IS_DUALSCREEN: string = 'IS_DUALSCREEN';
+export const IS_TWOPANE: string = 'IS_TWOPANE';

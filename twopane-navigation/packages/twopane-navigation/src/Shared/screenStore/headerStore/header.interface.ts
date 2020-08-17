@@ -1,5 +1,5 @@
 import { StyleProp, ViewStyle } from "react-native";
-import { ReactElement } from "react";
+import react, { ReactElement } from "react";
 
 export interface IHeader {
     title?: string;

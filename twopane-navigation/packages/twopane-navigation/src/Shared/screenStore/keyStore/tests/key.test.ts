@@ -1,7 +1,7 @@
 import { store, resetApp } from "../../../../appStore"
 import { IKeyState } from "../key.interface";
 import { populateKeyStore3, mockKeyState, keyObjectBuilder } from "./key.methods.helpers";
-import { screenType } from "../../../../utilities/interfaces";
+import { paneType } from "../../../../utilities/interfaces";
 import { pushKey, popToFront, popScreen, moveToFront, changeScreen } from "../key.actions";
 
 describe('keyStore tests', () => {
@@ -9,16 +9,16 @@ describe('keyStore tests', () => {
         store.dispatch(resetApp())
     });
 
-    describe('singleScreen', () => {
+    describe('onePane', () => {
 
         it('PUSH_KEY', () => {
             // Arrange
-            const expectedState = mockKeyState(screenType.SINGLE, false, `${screenType.SINGLE}_`);
+            const expectedState = mockKeyState(paneType.ONE, false, `${paneType.ONE}_`);
 
             // Act
-            store.dispatch(pushKey(screenType.SINGLE, `first`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `second`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `third`, false));
+            store.dispatch(pushKey(paneType.ONE, `first`, false));
+            store.dispatch(pushKey(paneType.ONE, `second`, false));
+            store.dispatch(pushKey(paneType.ONE, `third`, false));
             const data = store.getState().KeyReducers;
             // Assert
             expect(data).toStrictEqual(expectedState)
@@ -27,19 +27,19 @@ describe('keyStore tests', () => {
 
         it('PUSH_KEY_EXPECT_DUPLICATION', () => {
             // Arrange
-            const original = mockKeyState(screenType.SINGLE, false, `${screenType.SINGLE}_`);
-            const duplicate = mockKeyState(screenType.SINGLE, false, `${screenType.SINGLE}_`);
+            const original = mockKeyState(paneType.ONE, false, `${paneType.ONE}_`);
+            const duplicate = mockKeyState(paneType.ONE, false, `${paneType.ONE}_`);
             const expectedState: IKeyState = {
                 keys: [...original.keys, ...duplicate.keys]
             }
 
             // Act
-            store.dispatch(pushKey(screenType.SINGLE, `first`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `second`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `third`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `first`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `second`, false));
-            store.dispatch(pushKey(screenType.SINGLE, `third`, false));
+            store.dispatch(pushKey(paneType.ONE, `first`, false));
+            store.dispatch(pushKey(paneType.ONE, `second`, false));
+            store.dispatch(pushKey(paneType.ONE, `third`, false));
+            store.dispatch(pushKey(paneType.ONE, `first`, false));
+            store.dispatch(pushKey(paneType.ONE, `second`, false));
+            store.dispatch(pushKey(paneType.ONE, `third`, false));
             const data = store.getState().KeyReducers;
 
             // Assert
@@ -50,178 +50,178 @@ describe('keyStore tests', () => {
             // Arrange
             const expectedState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE)]
             }
-            populateKeyStore3(screenType.SINGLE, false);
+            populateKeyStore3(paneType.ONE, false);
 
             // Act
-            store.dispatch(popToFront(screenType.SINGLE))
+            store.dispatch(popToFront(paneType.ONE))
             const data = store.getState().KeyReducers;
 
             // Assert
             expect(data).toStrictEqual(expectedState)
         })
 
-        it('POP_TO_FRONT_KEY dualScreen untouched', () => {
+        it('POP_TO_FRONT_KEY twoPane untouched', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE)]
             }
-            const expectedDualState: IKeyState = mockKeyState(screenType.DUAL, false, `${screenType.DUAL}_`)
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.DUAL, false);
+            const expectedTWOState: IKeyState = mockKeyState(paneType.TWO, false, `${paneType.TWO}_`)
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.TWO, false);
 
             // Act
-            store.dispatch(popToFront(screenType.SINGLE))
+            store.dispatch(popToFront(paneType.ONE))
             const data = store.getState().KeyReducers;
-            const singleScreenState = data.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = data.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = data.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = data.keys.filter(x => x.screen === paneType.TWO);
 
             // Assert
-            expect(singleScreenState).toStrictEqual(expectedSingleState.keys)
-            expect(dualScreenState).toStrictEqual(expectedDualState.keys)
+            expect(onePaneState).toStrictEqual(expectedONEState.keys)
+            expect(twoPaneState).toStrictEqual(expectedTWOState.keys)
         })
 
         it('POP_KEY', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_second`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_second`, false, paneType.ONE)]
             }
-            populateKeyStore3(screenType.SINGLE, false);
+            populateKeyStore3(paneType.ONE, false);
 
             // Act
-            store.dispatch(popScreen(screenType.SINGLE))
+            store.dispatch(popScreen(paneType.ONE))
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedSingleState)
+            expect(data).toStrictEqual(expectedONEState)
 
         })
 
         it('POP_KEY Multiple', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE)]
             }
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.SINGLE, false);
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.ONE, false);
 
 
             // Act
-            store.dispatch(popScreen(screenType.SINGLE))
-            store.dispatch(popScreen(screenType.SINGLE))
-            store.dispatch(popScreen(screenType.SINGLE))
-            store.dispatch(popScreen(screenType.SINGLE))
-            store.dispatch(popScreen(screenType.SINGLE))
+            store.dispatch(popScreen(paneType.ONE))
+            store.dispatch(popScreen(paneType.ONE))
+            store.dispatch(popScreen(paneType.ONE))
+            store.dispatch(popScreen(paneType.ONE))
+            store.dispatch(popScreen(paneType.ONE))
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedSingleState)
+            expect(data).toStrictEqual(expectedONEState)
         })
 
 
-        it('POP_KEY dualScreen untouched', () => {
+        it('POP_KEY twoPane untouched', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_second`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_second`, false, paneType.ONE)]
             }
-            const expectedDualState: IKeyState = mockKeyState(screenType.DUAL, false, `${screenType.DUAL}_`);
+            const expectedTWOState: IKeyState = mockKeyState(paneType.TWO, false, `${paneType.TWO}_`);
 
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.DUAL, false);
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.TWO, false);
 
 
             // Act
-            store.dispatch(popScreen(screenType.SINGLE))
+            store.dispatch(popScreen(paneType.ONE))
             const data = store.getState().KeyReducers;
-            const singleScreenState = data.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = data.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = data.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = data.keys.filter(x => x.screen === paneType.TWO);
 
 
 
             // Assert
-            expect(singleScreenState).toStrictEqual(expectedSingleState.keys)
-            expect(dualScreenState).toStrictEqual(expectedDualState.keys)
+            expect(onePaneState).toStrictEqual(expectedONEState.keys)
+            expect(twoPaneState).toStrictEqual(expectedTWOState.keys)
 
         })
 
         it('MOVE_TO_FRONT_KEY', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_second`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_third`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_second`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_third`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE)]
             }
 
             // Act
-            populateKeyStore3(screenType.SINGLE, false);
-            store.dispatch(moveToFront(screenType.SINGLE, `${screenType.SINGLE}_first`));
+            populateKeyStore3(paneType.ONE, false);
+            store.dispatch(moveToFront(paneType.ONE, `${paneType.ONE}_first`));
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedSingleState)
+            expect(data).toStrictEqual(expectedONEState)
         })
 
-        it('MOVE_TO_FRONT_KEY dualScreen untouched', () => {
+        it('MOVE_TO_FRONT_KEY twoPane untouched', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_second`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_third`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_second`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_third`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE)]
             }
-            const expectedDualState: IKeyState = mockKeyState(screenType.DUAL, false, `${screenType.DUAL}_`);
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.DUAL, false);
+            const expectedTWOState: IKeyState = mockKeyState(paneType.TWO, false, `${paneType.TWO}_`);
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.TWO, false);
 
             // Act
-            store.dispatch(moveToFront(screenType.SINGLE, `${screenType.SINGLE}_first`));
+            store.dispatch(moveToFront(paneType.ONE, `${paneType.ONE}_first`));
             const data = store.getState().KeyReducers;
-            const singleScreenState = data.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = data.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = data.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = data.keys.filter(x => x.screen === paneType.TWO);
 
             // Assert
-            expect(singleScreenState).toStrictEqual(expectedSingleState.keys)
-            expect(dualScreenState).toStrictEqual(expectedDualState.keys)
+            expect(onePaneState).toStrictEqual(expectedONEState.keys)
+            expect(twoPaneState).toStrictEqual(expectedTWOState.keys)
 
         })
 
         it('CHANGE_SCREEN_KEY', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.SINGLE}_first`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.SINGLE}_second`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.SINGLE}_third`, false, screenType.SINGLE)]
+                keys: [keyObjectBuilder(`${paneType.ONE}_first`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.ONE}_second`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.ONE}_third`, false, paneType.ONE)]
             }
 
             // Act
-            populateKeyStore3(screenType.SINGLE, false);
-            store.dispatch(changeScreen(screenType.DUAL, `${screenType.SINGLE}_second`));
+            populateKeyStore3(paneType.ONE, false);
+            store.dispatch(changeScreen(paneType.TWO, `${paneType.ONE}_second`));
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedSingleState)
+            expect(data).toStrictEqual(expectedONEState)
         })
     });
 
-    describe('dualScreen', () => {
+    describe('twoPane', () => {
 
         it('PUSH_KEY', () => {
             // Arrange
-            const expectedState = mockKeyState(screenType.DUAL, false, `${screenType.DUAL}_`);
+            const expectedState = mockKeyState(paneType.TWO, false, `${paneType.TWO}_`);
 
             // Act
-            store.dispatch(pushKey(screenType.DUAL, `first`, false));
-            store.dispatch(pushKey(screenType.DUAL, `second`, false));
-            store.dispatch(pushKey(screenType.DUAL, `third`, false));
+            store.dispatch(pushKey(paneType.TWO, `first`, false));
+            store.dispatch(pushKey(paneType.TWO, `second`, false));
+            store.dispatch(pushKey(paneType.TWO, `third`, false));
             const data = store.getState().KeyReducers;
 
             // Assert
@@ -230,19 +230,19 @@ describe('keyStore tests', () => {
 
         it('PUSH_KEY_EXPECT_DUPLICATION', () => {
             // Arrange
-            const original = mockKeyState(screenType.DUAL, false, `${screenType.DUAL}_`);
-            const duplicate = mockKeyState(screenType.DUAL, false, `${screenType.DUAL}_`);
+            const original = mockKeyState(paneType.TWO, false, `${paneType.TWO}_`);
+            const duplicate = mockKeyState(paneType.TWO, false, `${paneType.TWO}_`);
             const expectedState: IKeyState = {
                 keys: [...original.keys, ...duplicate.keys]
             }
 
             // Act
-            store.dispatch(pushKey(screenType.DUAL, `first`, false));
-            store.dispatch(pushKey(screenType.DUAL, `second`, false));
-            store.dispatch(pushKey(screenType.DUAL, `third`, false));
-            store.dispatch(pushKey(screenType.DUAL, `first`, false));
-            store.dispatch(pushKey(screenType.DUAL, `second`, false));
-            store.dispatch(pushKey(screenType.DUAL, `third`, false));
+            store.dispatch(pushKey(paneType.TWO, `first`, false));
+            store.dispatch(pushKey(paneType.TWO, `second`, false));
+            store.dispatch(pushKey(paneType.TWO, `third`, false));
+            store.dispatch(pushKey(paneType.TWO, `first`, false));
+            store.dispatch(pushKey(paneType.TWO, `second`, false));
+            store.dispatch(pushKey(paneType.TWO, `third`, false));
             const data = store.getState().KeyReducers;
 
             // Assert
@@ -253,165 +253,165 @@ describe('keyStore tests', () => {
             // Arrange
             const expectedState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO)]
             }
-            populateKeyStore3(screenType.DUAL, false);
+            populateKeyStore3(paneType.TWO, false);
 
             // Act
-            store.dispatch(popToFront(screenType.DUAL))
+            store.dispatch(popToFront(paneType.TWO))
             const data = store.getState().KeyReducers;
 
             // Assert
             expect(data).toStrictEqual(expectedState)
         })
 
-        it('POP_TO_FRONT_KEY singleScreen untouched', () => {
+        it('POP_TO_FRONT_KEY onePane untouched', () => {
             // Arrange
-            const expectedSingleState: IKeyState = mockKeyState(screenType.SINGLE, false, `${screenType.SINGLE}_`)
-            const expectedDualState: IKeyState = {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL)]
+            const expectedONEState: IKeyState = mockKeyState(paneType.ONE, false, `${paneType.ONE}_`)
+            const expectedTWOState: IKeyState = {
+                keys: [keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO)]
             }
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.DUAL, false);
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.TWO, false);
 
             // Act
-            store.dispatch(popToFront(screenType.DUAL))
+            store.dispatch(popToFront(paneType.TWO))
             const data = store.getState().KeyReducers;
-            const singleScreenState = data.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = data.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = data.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = data.keys.filter(x => x.screen === paneType.TWO);
 
 
             // Assert
-            expect(singleScreenState).toStrictEqual(expectedSingleState.keys)
-            expect(dualScreenState).toStrictEqual(expectedDualState.keys)
+            expect(onePaneState).toStrictEqual(expectedONEState.keys)
+            expect(twoPaneState).toStrictEqual(expectedTWOState.keys)
         })
 
         it('POP_KEY', () => {
             // Arrange
-            const expectedDualState: IKeyState =
+            const expectedTWOState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_second`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_second`, false, paneType.TWO)]
             }
-            populateKeyStore3(screenType.DUAL, false);
+            populateKeyStore3(paneType.TWO, false);
 
             // Act
-            store.dispatch(popScreen(screenType.DUAL))
+            store.dispatch(popScreen(paneType.TWO))
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedDualState)
+            expect(data).toStrictEqual(expectedTWOState)
 
         })
 
         it('POP_KEY Multiple', () => {
             // Arrange
-            const expectedDualState: IKeyState =
+            const expectedTWOState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO)]
             }
-            populateKeyStore3(screenType.DUAL, false);
-            populateKeyStore3(screenType.DUAL, false);
+            populateKeyStore3(paneType.TWO, false);
+            populateKeyStore3(paneType.TWO, false);
 
 
             // Act
-            store.dispatch(popScreen(screenType.DUAL))
-            store.dispatch(popScreen(screenType.DUAL))
-            store.dispatch(popScreen(screenType.DUAL))
-            store.dispatch(popScreen(screenType.DUAL))
-            store.dispatch(popScreen(screenType.DUAL))
+            store.dispatch(popScreen(paneType.TWO))
+            store.dispatch(popScreen(paneType.TWO))
+            store.dispatch(popScreen(paneType.TWO))
+            store.dispatch(popScreen(paneType.TWO))
+            store.dispatch(popScreen(paneType.TWO))
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedDualState)
+            expect(data).toStrictEqual(expectedTWOState)
         })
 
 
-        it('POP_KEY singleScreen untouched', () => {
+        it('POP_KEY onePane untouched', () => {
             // Arrange
-            const expectedSingleState: IKeyState = mockKeyState(screenType.SINGLE, false, `${screenType.SINGLE}_`);
-            const expectedDualState: IKeyState =
+            const expectedONEState: IKeyState = mockKeyState(paneType.ONE, false, `${paneType.ONE}_`);
+            const expectedTWOState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_second`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_second`, false, paneType.TWO)]
             }
 
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.DUAL, false);
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.TWO, false);
 
 
             // Act
-            store.dispatch(popScreen(screenType.DUAL))
+            store.dispatch(popScreen(paneType.TWO))
             const data = store.getState().KeyReducers;
-            const singleScreenState = data.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = data.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = data.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = data.keys.filter(x => x.screen === paneType.TWO);
 
 
 
             // Assert
-            expect(singleScreenState).toStrictEqual(expectedSingleState.keys)
-            expect(dualScreenState).toStrictEqual(expectedDualState.keys)
+            expect(onePaneState).toStrictEqual(expectedONEState.keys)
+            expect(twoPaneState).toStrictEqual(expectedTWOState.keys)
 
         })
 
         it('MOVE_TO_FRONT_KEY', () => {
             // Arrange
-            const expectedDualState: IKeyState =
+            const expectedTWOState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_second`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_third`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_second`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_third`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO)]
             }
 
             // Act
-            populateKeyStore3(screenType.DUAL, false);
-            store.dispatch(moveToFront(screenType.DUAL, `${screenType.DUAL}_first`));
+            populateKeyStore3(paneType.TWO, false);
+            store.dispatch(moveToFront(paneType.TWO, `${paneType.TWO}_first`));
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedDualState)
+            expect(data).toStrictEqual(expectedTWOState)
         })
 
-        it('MOVE_TO_FRONT_KEY singleScreen untouched', () => {
+        it('MOVE_TO_FRONT_KEY onePane untouched', () => {
             // Arrange
-            const expectedDualState: IKeyState =
+            const expectedTWOState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_second`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_third`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_second`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_third`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO)]
             }
-            const expectedSingleState: IKeyState = mockKeyState(screenType.SINGLE, false, `${screenType.SINGLE}_`);
-            populateKeyStore3(screenType.SINGLE, false);
-            populateKeyStore3(screenType.DUAL, false);
+            const expectedONEState: IKeyState = mockKeyState(paneType.ONE, false, `${paneType.ONE}_`);
+            populateKeyStore3(paneType.ONE, false);
+            populateKeyStore3(paneType.TWO, false);
 
             // Act
-            store.dispatch(moveToFront(screenType.DUAL, `${screenType.DUAL}_first`));
+            store.dispatch(moveToFront(paneType.TWO, `${paneType.TWO}_first`));
             const data = store.getState().KeyReducers;
-            const singleScreenState = data.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = data.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = data.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = data.keys.filter(x => x.screen === paneType.TWO);
 
             // Assert
-            expect(singleScreenState).toStrictEqual(expectedSingleState.keys)
-            expect(dualScreenState).toStrictEqual(expectedDualState.keys)
+            expect(onePaneState).toStrictEqual(expectedONEState.keys)
+            expect(twoPaneState).toStrictEqual(expectedTWOState.keys)
         })
 
 
         it('CHANGE_SCREEN_KEY', () => {
             // Arrange
-            const expectedSingleState: IKeyState =
+            const expectedONEState: IKeyState =
             {
-                keys: [keyObjectBuilder(`${screenType.DUAL}_first`, false, screenType.DUAL),
-                keyObjectBuilder(`${screenType.DUAL}_second`, false, screenType.SINGLE),
-                keyObjectBuilder(`${screenType.DUAL}_third`, false, screenType.DUAL)]
+                keys: [keyObjectBuilder(`${paneType.TWO}_first`, false, paneType.TWO),
+                keyObjectBuilder(`${paneType.TWO}_second`, false, paneType.ONE),
+                keyObjectBuilder(`${paneType.TWO}_third`, false, paneType.TWO)]
             }
 
             // Act
-            populateKeyStore3(screenType.DUAL, false);
-            store.dispatch(changeScreen(screenType.SINGLE, `${screenType.DUAL}_second`));
+            populateKeyStore3(paneType.TWO, false);
+            store.dispatch(changeScreen(paneType.ONE, `${paneType.TWO}_second`));
             const data = store.getState().KeyReducers;
 
             // Assert
-            expect(data).toStrictEqual(expectedSingleState)
+            expect(data).toStrictEqual(expectedONEState)
         })
     });
 

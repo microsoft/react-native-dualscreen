@@ -1,13 +1,13 @@
 // components
 
 
-export {default as DualApp} from './components/dualApp/DualApp'
-export {default as ScreenOverlay} from './components/screenOverlay/ScreenOverlay'
+export {default as TwoPaneApp} from './components/twoPaneApp/TwoPaneApp'
+export {default as ScreenOverlay} from './components/paneOverlay/PaneOverlay'
 
 // methods
-export {default as singleScreen} from './singleScreen/singleScreenStore/singleScreen.methods'
-export {default as dualScreen} from './dualScreen/dualScreenStore/dualScreen.methods'
-export {default as autoScreen}from './utilities/auto.methods'
+export {default as onePane} from './onePane/onePaneStore/onePane.methods'
+export {default as twoPane} from './twoPane/twoPaneStore/twoPane.methods'
+export {default as autoPane}from './utilities/autoPane.methods'
 export {default as utility} from './utilities/utility.methods'
 
 /// STORES ///
@@ -26,11 +26,11 @@ export * from './Shared/screenStore/keyStore/key.selector'
 export * from './Shared/screenStore/keyStore/key.types'
 
 // element
-export * from './Shared/screenStore/twoPaneElementStore/twoPaneElement.action'
-export * from './Shared/screenStore/twoPaneElementStore/twoPaneElement.interface'
-export * from './Shared/screenStore/twoPaneElementStore/twoPaneElement.reducer'
-export * from './Shared/screenStore/twoPaneElementStore/twoPaneElement.selectors'
-export * from './Shared/screenStore/twoPaneElementStore/twoPaneElement.types'
+export * from './Shared/screenStore/paneElementStore/paneElement.action'
+export * from './Shared/screenStore/paneElementStore/paneElement.interface'
+export * from './Shared/screenStore/paneElementStore/paneElement.reducer'
+export * from './Shared/screenStore/paneElementStore/paneElement.selectors'
+export * from './Shared/screenStore/paneElementStore/paneElement.types'
 
 // Utility
 export * from './Shared/utilityStore/utilityStore.actions'

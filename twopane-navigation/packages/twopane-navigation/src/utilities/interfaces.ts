@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react';
 import { IHeader } from '../Shared/screenStore/headerStore/header.interface';
 
-export interface IScreenComponent {
+export interface IPaneComponent {
   key: string;
   twoPaneElement: ReactElement;
   header?: IHeader;
-  screen?: screenType;
+  screen?: paneType;
 }
 
-export interface IScreenState {
-  screen: Array<IScreenComponent>;
+export interface IPaneState {
+  screen: Array<IPaneComponent>;
 }
-
 
 export interface IEmptyAction {
   type: string;
@@ -19,7 +18,34 @@ export interface IEmptyAction {
   };
 }
 
-export enum screenType {
-  SINGLE = 'SINGLE',
-  DUAL = 'DUAL'
+export enum paneType {
+  ONE = 'ONE',
+  TWO = 'TWO'
 }
+
+export interface ITwoPaneAppProps {
+  /**
+   * Default element for ONE screen mode
+   */
+  onePaneDefault: IPaneComponent;
+
+  /**
+   * Default element for TWO screen mode
+   */
+  twoPaneDefault: IPaneComponent;
+
+  /**
+   * AppContainer if using React Navigation
+   */
+  navigationContainer?: JSX.Element;
+
+  /**
+   * Items to render in app drawer. If empty, drawer will not be included.
+   */
+  drawerItems?: JSX.Element[];
+}
+
+export interface IPaneHeaderProps extends IHeader {
+}
+
+

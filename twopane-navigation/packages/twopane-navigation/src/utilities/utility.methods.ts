@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { store } from '../appStore';
 
-const isDualScreen = (): boolean => {
-  return store.getState().utilityStoreReducer.isDualScreen
+const isTwoPane = (): boolean => {
+  return store.getState().utilityStoreReducer.isTwoPane
 };
 
 const _utilityFunctions = {
-  isDualScreen,
+  isTwoPane,
 };
 
 type utilityFunctions = typeof _utilityFunctions;

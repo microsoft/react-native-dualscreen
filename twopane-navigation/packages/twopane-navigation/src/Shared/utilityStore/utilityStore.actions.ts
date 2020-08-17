@@ -1,10 +1,10 @@
 import { IUtilityStoreAction } from "./utilityStore.interfaces";
-import { IS_DUALSCREEN } from "./utilityStore.types";
+import { IS_TWOPANE } from "./utilityStore.types";
 
-export const isDualScreenAction = (isDualScreen: boolean):
+export const isTwoPaneAction = (isTwoPane: boolean):
     IUtilityStoreAction => ({
-        type: IS_DUALSCREEN,
+        type: IS_TWOPANE,
         payload: {
-            isDualScreen: isDualScreen
+            isTwoPane: isTwoPane
         }
     });

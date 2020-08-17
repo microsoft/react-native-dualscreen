@@ -1,12 +1,12 @@
 import { store } from "../../appStore";
-import { isDualScreenAction } from "./utilityStore.actions";
+import { isTwoPaneAction } from "./utilityStore.actions";
 
-const isDualScreen = (isDualScreen: boolean) => {
-    store.dispatch(isDualScreenAction(isDualScreen));
+const isTwoPane = (isTwoPane: boolean) => {
+    store.dispatch(isTwoPaneAction(isTwoPane));
 };
 
 const _UtilityFunctions = {
-    isDualScreen,
+    isTwoPane,
 };
 
 type utilityFunctions = typeof _UtilityFunctions;

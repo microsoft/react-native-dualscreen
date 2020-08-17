@@ -1,31 +1,31 @@
 import { IUtilityStoreState } from "../utilityStore.interfaces"
 import { store } from "../../../appStore"
-import { isDualScreenAction } from "../utilityStore.actions"
+import { isTwoPaneAction } from "../utilityStore.actions"
 
 describe('utilityStore reducer tests', () => {
 
-    it('is DualScreen', () => {
+    it('is twoPane', () => {
         // Arrange
         const expectedState: IUtilityStoreState = {
-            isDualScreen: true
+            isTwoPane: true
         }
 
         // Act
-        store.dispatch(isDualScreenAction(true));
+        store.dispatch(isTwoPaneAction(true));
         const data = store.getState().utilityStoreReducer;
 
         // Assert
         expect(data).toStrictEqual(expectedState)
     })
 
-    it('is DualScreen false', () => {
+    it('is twoPane false', () => {
         // Arrange
         const expectedState: IUtilityStoreState = {
-            isDualScreen: false
+            isTwoPane: false
         }
 
         // Act
-        store.dispatch(isDualScreenAction(false));
+        store.dispatch(isTwoPaneAction(false));
         const data = store.getState().utilityStoreReducer;
 
         // Assert

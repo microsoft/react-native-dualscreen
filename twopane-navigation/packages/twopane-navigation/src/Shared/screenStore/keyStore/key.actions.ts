@@ -1,9 +1,9 @@
-import { screenType } from "../../../utilities/interfaces";
+import { paneType } from "../../../utilities/interfaces";
 import { IKeyAction, IScreenOnlyAction, IKeyScreenAction } from "./key.interface";
 import { PUSH_KEY, POP_KEY, MOVE_TO_FRONT_KEY, REMOVE_KEY, CHANGE_SCREEN_KEY, POP_TO_FRONT_KEY } from "./key.types";
 
 export const pushKey = (
-    screen: screenType,
+    screen: paneType,
     key: string,
     isMerge: boolean
 ): IKeyAction => ({
@@ -18,7 +18,7 @@ export const pushKey = (
 /**
  * Removes all elements of the stack and returns element in index 0
  */
-export const popToFront = (screen: screenType): IScreenOnlyAction => ({
+export const popToFront = (screen: paneType): IScreenOnlyAction => ({
     type: POP_TO_FRONT_KEY,
     payload: {
         screen: screen
@@ -29,14 +29,14 @@ export const popToFront = (screen: screenType): IScreenOnlyAction => ({
 /**
  * Go back one element in the stack
  */
-export const popScreen = (screen: screenType): IScreenOnlyAction => ({
+export const popScreen = (screen: paneType): IScreenOnlyAction => ({
     type: POP_KEY,
     payload: {
         screen: screen
     }
 });
 
-export const moveToFront = (screen: screenType,
+export const moveToFront = (screen: paneType,
     key: string
 ): IKeyScreenAction => ({
     type: MOVE_TO_FRONT_KEY,
@@ -46,7 +46,7 @@ export const moveToFront = (screen: screenType,
     }
 });
 
-export const changeScreen = (screen: screenType,
+export const changeScreen = (screen: paneType,
     key: string
 ): IKeyScreenAction => ({
     type: CHANGE_SCREEN_KEY,

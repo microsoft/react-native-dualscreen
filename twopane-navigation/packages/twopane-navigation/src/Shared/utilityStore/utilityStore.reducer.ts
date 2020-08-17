@@ -1,7 +1,7 @@
 import { IUtilityStoreState, IUtilityStoreAction } from "./utilityStore.interfaces";
-import { IS_DUALSCREEN } from './utilityStore.types'
+import { IS_TWOPANE } from './utilityStore.types'
 const initialState: IUtilityStoreState = {
-    isDualScreen: false
+    isTwoPane: false
 };
 
 const utilityStoreReducer = (
@@ -9,9 +9,9 @@ const utilityStoreReducer = (
     action: IUtilityStoreAction
 ): IUtilityStoreState => {
     switch (action.type) {
-        case IS_DUALSCREEN: {
+        case IS_TWOPANE: {
             return {
-                isDualScreen: action.payload.isDualScreen
+                isTwoPane: action.payload.isTwoPane
             };
         }
         default:

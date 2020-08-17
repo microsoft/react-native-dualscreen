@@ -1,10 +1,10 @@
 export interface IUtilityStoreState {
-    isDualScreen: boolean;
+    isTwoPane: boolean;
 }
 
 export interface IUtilityStoreAction {
     type: string;
     payload: {
-        isDualScreen: boolean;
+        isTwoPane: boolean;
     };
 }

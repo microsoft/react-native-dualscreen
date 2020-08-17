@@ -1,4 +1,4 @@
-import { screenType } from "../../../utilities/interfaces";
+import { paneType } from "../../../utilities/interfaces";
 
 export interface IKeyState {
     keys: Array<IKeyObject>;
@@ -7,7 +7,7 @@ export interface IKeyState {
 export interface IKeyAction {
     type: string;
     payload: {
-        screen: screenType,
+        screen: paneType,
         key: string;
         isMerge: boolean;
     };
@@ -23,14 +23,14 @@ export interface IKeyOnlyAction {
 export interface IScreenOnlyAction {
     type: string;
     payload: {
-        screen: screenType;
+        screen: paneType;
     };
 }
 
 export interface IKeyScreenAction {
     type: string;
     payload: {
-        screen: screenType;
+        screen: paneType;
         key: string;
     };
 }
@@ -40,5 +40,5 @@ export interface IKeyScreenAction {
 export interface IKeyObject {
     key: string,
     isMerge: boolean;
-    screen: screenType;
+    screen: paneType;
 }

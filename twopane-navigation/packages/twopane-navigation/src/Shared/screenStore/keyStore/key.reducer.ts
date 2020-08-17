@@ -1,5 +1,5 @@
 import {
-    screenType,
+    paneType,
 } from '../../../utilities/interfaces';
 import { IKeyState, IKeyAction, IKeyObject } from './key.interface';
 import _ from 'lodash';
@@ -26,59 +26,59 @@ const keyReducers = (
             };
         }
         case POP_TO_FRONT_KEY: {
-            const singleScreenState = state.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = state.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = state.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = state.keys.filter(x => x.screen === paneType.TWO);
 
-            if (action.payload.screen === screenType.SINGLE) {
+            if (action.payload.screen === paneType.ONE) {
                 return {
                     ...state, //state retains state for all variables
-                    keys: [singleScreenState[0], ...dualScreenState]
+                    keys: [onePaneState[0], ...twoPaneState]
                 };
             };
 
             return {
                 ...state, //state retains state for all variables
-                keys: [...singleScreenState, dualScreenState[0]]
+                keys: [...onePaneState, twoPaneState[0]]
             };
         }
         case POP_KEY: {
-            const singleScreenState = state.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = state.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = state.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = state.keys.filter(x => x.screen === paneType.TWO);
 
-            if (action.payload.screen === screenType.SINGLE) {
-                singleScreenState.pop();
+            if (action.payload.screen === paneType.ONE) {
+                onePaneState.pop();
             } else {
-                dualScreenState.pop();
+                twoPaneState.pop();
             }
 
             return {
                 ...state,
-                keys: [...singleScreenState, ...dualScreenState]
+                keys: [...onePaneState, ...twoPaneState]
             };
         }
         case MOVE_TO_FRONT_KEY: {
             //TODO: REMOVE LODASH AND CREATE OUR OWN
-            const singleScreenState = state.keys.filter(x => x.screen === screenType.SINGLE);
-            const dualScreenState = state.keys.filter(x => x.screen === screenType.DUAL);
+            const onePaneState = state.keys.filter(x => x.screen === paneType.ONE);
+            const twoPaneState = state.keys.filter(x => x.screen === paneType.TWO);
 
-            if (action.payload.screen === screenType.SINGLE) {
-                const sorted = _.sortBy(singleScreenState, function (item) {
+            if (action.payload.screen === paneType.ONE) {
+                const sorted = _.sortBy(onePaneState, function (item) {
                     return item.key === `${action.payload.key}` ? 1 : 0;
                 });
 
                 return {
                     ...state, //retains state for all variables
-                    keys: [...sorted, ...dualScreenState]
+                    keys: [...sorted, ...twoPaneState]
                 };
             };
 
-            const sorted = _.sortBy(dualScreenState, function (item) {
+            const sorted = _.sortBy(twoPaneState, function (item) {
                 return item.key === `${action.payload.key}` ? 1 : 0;
             });
 
             return {
                 ...state, //retains state for all variables
-                keys: [...singleScreenState, ...sorted]
+                keys: [...onePaneState, ...sorted]
             };
         }
         case CHANGE_SCREEN_KEY: {

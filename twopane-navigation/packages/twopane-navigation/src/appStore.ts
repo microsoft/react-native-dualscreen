@@ -2,7 +2,7 @@ import { combineReducers, createStore } from 'redux';
 
 
 import keyReducers from './Shared/screenStore/keyStore/key.reducer';
-import twoPaneElementReducer from './Shared/screenStore/twoPaneElementStore/twoPaneElement.reducer';
+import PaneElementReducer from './Shared/screenStore/paneElementStore/paneElement.reducer';
 import headerReducer from './Shared/screenStore/headerStore/header.reducer';
 import utilityStoreReducer from './Shared/utilityStore/utilityStore.reducer';
 
@@ -12,7 +12,7 @@ require('./utilities/extensionMethods');
 const rootReducer = combineReducers({
   KeyReducers: keyReducers,
   headerReducer,
-  twoPaneElementReducer,
+  PaneElementReducer,
   utilityStoreReducer
 });
 

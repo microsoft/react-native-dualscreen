@@ -1,6 +1,6 @@
 import { IHeaderAction, IHeader } from "./header.interface";
 import { PUSH_HEADER, REPLACE_HEADER, REMOVE_KEY_HEADER } from "./header.types";
-import { IKeyAction, IKeyOnlyAction } from "../keyStore/key.interface";
+import { IKeyOnlyAction } from "../keyStore/key.interface";
 
 export const pushHeader = (
     key: string,

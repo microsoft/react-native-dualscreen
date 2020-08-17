@@ -11,7 +11,7 @@ This library was built with the idea to work side by side with the react-navigat
 
 ## Getting started
 
-The Dual Navigation library is built around the core concept of viewing each screen on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
+The TWO Navigation library is built around the core concept of viewing each screen on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
 
 This can be seen by the picture below
 ![stack Example](docs/stackExample.png)
@@ -20,64 +20,64 @@ This can be seen by the picture below
 
 coming soon
 
-### Hello Dual Navigation
+### Hello TWO Navigation
 
-- **Dual App** is a component that must be the base for your React Native application and has the following properites
+- **TWO App** is a component that must be the base for your React Native application and has the following properites
 
-  - singleScreen - this will be the base screen you want to show when in single mode
+  - onePane - this will be the base screen you want to show when in ONE mode
 
-  - dualScreen - this will be the base screen you want to show when in dual mode with the singleScreen showing on the other available screen
+  - twoPane - this will be the base screen you want to show when in TWO mode with the onePane showing on the other available screen
 
   - navigationContainer? - AppContainer if using React Navigation
 
-![DualApp Example](docs/DualApp.png)
+![TWOApp Example](docs/TWOApp.png)
 
-Now with our Dual App set up if we open up our app with only one active screen we will see.
+Now with our TWO App set up if we open up our app with only one active screen we will see.
 
-![singleScreen Example](docs/SingleScreenExample.png)
+![onePane Example](docs/onePaneExample.png)
 
 And now if we extend our application to make use of our multi screens we will see
-![dualScreen Example](docs/DualScreenExample.png)
-\*notice how the singleScreen is now showing in the first panel as its own seperate entity
+![twoPane Example](docs/twoPaneExample.png)
+\*notice how the onePane is now showing in the first panel as its own seperate entity
 
 ### Fundamentals
 
 #### Navigating Screens
 
-Now with our Dual App set up we can finally start navigating.
+Now with our TWO App set up we can finally start navigating.
 
 To navigate between screens we have a variety of built-in methods you can call. For purpose of this demonstration we will be introducing you to the core methods you will use during your development journey.
 
 ##### Moving Forward
 
-- (single | dual | auto)screen.Add(element: IScreenComponent) - Push a new screen to the stack of your choosing
+- (ONE | TWO | auto)screen.Add(element: IPaneComponent) - Push a new screen to the stack of your choosing
 
-  - For this example we will be pushing to the dual screen if both screens are active or we will be pushing to the single screen if only using one screen
+  - For this example we will be pushing to the TWO screen if both screens are active or we will be pushing to the ONE screen if only using one screen
 
-    ![dualScreen Example](docs/addingScreenExample.png)
+    ![twoPane Example](docs/addingScreenExample.png)
 
-  - Now if we run our application in dual mode we will see that we have only pushed the new screen to the dualStack
+  - Now if we run our application in TWO mode we will see that we have only pushed the new screen to the TWOStack
 
-    ![dualScreenView Example](docs/addingScreenViewExample.png)
+    ![twoPaneView Example](docs/addingScreenViewExample.png)
 
 ##### Going Back
 
-The header provided by Dual Navigator automatically includes a back button when it is possible to go back from the current screen(if there is only one screen in the stack, there is nothing that you can go back to, and so there is no back button)
+The header provided by TWO Navigator automatically includes a back button when it is possible to go back from the current screen(if there is only one screen in the stack, there is nothing that you can go back to, and so there is no back button)
 
 If you want to programmatically go back we give you the power by calling
 
-- (single | dual | auto)Screen.GoBack() - go back one element in the stack of your choosing
+- (ONE | TWO | auto)Screen.GoBack() - go back one element in the stack of your choosing
   ![goBack Example](docs/GoBackExample.png)
 
 If you have multiple screens in the stack and would like to go back to the very first screen in your stack(defaultScreen) you can call
 
-- (single | dual | auto)Screen.BackToHome() - go back to the base element of the stack
+- (ONE | TWO | auto)Screen.BackToHome() - go back to the base element of the stack
   ![goBackToHome Example](docs/BackToHomeExample.png)
 
 ##### React Navigation
 
-To use React Navigation with the Dual Navigation library is very simple.
-create all the StackNavigators,SwitchNavigators,DrawerNavigators,etc... and pass the appContainer into the navigationContainer prop in our DualApp Component. After that you can access the navigation/route objects with the useNavigation/useRoute hooks.
+To use React Navigation with the TWO Navigation library is very simple.
+create all the StackNavigators,SwitchNavigators,DrawerNavigators,etc... and pass the appContainer into the navigationContainer prop in our TWOApp Component. After that you can access the navigation/route objects with the useNavigation/useRoute hooks.
 
 - In the example we are opening a DrawerNavigator on icon press
   ![NavigationService Example](docs/navigationReferenceExample.PNG)
@@ -90,13 +90,13 @@ Coming Soon
 
 #### Screen Merging
 
-when you want to keep screens through screen transition from single screen to dual screen mode you need to mark the screens you want as mergeable.
+when you want to keep screens through screen transition from ONE screen to TWO screen mode you need to mark the screens you want as mergeable.
 
 to do this is very simple, simply mark isMerge = true when you add your screen to the stack.(defaulted to false)
 
 ![ScreenMerge Code Example](docs/ScreenMergeCodeExample.PNG)
 
-now when we start with a dual screen application and move it to single screen we can easily transition and keep our previous screen 
+now when we start with a TWO screen application and move it to ONE screen we can easily transition and keep our previous screen 
 
 ![ScreenMerge Example](docs/addingScreenViewExample.png)
 ![ScreenMerge Example](docs/ScreenMergeExample.png)
@@ -118,31 +118,31 @@ how to use
 
 #### Screens
 
-singleScreen- will call every action specifically for the singleScreen stack
+onePane- will call every action specifically for the onePane stack
 
-dualScreen - will call every action specifically for the dualScreen stack
+twoPane - will call every action specifically for the twoPane stack
 
-autoScreen - will check to see if the user is currently in singleScreen or DualScreen mode,
+autoPane - will check to see if the user is currently in onePane or twoPane mode,
 and will call the appropriate action the current modes stack.
 
 - Example:
-  If in singleScreen mode will call an action only to the single screen stack.
+  If in onePane mode will call an action only to the ONE screen stack.
 
-  If in dualScreen mode will call an action only to the dual screen stack
+  If in twoPane mode will call an action only to the TWO screen stack
 
 #### Methods
 
-- (single | dual | auto)Screen.Add - Pushes element to the top of the stack
+- (ONE | TWO | auto)Screen.Add - Pushes element to the top of the stack
 
-- (single | dual | auto)Screen.AddOrMoveToFront - Automatically pushes element to the top of stack or if the key is already in the stack,move that key to the top of the stack based on screen size
+- (ONE | TWO | auto)Screen.AddOrMoveToFront - Automatically pushes element to the top of stack or if the key is already in the stack,move that key to the top of the stack based on screen size
 
-- (single | dual | auto)Screen.BackToHome - Removes all elements of the stack and returns the base element of the stack
+- (ONE | TWO | auto)Screen.BackToHome - Removes all elements of the stack and returns the base element of the stack
 
-- (single | dual | auto)Screen.GoBack - Go back one element in the stack
+- (ONE | TWO | auto)Screen.GoBack - Go back one element in the stack
 
-- (single | dual | auto)Screen.ReplaceScreen - Replace the default element for this component
+- (ONE | TWO | auto)Screen.ReplaceScreen - Replace the default element for this component
 
-- (single | dual | auto)Screen.ReplaceHeader - Replace the default header for this component
+- (ONE | TWO | auto)Screen.ReplaceHeader - Replace the default header for this component
 
 #### Hooks
 
