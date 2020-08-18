@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import react from 'react';
 
 import {TwoPaneApp, ITwoPaneAppProps} from "twopane-navigation"
 import { IRestaurantDetails } from './interfaces';

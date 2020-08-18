@@ -12,7 +12,6 @@ module.exports = {
     // Include hoisted modules
     path.resolve(__dirname, '../../node_modules'),
   ],
-
   resolver: {
     extraNodeModules: {
       // Redirect react-native-dualscreeninfo to avoid symlink (metro doesn't like symlinks)
