@@ -11,22 +11,22 @@ This library was built with the idea to work side by side with the react-navigat
 
 ## Getting started
 
-The TWO Navigation library is built around the core concept of viewing each screen on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
+The TwoPane-Navigation library is built around the core concept of viewing each screen on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
 
 This can be seen by the picture below
-![stack Example](docs/stackExample.png)
+![stack Example](src/docs/stackExample.png)
 
 ### installation
 
 coming soon
 
-### Hello TWO Navigation
+### Hello TwoPane-Navigation
 
-- **TWO App** is a component that must be the base for your React Native application and has the following properites
+- **TwoPaneApp** is a component that must be the base for your React Native application and has the following properties
 
-  - onePane - this will be the base screen you want to show when in ONE mode
+  - onePaneDefault - this will be the base screen you want when your application is in onePane View
 
-  - twoPane - this will be the base screen you want to show when in TWO mode with the onePane showing on the other available screen
+  - twoPaneDefault - this will be the base screen you want when your application is in twoPane View
 
   - navigationContainer? - AppContainer if using React Navigation
 

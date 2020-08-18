@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ScreenHeader from '../paneHeader/PaneHeader';
 import { paneHeaderContainerStyles } from './PaneHeaderContainer.style';
-import { IHeader } from '../../Shared/screenStore/headerStore/header.interface';
+import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
 
 interface IPaneHeaderContainerProps {
     isGoBack: boolean;

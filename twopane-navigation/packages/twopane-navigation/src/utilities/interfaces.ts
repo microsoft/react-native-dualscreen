@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { IHeader } from '../Shared/screenStore/headerStore/header.interface';
+import { IHeader } from '../shared/screenStore/headerStore/header.interface';
 
 export interface IPaneComponent {
   key: string;
-  twoPaneElement: ReactElement;
+  paneElement: ReactElement;
   header?: IHeader;
   screen?: paneType;
 }

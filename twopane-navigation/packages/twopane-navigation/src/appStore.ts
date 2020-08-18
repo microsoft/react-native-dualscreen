@@ -1,10 +1,10 @@
 import { combineReducers, createStore } from 'redux';
 
 
-import keyReducers from './Shared/screenStore/keyStore/key.reducer';
-import PaneElementReducer from './Shared/screenStore/paneElementStore/paneElement.reducer';
-import headerReducer from './Shared/screenStore/headerStore/header.reducer';
-import utilityStoreReducer from './Shared/utilityStore/utilityStore.reducer';
+import keyReducers from './shared/screenStore/keyStore/key.reducer';
+import PaneElementReducer from './shared/screenStore/paneElementStore/paneElement.reducer';
+import headerReducer from './shared/screenStore/headerStore/header.reducer';
+import utilityStoreReducer from './shared/utilityStore/utilityStore.reducer';
 
 
 require('./utilities/extensionMethods');

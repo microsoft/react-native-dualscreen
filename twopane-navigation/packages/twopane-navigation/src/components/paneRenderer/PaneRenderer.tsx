@@ -30,7 +30,7 @@ const ScreenRenderer = (props: IScreenRendererProps) => {
                         </View>
                         <View
                             style={ScreenRendererStyles.body}>
-                            {val.twoPaneElement}
+                            {val.paneElement}
                         </View>
                     </View>
                 )

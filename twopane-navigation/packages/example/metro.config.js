@@ -4,17 +4,19 @@
  *
  * @format
  */
+const path = require('path');
 
 module.exports = {
   // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
   watchFolders: [
     // Include hoisted modules
-    path.resolve(__dirname, '../node_modules'),
+    path.resolve(__dirname, '../../node_modules'),
   ],
+
   resolver: {
     extraNodeModules: {
       // Redirect react-native-dualscreeninfo to avoid symlink (metro doesn't like symlinks)
-      'react-native-dualscreeninfo': path.resolve(__dirname, '../../duelscreeninfo'),
+      'react-native-dualscreeninfo': path.resolve(__dirname, '../../dualscreeninfo'),
       'twopane-navigation': path.resolve(__dirname, '../twopane-navigation'),
     }
   },

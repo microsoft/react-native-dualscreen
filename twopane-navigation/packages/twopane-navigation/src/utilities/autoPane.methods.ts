@@ -2,7 +2,7 @@ import utility from './utility.methods';
 import twoPane from '../twoPane/twoPaneStore/twoPane.methods';
 import onePane from '../onePane/onePaneStore/onePane.methods';
 import react, { ReactElement } from 'react';
-import { IHeader } from '../Shared/screenStore/headerStore/header.interface';
+import { IHeader } from '../shared/screenStore/headerStore/header.interface';
 
 
 /**

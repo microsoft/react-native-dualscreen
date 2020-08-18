@@ -17,8 +17,8 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
 
   useEffect(() => {
     if (!hasOnePaneDefault && !hasTwoPaneDefault) {
-      onePane.Add(props.onePaneDefault.key, props.onePaneDefault.twoPaneElement, props?.onePaneDefault?.header!);
-      twoPane.Add(props.twoPaneDefault.key, props.twoPaneDefault.twoPaneElement, props?.twoPaneDefault?.header!);
+      onePane.Add(props.onePaneDefault.key, props.onePaneDefault.paneElement, props?.onePaneDefault?.header!);
+      twoPane.Add(props.twoPaneDefault.key, props.twoPaneDefault.paneElement, props?.twoPaneDefault?.header!);
     }
   }, []);
 

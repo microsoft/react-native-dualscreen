@@ -2,15 +2,15 @@ import React, { useMemo, useEffect } from 'react';
 import { View } from 'react-native';
 import { IPaneComponent } from '../../utilities/interfaces';
 
-import { getPaneElementSelector } from '../../Shared/screenStore/paneElementStore/paneElement.selectors';
-import { getHeaderSelector } from '../../Shared/screenStore/headerStore/header.selector';
-import { IHeaderState } from '../../Shared/screenStore/headerStore/header.interface';
-import { IPaneElementState } from '../../Shared/screenStore/paneElementStore/paneElement.interface';
+import { getPaneElementSelector } from '../../shared/screenStore/paneElementStore/paneElement.selectors';
+import { getHeaderSelector } from '../../shared/screenStore/headerStore/header.selector';
+import { IHeaderState } from '../../shared/screenStore/headerStore/header.interface';
+import { IPaneElementState } from '../../shared/screenStore/paneElementStore/paneElement.interface';
 
 import ScreenRenderer from '../paneRenderer/PaneRenderer';
-import { getScreenKeyState } from '../../Shared/screenStore/keyStore/key.selector';
+import { getScreenKeyState } from '../../shared/screenStore/keyStore/key.selector';
 import { DualScreenInfo, DualScreenInfoPayload } from 'react-native-dualscreeninfo';
-import utilityStore from '../../Shared/utilityStore/utilityStore.methods';
+import utilityStore from '../../shared/utilityStore/utilityStore.methods';
 import onePane from '../../onePane/onePaneStore/onePane.methods';
 import twoPane from '../../twoPane/twoPaneStore/twoPane.methods';
 
@@ -35,7 +35,7 @@ const TwoPaneHub = () => {
     return keyState.keys.map((val, index) => {
       return {
         key: val.key,
-        twoPaneElement: twoPaneElementState.PaneElements[val.key],
+        paneElement: twoPaneElementState.PaneElements[val.key],
         header: headerState.headers[val.key],
         screen: val.screen
       }

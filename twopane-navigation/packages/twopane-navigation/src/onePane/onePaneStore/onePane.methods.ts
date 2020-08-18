@@ -2,12 +2,12 @@ import { store } from '../../appStore';
 import {
   paneType
 } from '../../utilities/interfaces';
-import { pushKey, popToFront, popScreen, moveToFront, changeScreen } from '../../Shared/screenStore/keyStore/key.actions';
-import { pushHeader, replaceHeader, removeHeaderByKey } from '../../Shared/screenStore/headerStore/header.actions';
-import { pushElement, removePaneElementByKey, replacePaneElement } from '../../Shared/screenStore/paneElementStore/paneElement.action';
+import { pushKey, popToFront, popScreen, moveToFront, changeScreen } from '../../shared/screenStore/keyStore/key.actions';
+import { pushHeader, replaceHeader, removeHeaderByKey } from '../../shared/screenStore/headerStore/header.actions';
+import { pushElement, removePaneElementByKey, replacePaneElement } from '../../shared/screenStore/paneElementStore/paneElement.action';
 import { ReactElement } from 'react';
-import { IHeader } from '../../Shared/screenStore/headerStore/header.interface';
-import { IKeyState, IKeyObject } from '../../Shared/screenStore/keyStore/key.interface';
+import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
+import { IKeyState, IKeyObject } from '../../shared/screenStore/keyStore/key.interface';
 
 /**
  * Pushes element to the top of the onePane stack

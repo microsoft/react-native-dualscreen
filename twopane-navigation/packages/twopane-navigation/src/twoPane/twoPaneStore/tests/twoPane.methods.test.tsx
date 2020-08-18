@@ -1,20 +1,20 @@
 import React from 'react'
 import twoPane from '../twoPane.methods';
-import * as keyActions from '../../../Shared/screenStore/keyStore/key.actions';
-import * as headerActions from '../../../Shared/screenStore/headerStore/header.actions';
-import * as paneElementActions from '../../../Shared/screenStore/paneElementStore/paneElement.action';
+import * as keyActions from '../../../shared/screenStore/keyStore/key.actions';
+import * as headerActions from '../../../shared/screenStore/headerStore/header.actions';
+import * as paneElementActions from '../../../shared/screenStore/paneElementStore/paneElement.action';
 
 import { Fragment } from 'react';
-import { IKeyAction, IKeyState } from '../../../Shared/screenStore/keyStore/key.interface';
+import { IKeyAction, IKeyState } from '../../../shared/screenStore/keyStore/key.interface';
 import { paneType } from '../../../utilities/interfaces';
-import { PUSH_KEY } from '../../../Shared/screenStore/keyStore/key.types';
-import { IHeaderAction } from '../../../Shared/screenStore/headerStore/header.interface';
-import { PUSH_HEADER } from '../../../Shared/screenStore/headerStore/header.types';
-import { IPaneElementAction } from '../../../Shared/screenStore/paneElementStore/paneElement.interface';
-import { PUSH_PANE_ELEMENT } from '../../../Shared/screenStore/paneElementStore/paneElement.types';
-import { paneElementActionBuilder } from '../../../Shared/screenStore/paneElementStore/tests/paneElement.methods.helpers';
-import { headerActionBuilder } from '../../../Shared/screenStore/headerStore/tests/header.methods.helpers';
-import { KeyActionBuilder, mockKeyState } from '../../../Shared/screenStore/keyStore/tests/key.methods.helpers';
+import { PUSH_KEY } from '../../../shared/screenStore/keyStore/key.types';
+import { IHeaderAction } from '../../../shared/screenStore/headerStore/header.interface';
+import { PUSH_HEADER } from '../../../shared/screenStore/headerStore/header.types';
+import { IPaneElementAction } from '../../../shared/screenStore/paneElementStore/paneElement.interface';
+import { PUSH_PANE_ELEMENT } from '../../../shared/screenStore/paneElementStore/paneElement.types';
+import { paneElementActionBuilder } from '../../../shared/screenStore/paneElementStore/tests/paneElement.methods.helpers';
+import { headerActionBuilder } from '../../../shared/screenStore/headerStore/tests/header.methods.helpers';
+import { KeyActionBuilder, mockKeyState } from '../../../shared/screenStore/keyStore/tests/key.methods.helpers';
 import { store } from '../../../appStore';
 
 describe('twoPane methods', () => {
