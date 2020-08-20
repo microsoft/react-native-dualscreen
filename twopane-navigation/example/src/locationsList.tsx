@@ -16,7 +16,8 @@ const LocationsList = (props: ILocationsList) => {
         renderItem={({ item }) => (
         <TouchableOpacity onPress={ () =>
             autoPane.AddOrMoveToFront(`${item.name}`,
-              <LocationInformation details={item}/>
+              <LocationInformation details={item}/>,
+              {title: item.city},true,true
               )} >
           <View style={locationListStyles.listItemContainer} >
               <Text style={locationListStyles.listItemTitle}>{item.name}</Text>

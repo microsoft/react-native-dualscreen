@@ -21,6 +21,17 @@ const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: bool
 };
 
 /**
+ * Pushes element to the top of the onePane stack
+ */
+const AddExtended = (key: string, element: ReactElement, header?: IHeader) => {
+  store.dispatch(pushKey(paneType.ONE, key, false, true));
+  store.dispatch(pushElement(`${paneType.ONE}_${key}`, element));
+  if (header) {
+    store.dispatch(pushHeader(`${paneType.ONE}_${key}`, header));
+  }
+};
+
+/**
  * Pushes element to the top of the onePane stack or if the key is already in the stack,
     move that key to the top of the stack 
  */
@@ -94,6 +105,7 @@ const ReplaceHeader = (key: string, header: IHeader) => {
 
 const _onePaneFunctions = {
   Add,
+  AddExtended,
   AddOrMoveToFront,
   mergeToOppositeScreen,
   BackToHome,

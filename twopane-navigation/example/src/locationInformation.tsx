@@ -1,6 +1,9 @@
 import React from 'react';
 import { IRestaurantDetails } from './interfaces';
-import { Text, View, Image, StyleSheet, ScrollView, Button } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { autoPane, onePane } from 'twopane-navigation';
+import ShoppingCart from './shoppingCart';
+import Directions from './directions';
 
 export interface ILocationInformationProps {
     details: IRestaurantDetails;
@@ -47,12 +50,20 @@ const LocationInformation = (props: ILocationInformationProps)  =>{
             <View style={locationInformationStyles.columnRightItem}>
               <View>
                 <View>
-                  <Button title='Order now' color='#D26441' onPress={()=> {console.log('works');}}/>
+                  <Button title='Order now' color='#D26441' 
+                    onPress={()=> autoPane.AddOrMoveToFront(`checkout ${details.name}`,
+                    <ShoppingCart />,
+                    {title: 'Checkout'},
+                    true,true)}/>
                 </View>
-                <View style={locationInformationStyles.getDirectionsView}>
-                  <Image source={require('./images/directions.png')} style={locationInformationStyles.directionsImage}/>
-                  <Text style={locationInformationStyles.getDirections}>Get directions</Text>
-                </View>
+                <TouchableOpacity onPress={()=> onePane.AddExtended(`directions ${details.name}`,
+                    <Directions />,
+                    {title: 'Directions'})}>
+                  <View style={locationInformationStyles.getDirectionsView}>
+                    <Image source={require('./images/directions.png')} style={locationInformationStyles.directionsImage}/>
+                    <Text style={locationInformationStyles.getDirections}>Get directions</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

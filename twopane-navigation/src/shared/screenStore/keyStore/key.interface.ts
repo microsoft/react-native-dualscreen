@@ -10,6 +10,7 @@ export interface IKeyAction {
         screen: paneType,
         key: string;
         isMerge: boolean;
+        isExtended: boolean;
     };
 }
 
@@ -41,4 +42,5 @@ export interface IKeyObject {
     key: string,
     isMerge: boolean;
     screen: paneType;
+    isExtended:boolean;
 }

@@ -37,7 +37,8 @@ const TwoPaneHub = () => {
         key: val.key,
         paneElement: twoPaneElementState.PaneElements[val.key],
         header: headerState.headers[val.key],
-        pane: val.screen
+        pane: val.screen,
+        isExtended: val.isExtended
       }
     })
   }, [keyState, twoPaneElementState, headerState])

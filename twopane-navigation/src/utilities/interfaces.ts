@@ -3,7 +3,8 @@ import { IHeader } from '../shared/screenStore/headerStore/header.interface';
 import { StyleProp, ViewStyle, ColorValue, ScaledSize } from 'react-native';
 
 export interface IPaneComponent extends IBasePaneComponent {
-  pane?: paneType;
+  pane: paneType;
+  isExtended: boolean;
 }
 
 export type Style = StyleProp<ViewStyle>;
@@ -33,7 +34,8 @@ export interface IEmptyAction {
 
 export enum paneType {
   ONE = 'ONE',
-  TWO = 'TWO'
+  TWO = 'TWO',
+  EXTENDED = 'EXTENDED'
 }
 
 export interface ITwoPaneAppProps {

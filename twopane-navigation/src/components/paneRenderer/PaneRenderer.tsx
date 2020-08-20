@@ -19,14 +19,24 @@ const PaneRenderer = (props: IPaneRendererProps) => {
 
     const isGoBackOne = paneComponent.filter(x => x.pane === paneType.ONE).length > 1;
     const isGoBackTwo = paneComponent.filter(x => x.pane === paneType.TWO).length > 1;
+    
+    const paneStyling = (_paneType: paneType, _isExtended:boolean, _paneRects: WindowRect[]) => {
+
+        if(_paneType === paneType.TWO && _paneRects.length > 1){
+            return Object.assign({},twoPaneStyles(paneRects[1]).twoPane, defaultConfig?.twoPane?.paneBody!)
+        } else if (_paneType === paneType.ONE && !_isExtended) {
+            return Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!)
+        } else if (_paneType === paneType.ONE && _isExtended) {
+            return Object.assign({},onePaneStyles(paneRects[0]).extendedPane, defaultConfig?.onePane?.paneBody!)
+        }
+    }
+
     return (
         <Fragment>
             {
                 paneComponent.map((val: IPaneComponent) =>
                     <View key={prependKey + val.key}
-           style={[generalStyles.container,  ((val.pane === paneType.TWO && paneRects.length > 1) ? 
-                            Object.assign({},twoPaneStyles(paneRects[1]).twoPane, defaultConfig?.twoPane?.paneBody!) : 
-                            Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!))]}>
+                        style={[generalStyles.container, paneStyling(val.pane,val.isExtended, paneRects)]}>
                         <View style={generalStyles.header}>
                             <PaneHeaderContainer
                                 isGoBack={(val.pane === paneType.ONE ? isGoBackOne : isGoBackTwo)}
@@ -65,6 +75,11 @@ const onePaneStyles = (paneRects : WindowRect) => StyleSheet.create({
         left: paneRects.x,
         height: paneRects.height,
         width: paneRects.width
+    },
+    extendedPane: {
+        left: paneRects.x,
+        height: paneRects.height,
+        width: paneRects.width * 2
     }
 });
 

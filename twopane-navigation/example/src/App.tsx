@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 
 import { TwoPaneApp, ITwoPaneAppProps }  from 'twopane-navigation';
@@ -20,6 +10,7 @@ const RestaurantDetails: IRestaurantDetails[] =
 [
   {
     name: 'ContosoPizza Seattle Center',
+    city: 'Seattle Center',
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -27,6 +18,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Westlake',
+    city: 'Westlake',
     address: '714 Taylor Ave N',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -34,6 +26,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Pioneer Square',
+    city: 'Pioneer Square',
     address: '112 1st Ave S #100',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -41,6 +34,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Capitol Hill',
+    city: 'Capitol Hill',
     address: '1427 Broadway',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -48,6 +42,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Capitol Hill East',
+    city: 'Capitol Hill East',
     address: 'Mount 2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -55,6 +50,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Bellevue',
+    city: 'Bellevue',
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -62,6 +58,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Redmond',
+    city: 'Redmond',
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -69,6 +66,7 @@ const RestaurantDetails: IRestaurantDetails[] =
   },
   {
     name: 'ContosoPizza Bothell',
+    city: 'Bothell',
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
@@ -100,6 +98,9 @@ const TwoPaneAppDefaultComponents: ITwoPaneAppProps = {
   twoPaneDefault: {
     key: 'restaurantDetails',
     paneElement: <LocationInformation details={RestaurantDetails[0]} />,
+    header : { 
+      title: RestaurantDetails[0].city
+    }
   },
   config: {
     onePane: {

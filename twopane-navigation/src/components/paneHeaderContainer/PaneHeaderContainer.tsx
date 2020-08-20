@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, StyleSheet, Image } from 'react-native';
 import ScreenHeader from '../paneHeader/PaneHeader';
 import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
 import { Style } from '../../utilities/interfaces';
@@ -28,7 +27,7 @@ const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
                         screenHeader?.leftIcon ? (
                             screenHeader?.leftIcon
                         ) : (
-                                <Icon name={'arrow-back'} color={'#F2F2F2'} size={20} />
+                            <Image source={require('../images/back.png')} style={{width: 30, height: 30, tintColor: 'white'}}/>
                             )
                     }
                     IconPress={

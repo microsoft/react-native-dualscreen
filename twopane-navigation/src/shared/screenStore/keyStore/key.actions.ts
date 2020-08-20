@@ -5,13 +5,15 @@ import { PUSH_KEY, POP_KEY, MOVE_TO_FRONT_KEY, REMOVE_KEY, CHANGE_SCREEN_KEY, PO
 export const pushKey = (
     screen: paneType,
     key: string,
-    isMerge: boolean
+    isMerge: boolean,
+    isExtended: boolean = false
 ): IKeyAction => ({
     type: PUSH_KEY,
     payload: {
         screen: screen,
         key: key,
-        isMerge: isMerge
+        isMerge: isMerge,
+        isExtended: isExtended
     }
 });
 
