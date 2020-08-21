@@ -8,3 +8,11 @@ export interface IRestaurantDetails {
     storeHours: string;
     deliveryHours: string;
 }
+
+export interface IMenuItem {
+    name: string,
+    size: pizzaSize,
+    price: number
+}
+
+export type pizzaSize = 'SMALL' | 'MEDIUM' | 'LARGE';

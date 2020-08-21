@@ -2,7 +2,7 @@ import React from 'react';
 import { IRestaurantDetails } from './interfaces';
 import { Text, View, Image, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
 import { autoPane, onePane } from 'twopane-navigation';
-import ShoppingCart from './shoppingCart';
+import Menu from './menu';
 import Directions from './directions';
 
 export interface ILocationInformationProps {
@@ -50,10 +50,10 @@ const LocationInformation = (props: ILocationInformationProps)  =>{
             <View style={locationInformationStyles.columnRightItem}>
               <View>
                 <View>
-                  <Button title='Order now' color='#D26441' 
-                    onPress={()=> autoPane.Add(`checkout ${details.name}`,
-                    <ShoppingCart />,
-                    undefined,
+                  <Button title='View Menu' color='#D26441' 
+                    onPress={()=> autoPane.Add(`menu ${details.name}`,
+                    <Menu />,
+                    {title: 'Menu'},
                     true,true)}/>
                 </View>
                 <TouchableOpacity onPress={()=> onePane.AddExtended(`directions ${details.name}`,

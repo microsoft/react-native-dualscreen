@@ -1,6 +1,6 @@
 import React, { Fragment} from 'react';
 
-import {
+import ReactNativeComponentTree, {
   View, ViewStyle, StyleProp,
 } from 'react-native';
 import { PaneOverlayStyles } from './PaneOverlay.styles';
@@ -25,7 +25,7 @@ interface IPaneOverlayProps {
    /**
    * Callback when user touches the backdrop
    */
-    onBackdropPress?:()=> void;
+    onBackdropPress:()=> void;
 }
 
 const PaneOverlay = (props: IPaneOverlayProps) => {
@@ -33,21 +33,21 @@ const PaneOverlay = (props: IPaneOverlayProps) => {
     <Fragment>
       {props.isVisible && (
         <View
-          style={[PaneOverlayStyles.backdrop, props.backdropStyle]}
+          style={[PaneOverlayStyles.backdrop, props?.backdropStyle!]}
             onTouchEndCapture={event => {
               //check if we are clicking ourselves or a different component
               if (
-                String(event.currentTarget) === String(event.nativeEvent.target)
+                String(ReactNativeComponentTree.findNodeHandle(event.currentTarget)) === String(event.nativeEvent.target)
               ) {
-                if(props?.onBackdropPress)
+                if(props.onBackdropPress)
                 {
-                  props?.onBackdropPress!();
+                  props.onBackdropPress();
                 }
               }
             }}>
             <View
               pointerEvents={'box-none'}
-              style={[PaneOverlayStyles.overlay, props.overlayStyle]}>
+              style={[PaneOverlayStyles.overlay, props?.overlayStyle!]}>
               {props.children}
             </View>
           </View>
