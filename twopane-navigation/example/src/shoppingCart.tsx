@@ -6,7 +6,7 @@ export interface IShoppingCartProps {
 
 const ShoppingCart = (props: IShoppingCartProps) => {
   return (
-    <Text>HELLO WORLD FROM SHOPPING CART</Text>
+    <Text>HELLO WORLD FROM SHOPPING CART{Math.random()}</Text>
   );
 }
 

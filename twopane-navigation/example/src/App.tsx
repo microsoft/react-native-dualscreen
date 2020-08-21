@@ -74,7 +74,6 @@ const RestaurantDetails: IRestaurantDetails[] =
   }
 ]
 
-
 const App = () => {
   return (
   <TwoPaneApp 

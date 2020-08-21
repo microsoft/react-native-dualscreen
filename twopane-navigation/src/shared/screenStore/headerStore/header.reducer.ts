@@ -37,7 +37,10 @@ const headerReducer = (
         case REMOVE_KEY_HEADER: {
             // using delete over lodash.omit to reduce dependencies on external libraries
             const newData = state;
-            delete newData.headers[action.payload.key];
+            if(newData.headers[action.payload.key])
+            {
+                delete newData.headers[action.payload.key];
+            }
             return { ...newData }
         }
         default:

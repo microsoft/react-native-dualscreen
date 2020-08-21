@@ -51,9 +51,9 @@ const LocationInformation = (props: ILocationInformationProps)  =>{
               <View>
                 <View>
                   <Button title='Order now' color='#D26441' 
-                    onPress={()=> autoPane.AddOrMoveToFront(`checkout ${details.name}`,
+                    onPress={()=> autoPane.Add(`checkout ${details.name}`,
                     <ShoppingCart />,
-                    {title: 'Checkout'},
+                    undefined,
                     true,true)}/>
                 </View>
                 <TouchableOpacity onPress={()=> onePane.AddExtended(`directions ${details.name}`,

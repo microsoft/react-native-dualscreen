@@ -35,7 +35,6 @@ export interface IEmptyAction {
 export enum paneType {
   ONE = 'ONE',
   TWO = 'TWO',
-  EXTENDED = 'EXTENDED'
 }
 
 export interface ITwoPaneAppProps {

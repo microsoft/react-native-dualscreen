@@ -15,18 +15,18 @@ exports[`DualApp Tests should render singleScreen 1`] = `
       style={
         Array [
           Object {
-            "backgroundColor": "black",
             "bottom": 0,
+            "color": "black",
             "flex": 1,
-            "height": 720,
             "left": 0,
             "position": "absolute",
             "right": 0,
             "top": 0,
-            "width": 540,
           },
           Object {
+            "height": 720,
             "left": 0,
+            "width": 540,
           },
         ]
       }
@@ -54,10 +54,13 @@ exports[`DualApp Tests should render singleScreen 1`] = `
                   "flexDirection": "row",
                   "justifyContent": "flex-start",
                 },
-                Object {
-                  "backgroundColor": "#212121",
-                  "paddingHorizontal": 25,
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#212121",
+                    "paddingHorizontal": 25,
+                  },
+                  undefined,
+                ],
               ]
             }
           >
@@ -88,18 +91,18 @@ exports[`DualApp Tests should render singleScreen 1`] = `
       style={
         Array [
           Object {
-            "backgroundColor": "black",
             "bottom": 0,
+            "color": "black",
             "flex": 1,
-            "height": 720,
             "left": 0,
             "position": "absolute",
             "right": 0,
             "top": 0,
-            "width": 540,
           },
           Object {
-            "left": 570,
+            "height": 720,
+            "left": 573.6,
+            "width": 540,
           },
         ]
       }
@@ -127,10 +130,13 @@ exports[`DualApp Tests should render singleScreen 1`] = `
                   "flexDirection": "row",
                   "justifyContent": "flex-start",
                 },
-                Object {
-                  "backgroundColor": "#212121",
-                  "paddingHorizontal": 25,
-                },
+                Array [
+                  Object {
+                    "backgroundColor": "#212121",
+                    "paddingHorizontal": 25,
+                  },
+                  undefined,
+                ],
               ]
             }
           >

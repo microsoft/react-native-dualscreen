@@ -9,38 +9,51 @@ import { ReactElement } from 'react';
 import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
 import { IKeyState, IKeyObject } from '../../shared/screenStore/keyStore/key.interface';
 
+const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false, isExtended:boolean = false) => {
+    store.dispatch(pushKey(paneType.ONE, key, isMerge, isExtended));
+    store.dispatch(pushElement(`${paneType.ONE}_${key}`, element));
+    if (header) {
+      store.dispatch(pushHeader(`${paneType.ONE}_${key}`, header));
+    }
+}
 /**
- * Pushes element to the top of the onePane stack
+ * Pushes element to the top of the onePane stack or replaces the original with the new element
  */
 const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
-  store.dispatch(pushKey(paneType.ONE, key, isMerge));
-  store.dispatch(pushElement(`${paneType.ONE}_${key}`, element));
-  if (header) {
-    store.dispatch(pushHeader(`${paneType.ONE}_${key}`, header));
+  const keys: IKeyState = store.getState().KeyReducers;
+  const index = keys.keys.findIndex(val => val.key === `${paneType.ONE}_${key}`);
+  if(index > -1) {
+    //remove old entry
+    store.dispatch(removeHeaderByKey(keys.keys[index].key))
+    store.dispatch(removePaneElementByKey(keys.keys[index].key))
+    
+    // push new entry
+    store.dispatch(pushElement(`${paneType.ONE}_${key}`, element));
+    if (header) {
+      store.dispatch(pushHeader(`${paneType.ONE}_${key}`, header));
+    }
+    store.dispatch(moveToFront(paneType.ONE, `${paneType.ONE}_${key}`));
+  } else {
+    AddPaneElement(key, element, header, isMerge)
   }
 };
 
 /**
- * Pushes element to the top of the onePane stack
+ * Pushes element to the top of the onePane stack or moves the original to the top of the stack
  */
 const AddExtended = (key: string, element: ReactElement, header?: IHeader) => {
-  store.dispatch(pushKey(paneType.ONE, key, false, true));
-  store.dispatch(pushElement(`${paneType.ONE}_${key}`, element));
-  if (header) {
-    store.dispatch(pushHeader(`${paneType.ONE}_${key}`, header));
-  }
+    AddPaneElement(key, element, header, false, true)
 };
 
 /**
- * Pushes element to the top of the onePane stack or if the key is already in the stack,
-    move that key to the top of the stack 
+ * Pushes element to the top of the onePane stack or moves the original to the top of the stack
  */
 const AddOrMoveToFront = (key: string, element: React.ReactElement, header?: IHeader, isMerge: boolean = false) => {
   const keys: IKeyState = store.getState().KeyReducers;
   const onePaneState: IKeyObject[] = keys.keys.filter(x => x.screen === paneType.ONE)
 
   if (!onePaneState.some(val => val.key === `${paneType.ONE}_${key}`)) {
-    Add(key, element, header, isMerge)
+    AddPaneElement(key, element, header, isMerge)
   } else {
     store.dispatch(moveToFront(paneType.ONE, `${paneType.ONE}_${key}`));
   }

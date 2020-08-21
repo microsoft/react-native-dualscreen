@@ -2,12 +2,13 @@ import React, { Fragment } from 'react';
 import DualApp from '../twoPaneApp';
 import { IPaneComponent } from '../../../utilities/interfaces';
 import { render, toJSON } from '@testing-library/react-native';
+import * as dsInfo from 'react-native-dualscreeninfo';
 
 describe('DualApp Tests', () => {
     it('should render singleScreen', () => {
         // Arrange
         jest.useFakeTimers();
-        
+
         const _onePaneDefault: IPaneComponent = {
             key: 'singleDefault',
             paneElement: <Fragment />,

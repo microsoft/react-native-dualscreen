@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, Fragment, useRef } from 'react';
 import { View } from 'react-native';
 import { IPaneComponent } from '../../utilities/interfaces';
 
@@ -20,7 +20,7 @@ const TwoPaneHub = () => {
   const headerState: IHeaderState = getHeaderSelector();
 
   const keyState = getScreenKeyState();
-  const [paneRects, setPaneRects] = useState<WindowRect[]>(DualScreenInfo.windowRects);
+  const [paneRects, setPaneRects] = useState<WindowRect[]>([] as WindowRect[]);
 
   useEffect(() => {
     utilityStore.isTwoPane(DualScreenInfo.isSpanning)
@@ -45,41 +45,29 @@ const TwoPaneHub = () => {
 
   const _handleSpanningChanged = (update: DualScreenInfoPayload) => {
     utilityStore.isTwoPane(update.isSpanning)
+
     if (update.isSpanning) {
       if(paneRects.length < 2)
       {
-        setPaneRects(DualScreenInfo.windowRects)
+        setPaneRects(update.windowRects)
       }
       onePane.mergeToOppositeScreen();
     } else {
+    if(paneRects.length < 1) {
+      setPaneRects(update.windowRects)
+    }
       twoPane.mergeToOppositeScreen();
     }
   };
 
-
-  const fakeWindowRect: WindowRect[] = [
-    {
-      x: 0,
-      y: 0,
-      width: 540,
-      height: 720
-    },
-    {
-      x: 573.6,
-      y: 0,
-      width: 540,
-      height: 720
-    }
-  ]
-
-
   return (
-    <View>
-      <PaneRenderer
-        prependKey={''}
-        paneComponent={screenStack} 
-        paneRects={fakeWindowRect}/>
-    </View>
+    <Fragment>
+      { paneRects.length > 0 &&
+        <PaneRenderer
+          paneComponent={screenStack} 
+          paneRects={paneRects}/>
+      }
+    </Fragment>
 
   );
 };

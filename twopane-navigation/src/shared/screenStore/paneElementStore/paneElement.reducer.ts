@@ -37,7 +37,10 @@ const PaneElementReducer = (
         case REMOVE_KEY_PANE_ELEMENT: {
             // using delete over lodash.omit to reduce dependencies on external libraries
             const newData = state;
-            delete newData.PaneElements[action.payload.key];
+            if(newData.PaneElements[action.payload.key])
+            {
+                delete newData.PaneElements[action.payload.key];
+            }
             return { ...newData }
         }
         default:

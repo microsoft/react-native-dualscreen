@@ -7,29 +7,49 @@ import { pushHeader, replaceHeader, removeHeaderByKey } from '../../shared/scree
 import { pushElement, removePaneElementByKey, replacePaneElement } from '../../shared/screenStore/paneElementStore/paneElement.action';
 import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
 import { IKeyState, IKeyObject } from '../../shared/screenStore/keyStore/key.interface';
+import { ReactElement } from 'react';
+
+
+const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
+    store.dispatch(pushKey(paneType.TWO, key, isMerge));
+    store.dispatch(pushElement(`${paneType.TWO}_${key}`, element));
+    if (header) {
+      store.dispatch(pushHeader(`${paneType.TWO}_${key}`, header));
+    }
+}
 
 /**
- * Pushes element to the top of the Twopane stack.
+ * Pushes element to the top of the twoPane stack or replaces the original with the new element
  */
-const Add = (key: string, element: React.ReactElement, header?: IHeader, isMerge: boolean = false) => {
-
-  store.dispatch(pushKey(paneType.TWO, key, isMerge));
-  store.dispatch(pushElement(`${paneType.TWO}_${key}`, element));
-  if (header) {
-    store.dispatch(pushHeader(`${paneType.TWO}_${key}`, header));
+const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
+  const keys: IKeyState = store.getState().KeyReducers;
+  const index = keys.keys.findIndex(val => val.key === `${paneType.TWO}_${key}`);
+  if(index > -1) {
+    //remove old entry
+    store.dispatch(removeHeaderByKey(keys.keys[index].key))
+    store.dispatch(removePaneElementByKey(keys.keys[index].key))
+    
+    // push new entry
+    store.dispatch(pushElement(`${paneType.TWO}_${key}`, element));
+    if (header) {
+      store.dispatch(pushHeader(`${paneType.TWO}_${key}`, header));
+    }
+    store.dispatch(moveToFront(paneType.TWO, `${paneType.TWO}_${key}`));
+  
+  } else {
+    AddPaneElement(key, element, header, isMerge)
   }
 };
 
 /**
- * Pushes element to the top of the twopane stack or if the key is already in the stack,
-    move that key to the top of the stack 
+ * Pushes element to the top of the twoPane stack or moves the original to the top of the stack
  */
-const AddOrMoveToFront = (key: string, element: React.ReactElement, header?: IHeader, isMerge: boolean = false,) => {
+const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false,) => {
   const keys: IKeyState = store.getState().KeyReducers;
   const twoPaneState: IKeyObject[] = keys.keys.filter(x => x.screen === paneType.TWO)
 
   if (!twoPaneState.some(val => val.key === `${paneType.TWO}_${key}`)) {
-    Add(key, element, header, isMerge)
+    AddPaneElement(key, element, header, isMerge)
   } else {
     store.dispatch(moveToFront(paneType.TWO, `${paneType.TWO}_${key}`));
   }
@@ -78,7 +98,7 @@ const GoBack = () => {
 /**
  * Replace the current element for this twoPane component
  */
-const ReplaceScreen = (key: string, element: React.ReactElement) => {
+const ReplaceScreen = (key: string, element: ReactElement) => {
   store.dispatch(replacePaneElement(`${paneType.TWO}_${key}`, element))
 }
 
