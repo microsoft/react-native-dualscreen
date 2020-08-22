@@ -51,12 +51,12 @@ const TwoPaneHub = () => {
       {
         setPaneRects(update.windowRects)
       }
-      onePane.mergeToOppositeScreen();
+      onePane.mergeToOppositePane();
     } else {
     if(paneRects.length < 1) {
       setPaneRects(update.windowRects)
     }
-      twoPane.mergeToOppositeScreen();
+      twoPane.mergeToOppositePane();
     }
   };
 
