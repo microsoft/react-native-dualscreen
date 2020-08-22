@@ -256,19 +256,19 @@ describe('autoPane methods', () => {
         });
 
 
-        it('ReplaceScreen', () => {
+        it('ReplacePane', () => {
             // Arrange
             const onePaneReplaceHeaderSpy = jest.spyOn(
                 onePane,
-                'ReplaceScreen'
+                'ReplacePane'
             );
             const twoPaneReplaceHeaderSpy = jest.spyOn(
                 twoPane,
-                'ReplaceScreen'
+                'ReplacePane'
             );
 
             // Act
-            autoPane.ReplaceScreen('test', <Fragment />);
+            autoPane.ReplacePane('test', <Fragment />);
 
             // Assert
             expect(twoPaneReplaceHeaderSpy).toBeCalled();
