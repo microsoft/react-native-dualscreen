@@ -55,9 +55,9 @@ const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, 
   }
 }
 /**
- * when the app screen size changes move screens marked as isMerged to onePane
+ * when the apps active panes changes move panes marked as isMerged to onePane
  */
-const mergeToOppositeScreen = () => {
+const mergeToOppositePane = () => {
   const keys: IKeyState = store.getState().KeyReducers;
   keys.keys.map(val => {
     if (val.screen === paneType.TWO && val.isMerge) {
@@ -98,7 +98,7 @@ const GoBack = () => {
 /**
  * Replace the current element for this twoPane component
  */
-const ReplaceScreen = (key: string, element: ReactElement) => {
+const ReplacePane = (key: string, element: ReactElement) => {
   store.dispatch(replacePaneElement(`${paneType.TWO}_${key}`, element))
 }
 
@@ -112,10 +112,10 @@ const ReplaceHeader = (key: string, header: IHeader) => {
 const _twoPaneFunctions = {
   Add,
   AddOrMoveToFront,
-  mergeToOppositeScreen,
+  mergeToOppositePane,
   BackToHome,
   GoBack,
-  ReplaceScreen,
+  ReplacePane,
   ReplaceHeader,
 };
 

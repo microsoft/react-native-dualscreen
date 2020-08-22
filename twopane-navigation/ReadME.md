@@ -7,142 +7,297 @@
 TwoPane-Navigation library is built for React Native developers working on
 multi-screen phones and devices.
 
-This library was built with the idea to work side by side with the react-navigation library or work on its own as a replacement. This allows you, the developer, to have a flexible and premium experience to help pioneer the new wave of multi-screen device applications.
+This library was built with the idea to work side by side with the react-navigation library or work on its own as a replacement. This allows you, the developer, to have a flexible and premium experience one requires to help pioneer the new wave of multi-screen device applications.
+
+## Status
+
+- Android:
+  - 10+
+- react-native:
+  - supported versions "<strong>&gt;= 0.60.5</strong>"
+
+
+## Prerequisites
+react-native-twopaneview depends on the [react-native-dualscreeninfo](https://www.npmjs.com/package/react-native-dualscreeninfo) module.  Please first install react-native-dualscreeninfo.  
+
+`$ npm install react-native-dualscreeninfo`
+
+Also, make sure to carefully follow the installation instructions to modify your Android project, otherwise your TwoPaneView control won't be very happy on a dual screen device!
+
+## Installation
+
+`$ npm install twopane-navigation`
 
 ## Getting started
 
-The TwoPane-Navigation library is built around the core concept of viewing each screen on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
+The TwoPane-Navigation library is built around the core concept of viewing each pane(screen) on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
 
 This can be seen by the picture below
 ![stack Example](src/docs/stackExample.png)
 
-### installation
-
-coming soon
 
 ### Hello TwoPane-Navigation
 
 - **TwoPaneApp** is a component that must be the base for your React Native application and has the following properties
 
-  - onePaneDefault - this will be the base screen you want when your application is in onePane View
+  - onePaneDefault - this will be the base pane you want when your application is in onePane View
 
-  - twoPaneDefault - this will be the base screen you want when your application is in twoPane View
+  - twoPaneDefault - this will be the base pane you want when your application is in twoPane View
+
+  - config? - override default values for your application
 
   - navigationContainer? - AppContainer if using React Navigation
 
-![TWOApp Example](docs/TWOApp.png)
+```
+const App = () => {
+  return (
+    <TwoPaneApp 
+      onePaneDefault={TwoPaneAppDefaultComponents.onePaneDefault}
+      twoPaneDefault={TwoPaneAppDefaultComponents.twoPaneDefault}
+      config ={TwoPaneAppDefaultComponents.config}
+    />
+  );
+};
+```
 
-Now with our TWO App set up if we open up our app with only one active screen we will see.
 
-![onePane Example](docs/onePaneExample.png)
+```
+const TwoPaneAppDefaultComponents: ITwoPaneAppProps = {
+  onePaneDefault:{
+    key: 'onePane',
+    paneElement: <OnePane/>,
+    header: {
+      title: 'OnePaneTitle'
+    }
+
+  },
+  twoPaneDefault: {
+    key: 'twoPane',
+    paneElement: <TwoPane} />,
+    header : { 
+      title: 'OnePane Title'
+    }
+  },
+  config: {
+    onePane: {
+      paneHeader: {
+        backgroundColor: 'gray'
+      },
+      paneBody:{
+        backgroundColor: 'black'
+      }
+    },
+    twoPane: {
+      paneHeader: {
+        backgroundColor: 'gray'
+      },
+      paneBody:{
+        backgroundColor: 'black'
+      }
+      paneHeaderText: {
+        color: 'red'
+      },
+      paneHeaderIcon: {
+        tintColor: 'red'
+      }
+    }
+  }
+}
+```
+
+Now with our TWO App set up if we open up our app with only one active pane we will see.
+
+![onePane Example](./src/docs/onePaneExample.png)
 
 And now if we extend our application to make use of our multi screens we will see
-![twoPane Example](docs/twoPaneExample.png)
-\*notice how the onePane is now showing in the first panel as its own seperate entity
 
-### Fundamentals
+![twoPane Example](./src/docs/twoPaneExample.png)
 
-#### Navigating Screens
+- Notice in twoPane how our header text is red. this is because we did an override on our default text color in our config when we set up our app
+- Notice how the onePane is now showing in the first panel as its own separate entity
 
-Now with our TWO App set up we can finally start navigating.
 
-To navigate between screens we have a variety of built-in methods you can call. For purpose of this demonstration we will be introducing you to the core methods you will use during your development journey.
+# Fundamentals
 
-##### Moving Forward
+## __Navigating Panes__
 
-- (ONE | TWO | auto)screen.Add(element: IPaneComponent) - Push a new screen to the stack of your choosing
+Now with our twopane-navigation App setup we can finally start navigating.
 
-  - For this example we will be pushing to the TWO screen if both screens are active or we will be pushing to the ONE screen if only using one screen
+To navigate between panes we have a variety of built-in methods one can call. For purpose of this demonstration we will be introducing you to the core methods one will be using during your development journey.
 
-    ![twoPane Example](docs/addingScreenExample.png)
+### Moving Forward
 
-  - Now if we run our application in TWO mode we will see that we have only pushed the new screen to the TWOStack
+- (one | two | auto)Pane.Add(key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false) - Pushes element to the top of the stack or replaces the original with the new element
 
-    ![twoPaneView Example](docs/addingScreenViewExample.png)
+  - For this example we will be pushing to twoPane if both panes are active or we will be pushing to the onePane if only using one pane
 
-##### Going Back
+ ```
+  autoPane.Add(
+    'exampleScreen',
+    <NextExampleScreen/>,
+    header: {
+      title: 'NextExampleScreen'
+    },
+    true,
+    true) 
+```
 
-The header provided by TWO Navigator automatically includes a back button when it is possible to go back from the current screen(if there is only one screen in the stack, there is nothing that you can go back to, and so there is no back button)
+  - Now if we run our application in twoPane mode we will see that we have only pushed the new screen to the twoPane Stack
+
+    ![twoPaneView Example](./src/docs/addingPaneExample.png)
+- Notice in twoPane how our header icon is red. this is because we did an override on our default text color in our config when we set up our app
+
+### Going Back
+
+The header provided by twoPane-navigation automatically includes a back button when it is possible to go back from the current pane(if there is only one pane in the stack, there is nothing that you can go back to, and so there is no back button)
 
 If you want to programmatically go back we give you the power by calling
 
-- (ONE | TWO | auto)Screen.GoBack() - go back one element in the stack of your choosing
-  ![goBack Example](docs/GoBackExample.png)
+- (ONE | TWO | auto)Pane.GoBack() - go back one element in the stack of your choosing
+```
+<TouchableOpacity
+  onPress{() => onePane.GoBack()}>
+  <Text>Press me to go back in our onePane Stack</Text>
+</TouchableOpacity>
+```
 
-If you have multiple screens in the stack and would like to go back to the very first screen in your stack(defaultScreen) you can call
+If you have multiple panes in the stack and would like to go back to the very first pane in your stack(defaultPane) you can call
 
-- (ONE | TWO | auto)Screen.BackToHome() - go back to the base element of the stack
-  ![goBackToHome Example](docs/BackToHomeExample.png)
+- (ONE | TWO | auto)Pane.BackToHome() - Removes all elements of the stack and returns the base element of the stack
+```
+<TouchableOpacity
+  onPress{() => onePane.BackToHome()}>
+  <Text> Press me to go back to our default pane in our onePane Stack </Text>
+</TouchableOpacity>
+```
 
-##### React Navigation
+### React Navigation
 
-To use React Navigation with the TWO Navigation library is very simple.
-create all the StackNavigators,SwitchNavigators,DrawerNavigators,etc... and pass the appContainer into the navigationContainer prop in our TWOApp Component. After that you can access the navigation/route objects with the useNavigation/useRoute hooks.
+To use React Navigation with the twopane-navigation library is very simple.
+create all the StackNavigators,SwitchNavigators,DrawerNavigators,etc... and pass the appContainer into the navigationContainer prop in our TwoPaneApp Component. After that you can access the navigation/route objects with the useNavigation/useRoute hooks.
 
-- In the example we are opening a DrawerNavigator on icon press
-  ![NavigationService Example](docs/navigationReferenceExample.PNG)
+```
+const App = () => {
+  return (
+    <TwoPaneApp 
+      onePaneDefault={TwoPaneAppDefaultComponents.onePaneDefault}
+      twoPaneDefault={TwoPaneAppDefaultComponents.twoPaneDefault}
+      config ={TwoPaneAppDefaultComponents.config}
+      navigationContainer={AppContainer()}
+    />
+  );
+};
+```
 
-##### Header customization
+### Header Customization
 
-Coming Soon
+When you want to customize your header to add a button and more just call the ReplaceHeader method for the pane you want to replace
 
-### Advanced
+- (ONE | TWO | auto)Pane.BackToHome() - Removes all elements of the stack and returns the base element of the stack
 
-#### Screen Merging
+```
+    onePane.ReplaceHeader(
+      'exampleScreen',
+      {
+        leftIcon: <CommIcon size={20} name={'menu'} color={'#F2F2F2'} />,
+        IconPress: () => {CustomMethod()}
+      }
+    );
+```
 
-when you want to keep screens through screen transition from ONE screen to TWO screen mode you need to mark the screens you want as mergeable.
+## __Advanced__
+
+### Pane Merging
+
+when you want to keep panes through pane transition from onePane to twoPane mode you need to mark the screens you want as isMergeOne or isMergeTwo.
 
 to do this is very simple, simply mark isMerge = true when you add your screen to the stack.(defaulted to false)
 
-![ScreenMerge Code Example](docs/ScreenMergeCodeExample.PNG)
+```
+onePane.Add(
+  'NextExampleScreen',
+  <NextExampleScreen />,
+  header: {
+    title: 'NextExampleScreen'
+  },
+  true
+)
+
+```
 
 now when we start with a TWO screen application and move it to ONE screen we can easily transition and keep our previous screen 
 
-![ScreenMerge Example](docs/addingScreenViewExample.png)
-![ScreenMerge Example](docs/ScreenMergeExample.png)
+![ScreenMerge Example](./src/docs/AddingPaneExample.png)
+
+![ScreenMerge Example](./src/docs/paneMergeExample.png)
+- Notice in twoPane how our header icon and text is now white where previously it was red. this is because we did not override the colors in our onePane config and because NextExampleScreen has now Merged into onePane it now takes on the default onePane stylings
+
+## __Utilities__
 
 
-### Utilities
+## Components
 
-#### Components
-
-##### ScreenOverlay
+#### ScreenOverlay
 
 The ScreenOverlay is a view that floats above a screens content
 
-![screenOverlay Example](docs/screenOverlayExample.png)
-
 how to use
 
-![screenOverlayCode Example](docs/screenOverlayCodeExample.png)
+```
+<ScreenOverlay
+  isVisible={true}
+  overlayStyle={{
+    margin: 60,
+    borderWidth: 3,
+    borderColor: 'gray'
+  }}>
+  <WelcomeOverlay/>
+</ScreenOverlay>
+```
 
-#### Screens
+![screenOverlay Example](./src/docs/screenOverlayExample.png)
+
+now although above is just a very simple implementation this can be used for all sorts of things. The example below is using our  PaneOverlay component to create a scrollable picture gallery (this can be found in our example app)
+
+![screenOverlay Example](./src/docs/advancedOverlay.png)
+
+
+## Panes
 
 onePane- will call every action specifically for the onePane stack
 
 twoPane - will call every action specifically for the twoPane stack
 
-autoPane - will check to see if the user is currently in onePane or twoPane mode,
-and will call the appropriate action the current modes stack.
+autoPane - will check to see if there is onePane or twoPane currently active,
+and will call the appropriate action to the current pane
 
 - Example:
-  If in onePane mode will call an action only to the ONE screen stack.
+  If onePane is active will call an action only to the onePane stack
 
-  If in twoPane mode will call an action only to the TWO screen stack
+  If twoPane is active will call an action only to the twoPane stack
 
 #### Methods
 
-- (ONE | TWO | auto)Screen.Add - Pushes element to the top of the stack
+- (ONE)Pane.AddExtended - Pushes element to the top of the onePane stack thats extended over both onePane and twoPane
 
-- (ONE | TWO | auto)Screen.AddOrMoveToFront - Automatically pushes element to the top of stack or if the key is already in the stack,move that key to the top of the stack based on screen size
+- (ONE | TWO )Pane.mergeToOppositePane - When the apps active panes changes move panes marked as isMerged to onePane
 
-- (ONE | TWO | auto)Screen.BackToHome - Removes all elements of the stack and returns the base element of the stack
 
-- (ONE | TWO | auto)Screen.GoBack - Go back one element in the stack
+- (ONE | TWO | auto)Pane.Add - Pushes element to the top of the stack or replaces the original with the new element
 
-- (ONE | TWO | auto)Screen.ReplaceScreen - Replace the default element for this component
+- (ONE | TWO | auto)Pane.AddOrMoveToFront - Pushes element to the top of the stack or moves the original to the top of the stack
 
-- (ONE | TWO | auto)Screen.ReplaceHeader - Replace the default header for this component
+- (ONE | TWO | auto)Pane.AddOrMoveToFrontONE - pushes element to the top of stack or if the key is already in the ONE screen stack, move that key to the top of the ONE screen stack based on screen size
+
+- (ONE | TWO | auto)Pane.AddOrMoveToFrontTWO -  pushes element to the top of stack or if the key is already in the  TWO screen stack, move that key to the top of the TWO screen stack based on screen size
+
+- (ONE | TWO | auto)Pane.BackToHome - Removes all elements of the stack and returns the base element of the screen stack based on screen size
+
+- (ONE | TWO | auto)Pane.GoBack - Go back one element in the stack based on pane
+
+- (ONE | TWO | auto)Pane.ReplacePane - Replace replace element in the stack based on screen size
+
+- (ONE | TWO | auto)Pane.ReplaceHeader - Replace header in the stack based on screen size
 
 #### Hooks
 
@@ -152,11 +307,44 @@ and will call the appropriate action the current modes stack.
 
 - getScreenKeyState() - get the state of the key Store
 
+- getUtilityStore() - get the state of the utility store
+
 #### Interfaces
 
-- IHeader {
-  IconPress?: () => void;
-  navigationCommand?: string;
-  style?: StyleProp<ViewStyle>; //expand this out
-  leftIcon?: React.ReactElement;
+```
+
+  interface ITwoPaneAppProps {
+    /**
+    * Default element for ONE screen mode
+    */
+    onePaneDefault: IBasePaneComponent;
+
+    /**
+    * Default element for TWO screen mode
+    */
+    twoPaneDefault: IBasePaneComponent;
+
+    /**
+    * override default values for your application
+    */
+    config?: IConfigComponent
+
+    /**
+    * AppContainer if using React Navigation
+    */
+    navigationContainer?: JSX.Element;
   }
+
+  interface IConfigComponent {
+    onePane?: IConfig;
+    twoPane?: IConfig;
+  }
+
+  interface IHeader {
+      title?: string;
+      IconPress?: () => void;
+      style?: StyleProp<ViewStyle>; //expand this out
+      leftIcon?: ReactElement;
+  }
+
+```

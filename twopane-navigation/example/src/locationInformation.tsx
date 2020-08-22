@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useRef } from 'react';
 import { IRestaurantDetails, imageRequire } from './interfaces';
 import { Text, View, Image, StyleSheet, ScrollView, Button, TouchableOpacity, FlatList } from 'react-native';
-import { autoPane, onePane, ScreenOverlay } from 'twopane-navigation';
+import { autoPane, onePane, PaneOverlay } from 'twopane-navigation';
 import Menu from './menu';
 import Directions from './directions';
 import  Icon  from 'react-native-vector-icons/MaterialIcons';
@@ -69,7 +69,7 @@ const LocationInformation = (props: ILocationInformationProps) => {
                     <Button title='View Menu' color='#D26441' 
                       onPress={()=> autoPane.Add(`menu ${details.name}`,
                       <Menu />,
-                      {title: 'Menu'},
+                      {title: `${details.city} Menu`},
                       true,true)}/>
                   </View>
                   <TouchableOpacity onPress={()=> onePane.AddExtended(`directions ${details.name}`,
@@ -102,7 +102,7 @@ const LocationInformation = (props: ILocationInformationProps) => {
         numColumns={3}
         keyExtractor={(item) => item.image.toString()}
       />
-      <ScreenOverlay
+      <PaneOverlay
         isVisible={showBackDrop}
         onBackdropPress={() => setShowBackDrop(false)}
         overlayStyle={{ backgroundColor: 'rgba(52, 52, 52, 0.0)'}}>
@@ -122,9 +122,8 @@ const LocationInformation = (props: ILocationInformationProps) => {
                             onPress={() => rightArrow()}>
             <Icon name={'chevron-right'} size={30} color={'#D26441' }/>
           </TouchableOpacity>
-
         </View>
-      </ScreenOverlay>
+      </PaneOverlay>
     </View>
   );
 }

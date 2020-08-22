@@ -2,7 +2,7 @@
 
 
 export {default as TwoPaneApp} from './components/twoPaneApp/TwoPaneApp'
-export {default as ScreenOverlay} from './components/paneOverlay/PaneOverlay'
+export {default as PaneOverlay} from './components/paneOverlay/PaneOverlay'
 
 // methods
 export {default as onePane} from './onePane/onePaneStore/onePane.methods'

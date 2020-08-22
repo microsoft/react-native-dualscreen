@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
 import DualApp from '../twoPaneApp';
-import { IPaneComponent } from '../../../utilities/interfaces';
+import { IPaneComponent, paneType } from '../../../utilities/interfaces';
 import { render, toJSON } from '@testing-library/react-native';
-import * as dsInfo from 'react-native-dualscreeninfo';
-
 describe('DualApp Tests', () => {
     it('should render singleScreen', () => {
         // Arrange
@@ -14,7 +12,9 @@ describe('DualApp Tests', () => {
             paneElement: <Fragment />,
             header: {
                 title: 'singleScreenDefaultTitle'
-            }
+            },
+            pane: paneType.ONE,
+            isExtended: false
         };
 
         const _twoPaneDefault: IPaneComponent = {
@@ -22,7 +22,9 @@ describe('DualApp Tests', () => {
             paneElement: <Fragment />,
             header: {
                 title: 'onePaneDefaultTitle'
-            }
+            },
+            pane: paneType.TWO,
+            isExtended: false
         };
 
         // Act

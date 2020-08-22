@@ -39,7 +39,7 @@ const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: bool
 };
 
 /**
- * Pushes element to the top of the onePane stack or moves the original to the top of the stack
+ * Pushes element to the top of the onePane stack thats extended over both onePane and twoPane
  */
 const AddExtended = (key: string, element: ReactElement, header?: IHeader) => {
     AddPaneElement(key, element, header, false, true)
@@ -60,9 +60,9 @@ const AddOrMoveToFront = (key: string, element: React.ReactElement, header?: IHe
 }
 
 /**
- * when the app screen size changes move screens marked as isMerged to twoPane
+ * when the app active panes changes move panes marked as isMerged to twoPane
  */
-const mergeToOppositeScreen = () => {
+const mergeToOppositePane= () => {
   const keys: IKeyState = store.getState().KeyReducers;
   keys.keys.map(val => {
     if (val.screen === paneType.ONE && val.isMerge) {
@@ -105,7 +105,7 @@ const GoBack = () => {
 /**
  * Replace the current element for this onePane component
  */
-const ReplaceScreen = (key: string, element: React.ReactElement) => {
+const ReplacePane = (key: string, element: React.ReactElement) => {
   store.dispatch(replacePaneElement(`${paneType.ONE}_${key}`, element))
 }
 
@@ -120,10 +120,10 @@ const _onePaneFunctions = {
   Add,
   AddExtended,
   AddOrMoveToFront,
-  mergeToOppositeScreen,
+  mergeToOppositePane,
   BackToHome,
   GoBack,
-  ReplaceScreen,
+  ReplacePane,
   ReplaceHeader,
 };
 

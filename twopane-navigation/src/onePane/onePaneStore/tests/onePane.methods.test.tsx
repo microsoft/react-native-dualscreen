@@ -152,12 +152,12 @@ describe('onePane methods', () => {
     });
 
 
-    it('onePane mergeToOppositeScreen called', () => {
+    it('onePane mergeToOppositePane called', () => {
         // Arrange
         const moveToFrontSpy = jest.spyOn(keyActions, 'changeScreen');
 
         // Act
-        const _onePaneAdd = onePane.mergeToOppositeScreen();
+        const _onePaneAdd = onePane.mergeToOppositePane();
         const keyStore = store.getState().KeyReducers;
 
         // Assert
@@ -229,12 +229,12 @@ describe('onePane methods', () => {
         expect(removePaneElementBySpy).toBeCalledTimes(1);
     });
 
-    it('replaceScreen calls', () => {
+    it('replacePane calls', () => {
         // Arrange
         const replacePaneElementSpy = jest.spyOn(paneElementActions, 'replacePaneElement');
 
         // Act
-        const _onePaneBack = onePane.ReplaceScreen('test', <Fragment />);
+        const _onePaneBack = onePane.ReplacePane('test', <Fragment />);
 
         // Assert
         expect(replacePaneElementSpy).toBeCalled();

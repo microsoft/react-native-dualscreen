@@ -18,7 +18,6 @@ export interface IConfig {
   paneHeaderIcon?: StyleImage;
 }
 
-//TODO ADD DEFAULT HEADER HEIGHT SIZE & BODY HEIGHT
 export interface IConfigComponent {
   onePane?: IConfig;
   twoPane?: IConfig;
@@ -53,7 +52,7 @@ export interface ITwoPaneAppProps {
   twoPaneDefault: IBasePaneComponent;
 
   /**
-   * override default values of pane components
+   * override default values for your application
    */
   config?: IConfigComponent
 

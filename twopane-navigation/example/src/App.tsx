@@ -120,7 +120,7 @@ const App = () => {
   <TwoPaneApp 
     onePaneDefault={TwoPaneAppDefaultComponents.onePaneDefault}
     twoPaneDefault={TwoPaneAppDefaultComponents.twoPaneDefault}
-    config ={TwoPaneAppDefaultComponents.config}
+    config={TwoPaneAppDefaultComponents.config}
   />
   );
 };

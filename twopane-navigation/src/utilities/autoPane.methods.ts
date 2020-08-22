@@ -6,7 +6,7 @@ import { IHeader } from '../shared/screenStore/headerStore/header.interface';
 
 
 /**
- * Automatically pushes element to the top of the stack based on screen size.
+ * Pushes element to the top of the stack or replaces the original with the new element
  */
 const Add = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false) => {
   if (utility.isTwoPane()) {
@@ -17,10 +17,9 @@ const Add = (key: string, element: ReactElement, header?: IHeader, isMergeONE = 
 };
 
 /**
- * Automatically pushes element to the top of stack or if the key is already in the stack,
-    move that key to the top of the stack based on screen size
+ * Pushes element to the top of the stack or moves the original to the top of the stack
  */
-const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false,) => {
+const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false) => {
   if (utility.isTwoPane()) {
     twoPane.AddOrMoveToFront(key, element, header, isMergeTWO);
   } else {
@@ -29,8 +28,8 @@ const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, 
 };
 
 /**
- * Automatically pushes element to the top of stack or if the key is already in the  TWO screen stack,
-    move that key to the top of the TWO screen stack based on screen size
+ * Automatically pushes element to the top of stack or if the key is already in the twoPane stack,
+    move that key to the top of the twoPane stack based on active panes
  */
 const AddOrMoveToFrontTWO = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false,) => {
   if (utility.isTwoPane()) {
@@ -41,8 +40,8 @@ const AddOrMoveToFrontTWO = (key: string, element: ReactElement, header?: IHeade
 };
 
 /**
- * Automatically pushes element to the top of stack or if the key is already in the ONE screen stack,
-    move that key to the top of the ONE screen stack based on screen size
+ * Automatically pushes element to the top of stack or if the key is already in the onePane stack,
+    move that key to the top of the onePane stack based on active panes
  */
 const AddOrMoveToFrontONE = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false,) => {
   if (utility.isTwoPane()) {
@@ -53,7 +52,7 @@ const AddOrMoveToFrontONE = (key: string, element: ReactElement, header?: IHeade
 };
 
 /**
- * Automatically Removes all elements of the stack and returns the base element of the screen stack based on screen size
+ * Automatically Removes all elements of the stack and returns the base element of the Pane stack based on active panes
  */
 const BackToHome = () => {
   if (utility.isTwoPane()) {
@@ -63,9 +62,8 @@ const BackToHome = () => {
   }
 };
 
-
 /**
- * Automatically go back one element in the stack based on screen size
+ * Automatically go back one element in the stack based on pane
  */
 const GoBack = () => {
   if (utility.isTwoPane()) {
@@ -76,13 +74,13 @@ const GoBack = () => {
 };
 
 /**
- * Automatically replace element in the stack based on screen size
+ * Automatically replace element in the stack based on activeP panes
  */
-const ReplaceScreen = (key: string, twoPaneElement: React.ReactElement) => {
+const ReplacePane = (key: string, twoPaneElement: React.ReactElement) => {
   if (utility.isTwoPane()) {
-    twoPane.ReplaceScreen(key, twoPaneElement);
+    twoPane.ReplacePane(key, twoPaneElement);
   } else {
-    onePane.ReplaceScreen(key, twoPaneElement);
+    onePane.ReplacePane(key, twoPaneElement);
   }
 };
 
@@ -107,7 +105,7 @@ const _autoPaneFunctions = {
   AddOrMoveToFrontONE,
   BackToHome,
   GoBack,
-  ReplaceScreen,
+  ReplacePane,
   ReplaceHeader
 };
 
@@ -116,3 +114,4 @@ type autoPaneFunctions = typeof _autoPaneFunctions;
 const autoPane: autoPaneFunctions = _autoPaneFunctions;
 
 export default autoPane;
+

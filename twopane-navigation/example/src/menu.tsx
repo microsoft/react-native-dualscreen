@@ -1,7 +1,7 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, Button, TextInput, KeyboardAvoidingView } from 'react-native';
 import { IMenuItem, pizzaSize } from './interfaces';
-import { ScreenOverlay } from 'twopane-navigation';
+import { PaneOverlay } from 'twopane-navigation';
 
 export interface IMenuProps {
 }
@@ -162,14 +162,14 @@ const Menu = (props: IMenuProps) => {
         )}
         keyExtractor={item => item.name}
         />
-      <ScreenOverlay
+      <PaneOverlay
         isVisible={showBackDrop}
         onBackdropPress={() => setShowBackDrop(false)}>
           <View style={MenuStyles.overlay}>
             <Text style={MenuStyles.overlayText}>Thank you for your purchase</Text>
             <Text style={MenuStyles.overlayTotal}>Total: ${calculateTotal()}</Text>
           </View>
-      </ScreenOverlay>
+      </PaneOverlay>
     </KeyboardAvoidingView>
   );
 }
