@@ -31,7 +31,6 @@ const Menu = (props: IMenuProps) => {
   const [largePizzas, setLargePizzas] = useState<number>(0)
   const [showBackDrop, setShowBackDrop] = useState<boolean>(false)
 
-
   const calculateTotal = ():number => {
     const smallPrice: number = smallPizzas * menuItems[0].price;
     const mediumPrice: number = mediumPizzas * menuItems[1].price;    
@@ -63,15 +62,15 @@ const Menu = (props: IMenuProps) => {
   const subtractFromCart = (size: pizzaSize) => {
     switch(size) {
       case 'SMALL': {
-        setSmallPizzas(count => count - 1);
+        setSmallPizzas(count => (count - 1 >= 0) ? count - 1: count);
         break;
       }
       case 'MEDIUM': {
-        setMediumPizzas(count => count - 1);
+        setMediumPizzas(count =>(count - 1 >= 0) ? count - 1: count);
         break;
       }
       case 'LARGE': {
-        setLargePizzas(count => count - 1);
+        setLargePizzas(count => (count - 1 >= 0) ? count - 1: count);
         break;
       }
       default:{
@@ -81,22 +80,25 @@ const Menu = (props: IMenuProps) => {
   }
 
   const setQuantity = (text: string, size: pizzaSize) => {
-    switch(size) {
-      case 'SMALL': {
-        setSmallPizzas(+text);
-        break;
-      }
-      case 'MEDIUM': {
-        setMediumPizzas(+text);
-        break;
-      }
-      case 'LARGE': {
-        setLargePizzas(+text);
-        break;
-      }
-      default: {
-        break;
+    if(Number.isInteger(+text))
+    {
+      switch(size) {
+        case 'SMALL': {
+          setSmallPizzas(+text);
+          break;
+        }
+        case 'MEDIUM': {
+          setMediumPizzas(+text);
+          break;
+        }
+        case 'LARGE': {
+          setLargePizzas(+text);
+          break;
+        }
+        default: {
+          break;
 
+        }
       }
     }
   }
@@ -162,9 +164,7 @@ const Menu = (props: IMenuProps) => {
         />
       <ScreenOverlay
         isVisible={showBackDrop}
-        onBackdropPress={() => setShowBackDrop(false)}
-          
-          >
+        onBackdropPress={() => setShowBackDrop(false)}>
           <View style={MenuStyles.overlay}>
             <Text style={MenuStyles.overlayText}>Thank you for your purchase</Text>
             <Text style={MenuStyles.overlayTotal}>Total: ${calculateTotal()}</Text>
@@ -177,6 +177,7 @@ const Menu = (props: IMenuProps) => {
   const MenuStyles = StyleSheet.create({
     viewContainer: {
       margin: 20,
+      height: '90%'
     },
     title: {
       fontSize:15,

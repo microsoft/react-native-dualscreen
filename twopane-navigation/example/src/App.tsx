@@ -2,9 +2,42 @@ import React from 'react';
 
 import { TwoPaneApp, ITwoPaneAppProps }  from 'twopane-navigation';
 
-import { IRestaurantDetails } from './interfaces';
+import { IRestaurantDetails, imageRequire } from './interfaces';
 import LocationsList from './locationsList';
 import LocationInformation from './locationInformation';
+
+const foodImages: imageRequire[] = [
+  {
+   image: require('./images/pizzaGallery/pizza1.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza2.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza3.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza4.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza5.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza6.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza7.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza8.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza9.jpg')
+  },
+  {
+   image: require('./images/pizzaGallery/pizza10.jpg')
+  }
+]
 
 const RestaurantDetails: IRestaurantDetails[] = 
 [
@@ -14,7 +47,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Westlake',
@@ -22,7 +56,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '714 Taylor Ave N',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Pioneer Square',
@@ -30,7 +65,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '112 1st Ave S #100',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Capitol Hill',
@@ -38,7 +74,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '1427 Broadway',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Capitol Hill East',
@@ -46,7 +83,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: 'Mount 2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Bellevue',
@@ -54,7 +92,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Redmond',
@@ -62,7 +101,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   },
   {
     name: 'ContosoPizza Bothell',
@@ -70,7 +110,8 @@ const RestaurantDetails: IRestaurantDetails[] =
     address: '2928 1st Ave',
     phoneNumber: '206-555-4437',
     storeHours: '10am-11pm daily',
-    deliveryHours: '10am-11pm daily'
+    deliveryHours: '10am-11pm daily',
+    gallery: foodImages
   }
 ]
 
@@ -85,7 +126,6 @@ const App = () => {
 };
 
 const TwoPaneAppDefaultComponents: ITwoPaneAppProps = {
-
   onePaneDefault:{
     key: 'restaurantLocations',
     paneElement: <LocationsList listItems={RestaurantDetails}/>,

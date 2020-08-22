@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from "react-native";
 
 export interface IRestaurantDetails {
 
@@ -7,7 +8,10 @@ export interface IRestaurantDetails {
     phoneNumber: string;
     storeHours: string;
     deliveryHours: string;
+    gallery: imageRequire[]
 }
+
+export type imageRequire = { image: ImageSourcePropType}; 
 
 export interface IMenuItem {
     name: string,

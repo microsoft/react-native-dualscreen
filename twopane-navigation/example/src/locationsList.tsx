@@ -50,8 +50,7 @@ const locationListStyles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
     color: '#777777',
-  },
-
+  }
 })
 
 export default LocationsList;
