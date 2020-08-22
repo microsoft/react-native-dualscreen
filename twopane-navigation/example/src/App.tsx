@@ -145,19 +145,12 @@ const TwoPaneAppDefaultComponents: ITwoPaneAppProps = {
     onePane: {
       paneHeader: {
           backgroundColor: '#D26441'
-      },
-      paneBody: {
-          backgroundColor: '#f2f2f2'
       }
     },
     twoPane: {
       paneHeader: {
           backgroundColor: '#D26441',
-          
       },
-      paneBody: {
-          backgroundColor: '#f2f2f2'
-      }
     }
   }
 }

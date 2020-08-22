@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { IHeader } from '../shared/screenStore/headerStore/header.interface';
-import { StyleProp, ViewStyle, ColorValue, ScaledSize } from 'react-native';
+import { StyleProp, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 export interface IPaneComponent extends IBasePaneComponent {
   pane: paneType;
@@ -8,10 +8,14 @@ export interface IPaneComponent extends IBasePaneComponent {
 }
 
 export type Style = StyleProp<ViewStyle>;
+export type StyleText = StyleProp<TextStyle>;
+export type StyleImage = StyleProp<ImageStyle>;
 
 export interface IConfig {
   paneBody? : Style;
   paneHeader? : Style;
+  paneHeaderText?: StyleText;
+  paneHeaderIcon?: StyleImage;
 }
 
 //TODO ADD DEFAULT HEADER HEIGHT SIZE & BODY HEIGHT
@@ -59,7 +63,5 @@ export interface ITwoPaneAppProps {
   navigationContainer?: JSX.Element;
 }
 
-export interface IPaneHeaderProps extends IHeader {
-}
 
 

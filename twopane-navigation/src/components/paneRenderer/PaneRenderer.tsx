@@ -25,8 +25,7 @@ const PaneRenderer = (props: IPaneRendererProps) => {
                 paneComponent.map((val: IPaneComponent) =>
                 <View key={val.key}>
                     { (val.pane === paneType.ONE ) &&
-                        <View
-                            style={(val.isExtended) ? 
+                        <View style={(val.isExtended) ? 
                                     Object.assign({},onePaneStyles(paneRects[0]).extendedPane, defaultConfig?.onePane?.paneBody!) :
                                     Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!)}>
                             <View style={generalStyles.header}>
@@ -35,6 +34,8 @@ const PaneRenderer = (props: IPaneRendererProps) => {
                                     screenHeader={val.header}
                                     goBack={() => (onePane.GoBack())}
                                     configDefaultHeader={defaultConfig.onePane?.paneHeader!}
+                                    configDefaultHeaderText={defaultConfig.onePane?.paneHeaderText!}
+                                    configDefaultHeaderIcon={defaultConfig.onePane?.paneHeaderIcon!}
                                 />
                             </View>
                             <View
@@ -52,6 +53,8 @@ const PaneRenderer = (props: IPaneRendererProps) => {
                                     screenHeader={val.header}
                                     goBack={() => (twoPane.GoBack())}
                                     configDefaultHeader={defaultConfig.twoPane?.paneHeader!}
+                                    configDefaultHeaderText={defaultConfig.twoPane?.paneHeaderText!}
+                                    configDefaultHeaderIcon={defaultConfig.twoPane?.paneHeaderIcon!}
                                 />
                             </View>
                             <View
@@ -72,7 +75,7 @@ const generalStyles = StyleSheet.create({
         height: '10%'
     },
     body: {
-        height: '85%'
+        height: '85%',
     }
 })
 
@@ -80,7 +83,7 @@ const onePaneStyles = (paneRects : WindowRect) => StyleSheet.create({
     onePane: {
             flex: 1,
         ...StyleSheet.absoluteFillObject,
-        color: 'black',
+        backgroundColor: '#f2f2f2',
         left: paneRects.x,
         height: paneRects.height,
         width: paneRects.width
@@ -88,7 +91,7 @@ const onePaneStyles = (paneRects : WindowRect) => StyleSheet.create({
     extendedPane: {
             flex: 1,
         ...StyleSheet.absoluteFillObject,
-        color: 'black',
+        backgroundColor: '#f2f2f2',
         left: paneRects.x,
         height: paneRects.height,
         width: paneRects.width * 2
@@ -99,7 +102,7 @@ const twoPaneStyles = (paneRects : WindowRect) => StyleSheet.create({
     twoPane: {
             flex: 1,
         ...StyleSheet.absoluteFillObject,
-        color: 'black',
+        backgroundColor: '#f2f2f2',
         left: paneRects.x,
         height: paneRects.height,
         width: paneRects.width,
