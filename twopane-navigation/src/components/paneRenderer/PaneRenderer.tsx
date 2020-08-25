@@ -6,6 +6,7 @@ import React, { Fragment } from "react";
 import twoPane from "../../twoPane/twoPaneStore/twoPane.methods";
 import { WindowRect } from "react-native-dualscreeninfo";
 import { getUtilityStore } from "../../shared/utilityStore/utilityStore.selectors";
+import { hingeWidth } from "../../utilities/constants";
 
 interface IPaneRendererProps {
     paneComponent: IPaneComponent[];
@@ -19,23 +20,39 @@ const PaneRenderer = (props: IPaneRendererProps) => {
     const isGoBackOne = paneComponent.filter(x => x.pane === paneType.ONE).length > 1;
     const isGoBackTwo = paneComponent.filter(x => x.pane === paneType.TWO).length > 1;
     
+
+    const renderStyles = (pane: paneType, isExtended: boolean) => {
+        if(pane === paneType.TWO)
+        {
+            if(paneRects.length > 1)
+            {
+                return Object.assign({},twoPaneStyles(paneRects[1]).twoPane, defaultConfig?.twoPane?.paneBody!);
+            }
+            return Object.assign({},twoPaneStyles(paneRects[0]).twoPaneManual, defaultConfig?.twoPane?.paneBody!);
+
+        } else {
+            if(isExtended) {
+                return Object.assign({},onePaneStyles(paneRects[0]).extendedPane, defaultConfig?.onePane?.paneBody!)
+            }
+            return Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!)
+        }
+    }
+
+// TODO MOVE TO ONE RENDER
     return (
         <Fragment>
             {
                 paneComponent.map((val: IPaneComponent) =>
                 <View key={val.key}>
-                    { (val.pane === paneType.ONE ) &&
-                        <View style={(val.isExtended) ? 
-                                    Object.assign({},onePaneStyles(paneRects[0]).extendedPane, defaultConfig?.onePane?.paneBody!) :
-                                    Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!)}>
+                        <View style={renderStyles(val.pane, val.isExtended)}>
                             <View style={generalStyles.header}>
                                 <PaneHeaderContainer
-                                    isGoBack={ isGoBackOne}
+                                    isGoBack={ val.pane === paneType.ONE ? isGoBackOne : isGoBackTwo}
                                     screenHeader={val.header}
-                                    goBack={() => (onePane.GoBack())}
-                                    configDefaultHeader={defaultConfig.onePane?.paneHeader!}
-                                    configDefaultHeaderText={defaultConfig.onePane?.paneHeaderText!}
-                                    configDefaultHeaderIcon={defaultConfig.onePane?.paneHeaderIcon!}
+                                    goBack={() => (val.pane === paneType.ONE ? onePane.GoBack() : twoPane.GoBack())}
+                                    configDefaultHeader={val.pane === paneType.ONE ? defaultConfig.onePane?.paneHeader! : defaultConfig.twoPane?.paneHeader!}
+                                    configDefaultHeaderText={val.pane === paneType.ONE ? defaultConfig.onePane?.paneHeaderText! : defaultConfig.twoPane?.paneHeaderText!}
+                                    configDefaultHeaderIcon={val.pane === paneType.ONE ? defaultConfig.onePane?.paneHeaderIcon! : defaultConfig.twoPane?.paneHeaderIcon!}
                                 />
                             </View>
                             <View
@@ -43,26 +60,6 @@ const PaneRenderer = (props: IPaneRendererProps) => {
                                 {val.paneElement}
                             </View>
                         </View>
-                    }
-                    {(val.pane === paneType.TWO && paneRects.length > 1 ) &&
-                        <View 
-                            style={Object.assign({},twoPaneStyles(paneRects[1]).twoPane, defaultConfig?.twoPane?.paneBody!)}>
-                            <View style={generalStyles.header}>
-                                <PaneHeaderContainer
-                                    isGoBack={isGoBackTwo}
-                                    screenHeader={val.header}
-                                    goBack={() => (twoPane.GoBack())}
-                                    configDefaultHeader={defaultConfig.twoPane?.paneHeader!}
-                                    configDefaultHeaderText={defaultConfig.twoPane?.paneHeaderText!}
-                                    configDefaultHeaderIcon={defaultConfig.twoPane?.paneHeaderIcon!}
-                                />
-                            </View>
-                            <View
-                                style={generalStyles.body}>
-                                {val.paneElement}
-                            </View>
-                        </View>
-                    }
                 </View>
                 )
             }
@@ -104,6 +101,14 @@ const twoPaneStyles = (paneRects : WindowRect) => StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#f2f2f2',
         left: paneRects.x,
+        height: paneRects.height,
+        width: paneRects.width,
+    },
+    twoPaneManual: {
+            flex: 1,
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#f2f2f2',
+        left: paneRects.width + hingeWidth,
         height: paneRects.height,
         width: paneRects.width,
     }

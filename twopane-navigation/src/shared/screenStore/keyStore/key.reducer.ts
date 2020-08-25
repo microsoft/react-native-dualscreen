@@ -47,9 +47,17 @@ const keyReducers = (
             const twoPaneState = state.keys.filter(x => x.screen === paneType.TWO);
 
             if (action.payload.screen === paneType.ONE) {
-                onePaneState.pop();
+                //safety guard
+                if(onePaneState.length > 1)
+                {
+                    onePaneState.pop();
+                }
             } else {
-                twoPaneState.pop();
+                //safety guard
+                if(twoPaneState.length > 1)
+                {
+                    twoPaneState.pop();
+                }
             }
 
             return {

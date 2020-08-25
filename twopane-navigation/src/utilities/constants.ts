@@ -1,0 +1,1 @@
+export const hingeWidth: number = 33.6;
