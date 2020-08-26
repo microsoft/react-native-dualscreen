@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TwoPaneApp, ITwoPaneAppProps }  from 'twopane-navigation';
+import { TwoPaneApp, ITwoPaneAppProps }  from 'react-native-twopane-navigation';
 
 import { IRestaurantDetails, imageRequire } from './interfaces';
 import LocationsList from './locationsList';

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { IRestaurantDetails } from './interfaces';
 import { FlatList, Text, View, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
-import { autoPane } from 'twopane-navigation';
+import { autoPane } from 'react-native-twopane-navigation';
 import LocationInformation from './locationInformation';
 
 export interface ILocationsList {

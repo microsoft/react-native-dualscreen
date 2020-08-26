@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, Button, TextInput, KeyboardAvoidingView } from 'react-native';
 import { IMenuItem, pizzaSize } from './interfaces';
-import { PaneOverlay } from 'twopane-navigation';
+import { PaneOverlay } from 'react-native-twopane-navigation';
 
 export interface IMenuProps {
 }

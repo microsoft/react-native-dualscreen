@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useRef } from 'react';
 import { IRestaurantDetails, imageRequire } from './interfaces';
 import { Text, View, Image, StyleSheet, ScrollView, Button, TouchableOpacity, FlatList } from 'react-native';
-import { autoPane, onePane, PaneOverlay } from 'twopane-navigation';
+import { autoPane, onePane, PaneOverlay } from 'react-native-twopane-navigation';
 import Menu from './menu';
 import Directions from './directions';
 import  Icon  from 'react-native-vector-icons/MaterialIcons';

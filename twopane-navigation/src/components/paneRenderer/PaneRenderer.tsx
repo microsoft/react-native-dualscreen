@@ -1,12 +1,11 @@
-import { IPaneComponent, paneType, IConfig } from "../../utilities/interfaces";
-import { StyleSheet, View, StyleProp, ViewStyle} from "react-native";
+import { IPaneComponent, paneType } from "../../utilities/interfaces";
+import { StyleSheet, View} from "react-native";
 import PaneHeaderContainer from "../paneHeaderContainer/PaneHeaderContainer";
 import onePane from "../../onePane/onePaneStore/onePane.methods";
 import React, { Fragment } from "react";
 import twoPane from "../../twoPane/twoPaneStore/twoPane.methods";
-import { WindowRect } from "react-native-dualscreeninfo";
+import { WindowRect, DualScreenInfo } from "react-native-dualscreeninfo";
 import { getUtilityStore } from "../../shared/utilityStore/utilityStore.selectors";
-import { hingeWidth } from "../../utilities/constants";
 
 interface IPaneRendererProps {
     paneComponent: IPaneComponent[];
@@ -19,8 +18,6 @@ const PaneRenderer = (props: IPaneRendererProps) => {
     
     const isGoBackOne = paneComponent.filter(x => x.pane === paneType.ONE).length > 1;
     const isGoBackTwo = paneComponent.filter(x => x.pane === paneType.TWO).length > 1;
-    
-
     const renderStyles = (pane: paneType, isExtended: boolean) => {
         if(pane === paneType.TWO)
         {
@@ -108,7 +105,7 @@ const twoPaneStyles = (paneRects : WindowRect) => StyleSheet.create({
             flex: 1,
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#f2f2f2',
-        left: paneRects.width + hingeWidth,
+        left: paneRects.width + DualScreenInfo.hingeWidth,
         height: paneRects.height,
         width: paneRects.width,
     }

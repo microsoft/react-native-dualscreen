@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState, Fragment, useRef } from 'react';
+import React, { useMemo, useEffect, useState, Fragment } from 'react';
 import { View } from 'react-native';
 import { IPaneComponent } from '../../utilities/interfaces';
 
