@@ -6,7 +6,7 @@ See below.  We currently have three npm packages for dual screen devices.
 
 
 ## Offerings
-This repo provides two modules
+This repo provides three modules
 * **TwoPaneView** layout component
 * **DualScreenInfo** lower-level module
 * **TwoPane-Navigation** navigation library for dual screen devices
