@@ -26,14 +26,14 @@ Also, make sure to carefully follow the installation instructions to modify your
 
 ## Installation
 
-`$ npm install twopane-navigation`
+`$ npm install react-native-twopane-navigation`
 
 ## Getting started
 
 The TwoPane-Navigation library is built around the core concept of viewing each pane(screen) on your multi-screen device as its own stack (LIFO) like system and rendering the very top element of said stack as the current page for the user to see.
 
 This can be seen by the picture below
-![stack Example](src/docs/stackExample.png)
+![stack Example](https://user-images.githubusercontent.com/68410905/91344222-81f85b00-e792-11ea-8b4c-70cbbdb24b68.PNG)
 
 
 ### Hello TwoPane-Navigation
@@ -107,11 +107,11 @@ const TwoPaneAppDefaultComponents: ITwoPaneAppProps = {
 
 Now with our TWO App set up if we open up our app with only one active pane we will see.
 
-![onePane Example](./src/docs/onePaneExample.png)
+![onePane Example](https://user-images.githubusercontent.com/68410905/91344270-94729480-e792-11ea-870c-22ad0ba19725.PNG)
 
 And now if we extend our application to make use of our multi screens we will see
 
-![twoPane Example](./src/docs/twoPaneExample.png)
+![twoPane Example](https://user-images.githubusercontent.com/68410905/91344311-a2281a00-e792-11ea-9c42-ad47b10e0ec0.PNG)
 
 - Notice in twoPane how our header text is red. this is because we did an override on our default text color in our config when we set up our app
 - Notice how the onePane is now showing in the first panel as its own separate entity
@@ -144,7 +144,7 @@ To navigate between panes we have a variety of built-in methods one can call. Fo
 
   - Now if we run our application in twoPane mode we will see that we have only pushed the new screen to the twoPane Stack
 
-    ![twoPaneView Example](./src/docs/addingPaneExample.png)
+    ![twoPaneView Example](https://user-images.githubusercontent.com/68410905/91344406-c3890600-e792-11ea-9d51-ab7f5295c836.PNG)
 - Notice in twoPane how our header icon is red. this is because we did an override on our default text color in our config when we set up our app
 
 ### Going Back
@@ -227,9 +227,9 @@ onePane.Add(
 
 now when we start with a TWO screen application and move it to ONE screen we can easily transition and keep our previous screen 
 
-![ScreenMerge Example](./src/docs/AddingPaneExample.png)
+![ScreenMerge Example](https://user-images.githubusercontent.com/68410905/91344406-c3890600-e792-11ea-9d51-ab7f5295c836.PNG)
 
-![ScreenMerge Example](./src/docs/paneMergeExample.png)
+![ScreenMerge Example](https://user-images.githubusercontent.com/68410905/91344506-e1ef0180-e792-11ea-92e5-9f01bae0d360.PNG)
 - Notice in twoPane how our header icon and text is now white where previously it was red. this is because we did not override the colors in our onePane config and because NextExampleScreen has now Merged into onePane it now takes on the default onePane stylings
 
 ## __Utilities__
@@ -255,11 +255,11 @@ how to use
 </ScreenOverlay>
 ```
 
-![screenOverlay Example](./src/docs/screenOverlayExample.png)
+![screenOverlay Example](https://user-images.githubusercontent.com/68410905/91344569-f16e4a80-e792-11ea-85bb-ce0fe393ee35.PNG)
 
 now although above is just a very simple implementation this can be used for all sorts of things. The example below is using our  PaneOverlay component to create a scrollable picture gallery (this can be found in our example app)
 
-![screenOverlay Example](./src/docs/advancedOverlay.png)
+![screenOverlay Example](https://user-images.githubusercontent.com/68410905/91344629-06e37480-e793-11ea-95ca-cdb60c384a19.PNG)
 
 
 ## Panes
