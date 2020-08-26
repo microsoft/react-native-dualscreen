@@ -1,0 +1,7 @@
+export const PUSH_PANE_ELEMENT: string = 'PUSH_PANE_ELEMENT';
+
+export const REMOVE_KEY_PANE_ELEMENT: string = 'REMOVE_KEY_PANE_ELEMENT';
+
+export const REPLACE_PANE_ELEMENT: string = 'REPLACE_PANE_ELEMENT';
+
+
