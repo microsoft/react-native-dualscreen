@@ -187,7 +187,21 @@ const App = () => {
     />
   );
 };
+
+const AppContainer = () => {
+  return (
+      <NavigationContainer>
+        <Main.Screen
+          name="base"
+          component={TwoPaneHub}
+          options={{ headerShown: false }}
+        />
+      </NavigationContainer>
+  );
+};
 ```
+ - note in order to use react-navigation we must set the homepage to TwoPaneHub
+
 
 ### Header Customization
 

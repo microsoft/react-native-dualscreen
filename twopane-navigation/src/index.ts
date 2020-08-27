@@ -2,6 +2,7 @@
 
 
 export {default as TwoPaneApp} from './components/twoPaneApp/TwoPaneApp'
+export {default as TwoPaneHub} from './components/twoPaneHub/TwoPaneHub'
 export {default as PaneOverlay} from './components/paneOverlay/PaneOverlay'
 
 // methods
