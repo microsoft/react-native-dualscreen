@@ -1,7 +1,7 @@
 {
   "name": "react-native-twopane-navigation",
   "Title": "React Native TwoPane-Navigation",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Native package for dual screen devices navigation support (Surface Duo)",
   "react-native": "src/index.ts",
   "types": "lib/typescript/index.d.ts",

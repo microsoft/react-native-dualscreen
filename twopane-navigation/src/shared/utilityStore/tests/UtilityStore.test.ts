@@ -7,6 +7,7 @@ describe('utilityStore reducer tests', () => {
     it('is twoPane', () => {
         // Arrange
         const expectedState: IUtilityStoreState = {
+            paneRects: [],
             isTwoPane: true,
             config: {}
         }
@@ -22,6 +23,7 @@ describe('utilityStore reducer tests', () => {
     it('is twoPane false', () => {
         // Arrange
         const expectedState: IUtilityStoreState = {
+            paneRects:[],
             isTwoPane: false,
             config: {}
         }

@@ -1,6 +1,8 @@
 import { IConfigComponent } from "../../utilities/interfaces";
+import { WindowRect } from "react-native-dualscreeninfo";
 
 export interface IUtilityStoreState {
+    paneRects: WindowRect[];
     isTwoPane: boolean;
     config: IConfigComponent;
 }
@@ -8,8 +10,16 @@ export interface IUtilityStoreState {
 export interface IUtilityStoreAction {
     type: string;
     payload: {
+        paneRects: WindowRect[];
         isTwoPane: boolean;
         config: IConfigComponent;
+    };
+}
+
+export interface IUtilityPaneRectsAction {
+    type: string;
+    payload: {
+        paneRects: WindowRect[];
     };
 }
 
@@ -25,4 +35,3 @@ export interface IUtilityConfigAction {
         config: IConfigComponent;
     };
 }
-

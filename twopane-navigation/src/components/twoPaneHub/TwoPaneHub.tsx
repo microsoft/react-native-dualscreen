@@ -9,28 +9,16 @@ import { IPaneElementState } from '../../shared/screenStore/paneElementStore/pan
 
 import PaneRenderer from '../paneRenderer/PaneRenderer';
 import { getScreenKeyState } from '../../shared/screenStore/keyStore/key.selector';
-import { DualScreenInfo, DualScreenInfoPayload, WindowRect } from 'react-native-dualscreeninfo';
-import utilityStore from '../../shared/utilityStore/utilityStore.methods';
-import onePane from '../../onePane/onePaneStore/onePane.methods';
-import twoPane from '../../twoPane/twoPaneStore/twoPane.methods';
+import { IUtilityStoreState } from '../../shared/utilityStore/utilityStore.interfaces';
+import { getUtilityStore } from '../../shared/utilityStore/utilityStore.selectors';
 
 const TwoPaneHub = () => {
 
+  const utilityState: IUtilityStoreState = getUtilityStore();
   const twoPaneElementState: IPaneElementState = getPaneElementSelector();
   const headerState: IHeaderState = getHeaderSelector();
 
   const keyState = getScreenKeyState();
-  const [paneRects, setPaneRects] = useState<WindowRect[]>([] as WindowRect[]);
-
-  useEffect(() => {
-    utilityStore.isTwoPane(DualScreenInfo.isSpanning)
-    DualScreenInfo.addEventListener('didUpdateSpanning', _handleSpanningChanged);
-
-    return () => {
-      DualScreenInfo.removeEventListener('didUpdateSpanning', _handleSpanningChanged);
-    }
-  }, [])
-
   const screenStack: IPaneComponent[] = useMemo(() => {
     return keyState.keys.map((val, index) => {
       return {
@@ -43,29 +31,12 @@ const TwoPaneHub = () => {
     })
   }, [keyState, twoPaneElementState, headerState])
 
-  const _handleSpanningChanged = (update: DualScreenInfoPayload) => {
-    utilityStore.isTwoPane(update.isSpanning)
-
-    if (update.isSpanning) {
-      if(paneRects.length < 2)
-      {
-        setPaneRects(update.windowRects)
-      }
-      onePane.mergeToOppositePane();
-    } else {
-    if(paneRects.length < 1) {
-      setPaneRects(update.windowRects)
-    }
-      twoPane.mergeToOppositePane();
-    }
-  };
-
   return (
     <Fragment>
-      { paneRects.length > 0 &&
+      { utilityState.paneRects.length > 0 &&
         <PaneRenderer
           paneComponent={screenStack} 
-          paneRects={paneRects}/>
+          paneRects={utilityState.paneRects}/>
       }
     </Fragment>
 
