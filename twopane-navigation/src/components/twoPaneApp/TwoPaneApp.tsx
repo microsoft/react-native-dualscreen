@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect } from 'react';
 import { Provider } from 'react-redux';
-
+import { DualScreenInfo, DualScreenInfoPayload } from 'react-native-dualscreeninfo';
 import { store } from '../../appStore';
 import { ITwoPaneAppProps } from '../../utilities/interfaces';
 import TwoPaneHub from '../twoPaneHub/TwoPaneHub';
 import onePane from '../../onePane/onePaneStore/onePane.methods';
 import twoPane from '../../twoPane/twoPaneStore/twoPane.methods';
 import utilityStore from '../../shared/utilityStore/utilityStore.methods';
-
 
 const TwoPaneApp = (props: ITwoPaneAppProps) => {
 
@@ -26,7 +25,25 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
         utilityStore.pushConfig(props.config);
       }
     }
+
+    utilityStore.isTwoPane(DualScreenInfo.isSpanning)
+    DualScreenInfo.addEventListener('didUpdateSpanning', _handleSpanningChanged);
+    return () => {
+      DualScreenInfo.removeEventListener('didUpdateSpanning', _handleSpanningChanged);
+    }
   }, []);
+
+  const _handleSpanningChanged = (update: DualScreenInfoPayload) => {
+    utilityStore.isTwoPane(update.isSpanning)
+
+    if (update.isSpanning) {
+      utilityStore.pushPaneRects(update.windowRects)
+      onePane.mergeToOppositePane();
+    } else {
+      utilityStore.pushPaneRects(update.windowRects)
+      twoPane.mergeToOppositePane();
+    }
+  };
 
   return (
     <Fragment key={'App Component'}>
