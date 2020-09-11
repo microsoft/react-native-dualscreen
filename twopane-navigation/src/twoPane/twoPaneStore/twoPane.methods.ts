@@ -106,7 +106,7 @@ const ReplacePane = (key: string, element: ReactElement) => {
  * Replace the default header for this twoPane component
  */
 const ReplaceHeader = (key: string, header: IHeader) => {
-  store.dispatch(replaceHeader(key, header));
+  store.dispatch(replaceHeader(`${paneType.TWO}_${key}`, header));
 };
 
 const _twoPaneFunctions = {
