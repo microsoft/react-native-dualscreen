@@ -34,6 +34,15 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				Rect(0, 0, 0, 0)
 			} else boundings[0]
 		}
+	private val mStatusBarHeight: Int
+		get() {
+			var statusBarHeight: Int = 0;
+			val resourceId: Int = reactApplicationContext.resources.getIdentifier("status_bar_height", "dimen", "android")
+			if (resourceId > 0) {
+				statusBarHeight = reactApplicationContext.resources.getDimensionPixelSize(resourceId)
+			}
+			return statusBarHeight;
+		}
 	private val windowRects: List<Rect>
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
@@ -47,6 +56,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
 				} else {
+					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
 					listOf(topRect, bottomRect)
