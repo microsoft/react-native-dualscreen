@@ -2,7 +2,7 @@ import { IPaneComponent, paneType } from "../../utilities/interfaces";
 import { StyleSheet, View} from "react-native";
 import PaneHeaderContainer from "../paneHeaderContainer/PaneHeaderContainer";
 import onePane from "../../onePane/onePaneStore/onePane.methods";
-import React, { Fragment } from "react";
+import React, { Fragment, useMemo } from "react";
 import twoPane from "../../twoPane/twoPaneStore/twoPane.methods";
 import { WindowRect, DualScreenInfo, DeviceOrientation } from "react-native-dualscreeninfo";
 import { getUtilityStore } from "../../shared/utilityStore/utilityStore.selectors";
@@ -17,9 +17,9 @@ interface IPaneRendererProps {
 const PaneRenderer = (props: IPaneRendererProps) => {
     const defaultConfig = getUtilityStore().config;
     const {  paneComponent, paneRects, orientation } = props;
-    
     const isGoBackOne = paneComponent.filter(x => x.pane === paneType.ONE).length > 1;
     const isGoBackTwo = paneComponent.filter(x => x.pane === paneType.TWO).length > 1;
+    
     const renderStyles = (pane: paneType, isExtended: boolean) => {
         if(pane === paneType.TWO)
         {
@@ -33,9 +33,13 @@ const PaneRenderer = (props: IPaneRendererProps) => {
             if(isExtended) {
                 if(orientation === DeviceOrientation.Landscape || orientation === DeviceOrientation.LandscapeFlipped)
                 {
-                    return Object.assign({},onePaneStyles(paneRects[0]).extendedPaneVertical, defaultConfig?.onePane?.paneBody!)
+                    if(paneRects.length > 1)
+                    {
+                        return Object.assign({},extendedStyles(paneRects[0], paneRects[0].height + paneRects[1].height).extendedPaneVertical, defaultConfig?.onePane?.paneBody!)
+                    }
+                    return Object.assign({},extendedStyles(paneRects[0], paneRects[0].height).extendedPaneVertical, defaultConfig?.onePane?.paneBody!)
                 }
-                return Object.assign({},onePaneStyles(paneRects[0]).extendedPaneHorizontal, defaultConfig?.onePane?.paneBody!)
+                return Object.assign({},extendedStyles(paneRects[0], paneRects[0].width * 2).extendedPaneHorizontal, defaultConfig?.onePane?.paneBody!)
             }
             return Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!)
         }
@@ -81,26 +85,27 @@ const generalStyles = StyleSheet.create({
 
 const onePaneStyles = (paneRects : WindowRect) => StyleSheet.create({
     onePane: {
-            flex: 1,
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#f2f2f2',
         left: paneRects.x,
         height: paneRects.height,
         width: paneRects.width
-    },
+    }
+});
+
+const extendedStyles = (paneRects : WindowRect, length: number) => StyleSheet.create({
     extendedPaneHorizontal: {
-            flex: 1,
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#f2f2f2',
         left: paneRects.x,
         height: paneRects.height,
-        width: paneRects.width * 2
+        width: length + DualScreenInfo.hingeWidth
     },
     extendedPaneVertical: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#f2f2f2',
         left: paneRects.x,
-        height: paneRects.height * 2,
+        height: length  + DualScreenInfo.hingeWidth,
         width: paneRects.width
     }
 });
