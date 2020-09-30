@@ -10,12 +10,13 @@ import { paneType } from '../../../utilities/interfaces';
 import { PUSH_KEY } from '../../../shared/screenStore/keyStore/key.types';
 import { IHeaderAction } from '../../../shared/screenStore/headerStore/header.interface';
 import { PUSH_HEADER } from '../../../shared/screenStore/headerStore/header.types';
-import { IPaneElementAction } from '../../../shared/screenStore/paneElementStore/paneElement.interface';
+import { IPaneElementAction, IPaneElementState } from '../../../shared/screenStore/paneElementStore/paneElement.interface';
 import { PUSH_PANE_ELEMENT } from '../../../shared/screenStore/paneElementStore/paneElement.types';
 import { paneElementActionBuilder } from '../../../shared/screenStore/paneElementStore/tests/paneElement.methods.helpers';
 import { headerActionBuilder } from '../../../shared/screenStore/headerStore/tests/header.methods.helpers';
 import { KeyActionBuilder, mockKeyState } from '../../../shared/screenStore/keyStore/tests/key.methods.helpers';
-import { store } from '../../../appStore';
+import { resetApp, store } from '../../../appStore';
+
 describe('onePane methods', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -251,6 +252,31 @@ describe('onePane methods', () => {
         // Assert
         expect(replaceHeaderSpy).toBeCalled();
         expect(replaceHeaderSpy).toBeCalledTimes(1);
+    });
+
+    it('AddExtended calls', () => {
+        // Arrange
+        store.dispatch(resetApp())
+        const expectedKeyStore:IKeyState = {
+            keys: [{
+            key:'ONE_test',
+            isMerge: false,
+            screen: paneType.ONE,
+            isExtended: true
+            }]
+        }
+
+        const expectedPaneStore:IPaneElementState = {
+            PaneElements: {'ONE_test': <Fragment /> }
+        }
+        // Act
+        const _onePaneAdd = onePane.AddExtended('test', <Fragment />);
+        const finalState: IKeyState = store.getState().KeyReducers;
+        const finalPane: IPaneElementState = store.getState().PaneElementReducer;
+
+        //Assert
+        expect(finalState).toStrictEqual(expectedKeyStore);
+        expect(finalPane).toStrictEqual(expectedPaneStore);
     });
 
 });
