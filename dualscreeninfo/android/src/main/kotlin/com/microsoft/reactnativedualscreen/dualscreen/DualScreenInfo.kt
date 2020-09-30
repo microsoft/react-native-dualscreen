@@ -34,11 +34,33 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				Rect(0, 0, 0, 0)
 			} else boundings[0]
 		}
+	private val isStatusBarVisible: Boolean
+		get() {
+			val rectangle = Rect()
+			val window: Window? = currentActivity?.window;
+			window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
+			val statusBarHeight = rectangle.top
+			return statusBarHeight != 0
+		}
+	private val mStatusBarHeight: Int
+		get() {
+			var statusBarHeight: Int = 0;
+			if(isStatusBarVisible)
+			{
+				val resourceId: Int = reactApplicationContext.resources.getIdentifier("status_bar_height", "dimen", "android")
+				if (resourceId > 0) {
+					statusBarHeight = reactApplicationContext.resources.getDimensionPixelSize(resourceId)
+				}
+				return statusBarHeight;
+			}
+			return statusBarHeight;
+		}
 	private val windowRects: List<Rect>
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
 			val windowBounds = windowRect;
-			return if (boundings == null  || boundings.size == 0) {
+			return if (boundings == null || boundings.size == 0) {
+				windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
 				listOf(windowBounds)
 			} else {
 				val hingeRect = boundings[0]
@@ -47,6 +69,8 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
 				} else {
+					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
+					hingeRect.top = hingeRect.top - mStatusBarHeight;
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
 					listOf(topRect, bottomRect)
