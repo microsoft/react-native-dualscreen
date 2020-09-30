@@ -1,7 +1,7 @@
 {
   "name": "react-native-dualscreeninfo",
   "title": "React Native DualScreenInfo",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "React Native package for dual screen devices support (Surface Duo)",
   "react-native": "src/index.ts",
   "types": "lib/typescript/index.d.ts",

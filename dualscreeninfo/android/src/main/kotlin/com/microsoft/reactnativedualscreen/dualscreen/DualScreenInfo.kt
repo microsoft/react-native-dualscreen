@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.view.View
 import android.view.WindowManager
 import android.view.Surface
+import android.view.Window
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Arguments.createMap
 import com.facebook.react.bridge.LifecycleEventListener
