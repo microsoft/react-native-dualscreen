@@ -38,10 +38,8 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
     utilityStore.pushPaneRects(update.windowRects)
     
     if (update.isSpanning) {
-      utilityStore.pushPaneRects(update.windowRects)
       onePane.mergeToOppositePane();
     } else {
-      utilityStore.pushPaneRects(update.windowRects)
       twoPane.mergeToOppositePane();
     }
   };

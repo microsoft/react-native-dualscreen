@@ -4,11 +4,7 @@ import { IConfigComponent } from "../../utilities/interfaces";
 import { DeviceOrientation, WindowRect } from "react-native-dualscreeninfo";
 
 const pushPaneRects = (paneRects: WindowRect[]) => {
-    const _paneRects = store.getState().utilityStoreReducer.paneRects
-    if(_paneRects.length < 2)
-    {
-        store.dispatch(pushPaneRectsActions(paneRects));
-    }
+    store.dispatch(pushPaneRectsActions(paneRects));
 };
 
 const pushOrientation = (orientation: DeviceOrientation) => {
