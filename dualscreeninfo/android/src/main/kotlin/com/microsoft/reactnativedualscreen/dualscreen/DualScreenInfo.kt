@@ -64,12 +64,13 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				listOf(windowBounds)
 			} else {
 				val hingeRect = boundings[0]
-				hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
 				if (hingeRect.top == 0) {
 					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
 				} else {
+					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
+					hingeRect.top = hingeRect.top - mStatusBarHeight;
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
 					listOf(topRect, bottomRect)
