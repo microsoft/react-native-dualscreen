@@ -6,7 +6,7 @@ import { store, resetApp } from "../../../../appStore";
 import { Text } from "react-native";
 
 describe('PaneElementStore tests', () => {
-    beforeEach(() => {
+    afterEach(() => {
         store.dispatch(resetApp())
     });
 
@@ -49,12 +49,12 @@ describe('PaneElementStore tests', () => {
     it('REPLACE_PANE_ELEMENT', () => {
         // Arrange
         const expectedState: IPaneElementState = {
-            PaneElements: paneElementObjectBuilder('first', <Text>second</Text>)
+            PaneElements: paneElementObjectBuilder('first', <Fragment key='second' />)
         }
 
         // Act 
-        store.dispatch(pushElement('first', <Text>first</Text>))
-        store.dispatch(replacePaneElement('first', <Text>second</Text>))
+        store.dispatch(pushElement('first', <Fragment key='first' />))
+        store.dispatch(replacePaneElement('first', <Fragment key='second' />))
         const data = store.getState().PaneElementReducer
 
         // Assert
@@ -65,15 +65,15 @@ describe('PaneElementStore tests', () => {
     it('REPLACE_PANE_ELEMENT Multiple', () => {
         // Arrange
         const expectedState: IPaneElementState = {
-            PaneElements: paneElementObjectBuilder('first', <Text>fifth</Text>)
+            PaneElements: paneElementObjectBuilder('first',<Fragment key='fifth' />)
         }
 
         // Act 
-        store.dispatch(pushElement('first', <Text>first</Text>))
-        store.dispatch(replacePaneElement('first', <Text>second</Text>))
-        store.dispatch(replacePaneElement('first', <Text>third</Text>))
-        store.dispatch(replacePaneElement('first', <Text>fourth</Text>))
-        store.dispatch(replacePaneElement('first', <Text>fifth</Text>))
+        store.dispatch(pushElement('first', <Fragment key='first' />))
+        store.dispatch(replacePaneElement('first', <Fragment key='second' />))
+        store.dispatch(replacePaneElement('first', <Fragment key='third' />))
+        store.dispatch(replacePaneElement('first', <Fragment key='fourth' />))
+        store.dispatch(replacePaneElement('first', <Fragment key='fifth' />))
         const data = store.getState().PaneElementReducer
 
         // Assert
@@ -83,12 +83,12 @@ describe('PaneElementStore tests', () => {
     it('REPLACE_PANE_ELEMENT not found', () => {
         // Arrange
         const expectedState: IPaneElementState = {
-            PaneElements: paneElementObjectBuilder('first', <Text>first</Text>)
+            PaneElements: paneElementObjectBuilder('first',<Fragment key='first' />)
         }
 
         // Act 
-        store.dispatch(pushElement('first', <Text>first</Text>))
-        store.dispatch(replacePaneElement('does not exist', <Text>second</Text>))
+        store.dispatch(pushElement('first', <Fragment key='first' />))
+        store.dispatch(replacePaneElement('does not exist', <Fragment key='second' />))
         const data = store.getState().PaneElementReducer
 
         // Assert
@@ -100,15 +100,15 @@ describe('PaneElementStore tests', () => {
         const expectedState: IPaneElementState =
         {
             PaneElements: {
-                'first': <Text>first</Text>,
-                'third': <Text>third</Text>,
+                'first': <Fragment key='first' />,
+                'third': <Fragment key='third' />,
             }
         }
 
         // Act
-        store.dispatch(pushElement('first', <Text>first</Text>))
-        store.dispatch(pushElement('second', <Text>second</Text>))
-        store.dispatch(pushElement('third', <Text>third</Text>))
+        store.dispatch(pushElement('first',<Fragment key='first' />))
+        store.dispatch(pushElement('second',<Fragment key='second' />))
+        store.dispatch(pushElement('third', <Fragment key='third' />))
         store.dispatch(removePaneElementByKey('second'))
         const data = store.getState().PaneElementReducer
 
@@ -121,18 +121,18 @@ describe('PaneElementStore tests', () => {
         const expectedState: IPaneElementState =
         {
             PaneElements: {
-                'first': <Text>first</Text>,
-                'third': <Text>third</Text>,
-                'fifth': <Text>fifth</Text>,
+                'first': <Fragment key='first' />,
+                'third': <Fragment key='third' />,
+                'fifth': <Fragment key='fifth' />,
             }
         }
 
         // Act
-        store.dispatch(pushElement('first', <Text>first</Text>,))
-        store.dispatch(pushElement('second', <Text>second</Text>,))
-        store.dispatch(pushElement('third', <Text>third</Text>,))
-        store.dispatch(pushElement('fourth', <Text>fourth</Text>,))
-        store.dispatch(pushElement('fifth', <Text>fifth</Text>,))
+        store.dispatch(pushElement('first', <Fragment key='first' />,))
+        store.dispatch(pushElement('second', <Fragment key='second' />,))
+        store.dispatch(pushElement('third', <Fragment key='third' />,))
+        store.dispatch(pushElement('fourth', <Fragment key='fourth' />,))
+        store.dispatch(pushElement('fifth', <Fragment key='fifth' />,))
         store.dispatch(removePaneElementByKey('second'))
         store.dispatch(removePaneElementByKey('fourth'))
         const data = store.getState().PaneElementReducer
@@ -146,16 +146,16 @@ describe('PaneElementStore tests', () => {
         const expectedState: IPaneElementState =
         {
             PaneElements: {
-                'first': <Text>first</Text>,
-                'second': <Text>second</Text>,
-                'third': <Text>third</Text>,
+                'first': <Fragment key='first' />,
+                'second': <Fragment key='second' />,
+                'third': <Fragment key='third' />,
             }
         }
 
         // Act
-        store.dispatch(pushElement('first', <Text>first</Text>,))
-        store.dispatch(pushElement('second', <Text>second</Text>,))
-        store.dispatch(pushElement('third', <Text>third</Text>,))
+        store.dispatch(pushElement('first', <Fragment key='first' />,))
+        store.dispatch(pushElement('second', <Fragment key='second' />,))
+        store.dispatch(pushElement('third', <Fragment key='third' />,))
         store.dispatch(removePaneElementByKey('does not exist'))
         const data = store.getState().PaneElementReducer
 

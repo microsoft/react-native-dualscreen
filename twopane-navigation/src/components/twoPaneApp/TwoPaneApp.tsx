@@ -11,7 +11,6 @@ import utilityStore from '../../shared/utilityStore/utilityStore.methods';
 const TwoPaneApp = (props: ITwoPaneAppProps) => {
 
   const screenState = store.getState().KeyReducers.keys;
-  //TODO: possibly look into utility state for things like isMount to keep data between renders
   const hasOnePaneDefault: boolean = screenState.some(val => val.key === (`ONE_${props.onePaneDefault.key}`));
   const hasTwoPaneDefault: boolean = screenState.some(val => val.key === (`TWO_${props.twoPaneDefault.key}`));
 
@@ -26,7 +25,7 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
       }
     }
 
-    utilityStore.isTwoPane(DualScreenInfo.isSpanning)
+    utilityStore.pushIsTwoPane(DualScreenInfo.isSpanning)
     DualScreenInfo.addEventListener('didUpdateSpanning', _handleSpanningChanged);
     return () => {
       DualScreenInfo.removeEventListener('didUpdateSpanning', _handleSpanningChanged);
@@ -34,13 +33,13 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
   }, []);
 
   const _handleSpanningChanged = (update: DualScreenInfoPayload) => {
-    utilityStore.isTwoPane(update.isSpanning)
-
+    utilityStore.pushIsTwoPane(update.isSpanning)
+    utilityStore.pushOrientation(update.orientation)
+    utilityStore.pushPaneRects(update.windowRects)
+    
     if (update.isSpanning) {
-      utilityStore.pushPaneRects(update.windowRects)
       onePane.mergeToOppositePane();
     } else {
-      utilityStore.pushPaneRects(update.windowRects)
       twoPane.mergeToOppositePane();
     }
   };

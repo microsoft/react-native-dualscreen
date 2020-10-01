@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect, useState, Fragment } from 'react';
-import { View } from 'react-native';
 import { IPaneComponent } from '../../utilities/interfaces';
 
 import { getPaneElementSelector } from '../../shared/screenStore/paneElementStore/paneElement.selectors';
@@ -36,7 +35,8 @@ const TwoPaneHub = () => {
       { utilityState.paneRects.length > 0 &&
         <PaneRenderer
           paneComponent={screenStack} 
-          paneRects={utilityState.paneRects}/>
+          paneRects={utilityState.paneRects}
+          orientation={utilityState.orientation}/>
       }
     </Fragment>
 

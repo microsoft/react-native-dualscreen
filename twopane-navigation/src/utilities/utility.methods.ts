@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import React from 'react';
 import { store } from '../appStore';
 
 const isTwoPane = (): boolean => {

@@ -9,7 +9,8 @@ describe('ScreenOverlay Tests', () => {
 
     // Act
     const tree = renderer.create(
-      <PaneOverlay isVisible={true}>
+      <PaneOverlay isVisible={true}
+        onBackdropPress={()=>{}}>
         <Fragment />
       </PaneOverlay>
     );

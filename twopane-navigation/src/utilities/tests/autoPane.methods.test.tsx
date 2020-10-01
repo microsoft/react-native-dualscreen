@@ -3,6 +3,10 @@ import twoPane from '../../twoPane/twoPaneStore/twoPane.methods';
 import utility from '../utility.methods';
 import autoPane from '../autoPane.methods';
 import React, { Fragment } from 'react';
+import utilityStore from '../../shared/utilityStore/utilityStore.methods';
+import { resetApp, store } from '../../appStore';
+import { isTwoPaneAction } from '../../shared/utilityStore/utilityStore.actions';
+import { getUtilityStore } from '../../shared/utilityStore/utilityStore.selectors';
 
 describe('autoPane methods', () => {
     describe('onePane Correct Methods Called', () => {

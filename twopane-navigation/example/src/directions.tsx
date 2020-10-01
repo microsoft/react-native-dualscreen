@@ -6,7 +6,7 @@ export interface IDirectionsProps {
 
 const Directions = (props: IDirectionsProps) => {
   return (  
-    <Image source={require('./images/bingmapsdemo.png')}/>
+    <Image source={require('./images/directions.png')}/>
   );
 }
 
