@@ -91,16 +91,15 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private var mWindowRects: List<Rect> = emptyList()
 	private var mRotation: Int = Surface.ROTATION_0
 
+	private val onLayoutChange = View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+		emitUpdateStateEvent()
+	}
+
 	override fun getName() = "DualScreenInfo"
 
 	override fun initialize() {
 		super.initialize()
 		reactApplicationContext.addLifecycleEventListener(this)
-
-		val rootView: View? = currentActivity?.window?.decorView?.rootView
-		rootView?.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-			emitUpdateStateEvent()
-		}
 	}
 
 	override fun getConstants(): Map<String, Any>? {
@@ -112,10 +111,15 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
     }
 
 	override fun onHostResume() {
-		emitUpdateStateEvent()
+		val rootView: View? = currentActivity?.window?.decorView?.rootView
+		rootView?.addOnLayoutChangeListener(onLayoutChange)
+
 	}
 
-	override fun onHostPause() {}
+	override fun onHostPause() {
+		val rootView: View? = currentActivity?.window?.decorView?.rootView
+		rootView?.removeOnLayoutChangeListener(onLayoutChange)
+	}
 
 	override fun onHostDestroy() {}
 
