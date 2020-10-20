@@ -66,6 +66,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			} else {
 				val hingeRect = boundings[0]
 				if (hingeRect.top == 0) {
+					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
 					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
