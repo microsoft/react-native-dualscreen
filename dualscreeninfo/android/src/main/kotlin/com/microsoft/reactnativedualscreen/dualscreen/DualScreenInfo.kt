@@ -100,6 +100,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	override fun initialize() {
 		super.initialize()
 		reactApplicationContext.addLifecycleEventListener(this)
+		emitUpdateStateEvent()
 	}
 
 	override fun getConstants(): Map<String, Any>? {
