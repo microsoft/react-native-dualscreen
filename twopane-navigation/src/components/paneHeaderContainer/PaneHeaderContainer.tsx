@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, BackHandler, Alert } from 'react-native';
 import ScreenHeader from '../paneHeader/PaneHeader';
 import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
 import { Style, StyleText, StyleImage } from '../../utilities/interfaces';
+import utility from '../../utilities/utility.methods'
 
 interface IPaneHeaderContainerProps {
     isGoBack: boolean;
@@ -16,7 +17,26 @@ interface IPaneHeaderContainerProps {
 const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
 
     const { isGoBack, screenHeader, goBack, configDefaultHeader, configDefaultHeaderText, configDefaultHeaderIcon } = props;
-    
+
+    const backActionHandler = () => {
+        if(isGoBack)
+        {
+            goBack();
+        } else{
+            Alert.alert("Alert!", "Are you sure you want to exit app?", [
+              {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+              },
+              { text: "YES", onPress: () => BackHandler.exitApp() }
+            ]);
+        }
+        return true;
+      };
+
+    utility.useBackHandler(backActionHandler);
+
     return (
         <View style={{ flex: 1 }}>
             {isGoBack ? (
@@ -67,8 +87,8 @@ const paneHeaderContainerStyles = StyleSheet.create({
         backgroundColor: '#0078d4',
     },
     defaultIcon: {
-        width: 30, 
-        height: 30, 
+        width: 30,
+        height: 30,
         tintColor: 'white'
     }
 });
