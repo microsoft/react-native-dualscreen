@@ -56,29 +56,50 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			}
 			return statusBarHeight;
 		}
-	private val windowRects: List<Rect>
-		get() {
-			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
-			val windowBounds = windowRect;
-			return if (boundings == null || boundings.size == 0) {
-				windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
-				listOf(windowBounds)
-			} else {
-				val hingeRect = boundings[0]
-				if (hingeRect.top == 0) {
-					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
-					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
-					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
-					listOf(leftRect, rightRect)
-				} else {
-					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
-					hingeRect.top = hingeRect.top - mStatusBarHeight;
-					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
-					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
-					listOf(topRect, bottomRect)
-				}
-			}
-		}
+    private val isNavigationBarVisible: Boolean
+        get() {
+            val rectangle = Rect()
+            val window: Window? = currentActivity?.window;
+            window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
+            val statusBarHeight = rectangle.top
+            return statusBarHeight != 0
+        }
+    private val mNavigationBarHeight: Int
+        get() {
+            var navigationBarHeight: Int = 0;
+            if (isNavigationBarVisible) {
+                val resourceId: Int = reactApplicationContext.resources.getIdentifier("navigation_bar_height", "dimen", "android")
+                if (resourceId > 0) {
+                    navigationBarHeight = reactApplicationContext.resources.getDimensionPixelSize(resourceId)
+                }
+                return navigationBarHeight;
+            }
+            return navigationBarHeight;
+        }
+    private val windowRects: List<Rect>
+        get() {
+            val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
+            val windowBounds = windowRect;
+            val barHeight = mStatusBarHeight + mNavigationBarHeight;
+            return if (boundings == null || boundings.size == 0) {
+                windowBounds.bottom = windowBounds.bottom - barHeight;
+                listOf(windowBounds)
+            } else {
+                val hingeRect = boundings[0]
+                if (hingeRect.top == 0) {
+                    windowBounds.bottom = windowBounds.bottom - barHeight;
+                    val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
+                    val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
+                    listOf(leftRect, rightRect)
+                } else {
+                    hingeRect.bottom = hingeRect.bottom - barHeight;
+                    hingeRect.top = hingeRect.top - barHeight;
+                    val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
+                    val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
+                    listOf(topRect, bottomRect)
+                }
+            }
+        }
 	private val windowRect: Rect
 		get() {
 			val windowRect = Rect()
