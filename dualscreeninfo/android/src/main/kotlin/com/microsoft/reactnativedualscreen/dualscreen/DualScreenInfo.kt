@@ -2,6 +2,7 @@ package com.microsoft.reactnativedualscreen.dualscreen
 
 import android.content.Context
 import android.graphics.Rect
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import android.view.Surface
@@ -56,22 +57,33 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			}
 			return statusBarHeight;
 		}
+
+	private val mNavigationBarHeight: Int
+		get() {
+			val rectangle = Rect()
+			val displayMetrics = DisplayMetrics()
+			currentActivity?.window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
+			currentActivity?.windowManager?.defaultDisplay?.getRealMetrics(displayMetrics);
+			return displayMetrics.heightPixels - (rectangle.top + rectangle.height());
+		}
+
 	private val windowRects: List<Rect>
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
+			val barHeights = mStatusBarHeight + mNavigationBarHeight
 			val windowBounds = windowRect;
 			return if (boundings == null || boundings.size == 0) {
-				windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
+				windowBounds.bottom = windowBounds.bottom - barHeights;
 				listOf(windowBounds)
 			} else {
 				val hingeRect = boundings[0]
 				if (hingeRect.top == 0) {
-					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
+					windowBounds.bottom = windowBounds.bottom - barHeights;
 					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
 				} else {
-					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
+					hingeRect.bottom = hingeRect.bottom - barHeights;
 					hingeRect.top = hingeRect.top - mStatusBarHeight;
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
@@ -79,6 +91,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				}
 			}
 		}
+		
 	private val windowRect: Rect
 		get() {
 			val windowRect = Rect()
