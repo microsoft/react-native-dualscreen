@@ -47,7 +47,7 @@ namespace DualScreenInfo
         {
             if (const auto view{ winrt::ApplicationView::GetForCurrentView() })
             {
-                if (const auto appView{ view.try_as<winrt::IApplicationViewSpanningRects>() })
+                if (const auto appView{view.try_as<winrt::Windows::UI::ViewManagement::IApplicationViewSpanningRects>()})
                 {
                     const auto spanningRects{ appView.GetSpanningRects() };
                     std::vector<Rect> rects(spanningRects.Size());
