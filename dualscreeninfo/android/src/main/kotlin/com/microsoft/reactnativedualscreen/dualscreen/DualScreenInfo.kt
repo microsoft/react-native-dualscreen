@@ -67,31 +67,49 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			return displayMetrics.heightPixels - (rectangle.top + rectangle.height());
 		}
 
+	private val mNavigationBarWidth: Int
+		get() {
+			val rectangle = Rect()
+			val displayMetrics = DisplayMetrics()
+			currentActivity?.window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
+			currentActivity?.windowManager?.defaultDisplay?.getRealMetrics(displayMetrics);
+			return displayMetrics.widthPixels - (rectangle.left + rectangle.width());
+		}
+
 	private val windowRects: List<Rect>
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
 			val barHeights = mStatusBarHeight + mNavigationBarHeight
 			val windowBounds = windowRect;
 			return if (boundings == null || boundings.size == 0) {
-				windowBounds.bottom = windowBounds.bottom - barHeights;
+				if (rotationToOrientationString(mRotation) == "portrait" || rotationToOrientationString(mRotation) == "portraitFlipped") {
+					//single screen portrait
+					windowBounds.bottom = windowBounds.bottom - barHeights
+				} else {
+					//single screen landscape
+					windowBounds.right = windowBounds.right - mNavigationBarWidth
+				}
 				listOf(windowBounds)
 			} else {
 				val hingeRect = boundings[0]
 				if (hingeRect.top == 0) {
+					//dual screen portrait mode
 					windowBounds.bottom = windowBounds.bottom - barHeights;
 					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
 				} else {
-					hingeRect.bottom = hingeRect.bottom - barHeights;
+					// dual screen landscape mode
+					windowBounds.right = windowBounds.right - mNavigationBarWidth;
+					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight;
 					hingeRect.top = hingeRect.top - mStatusBarHeight;
+					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
 					listOf(topRect, bottomRect)
 				}
 			}
 		}
-		
 	private val windowRect: Rect
 		get() {
 			val windowRect = Rect()
