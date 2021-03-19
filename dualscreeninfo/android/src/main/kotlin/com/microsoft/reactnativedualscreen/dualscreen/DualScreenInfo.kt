@@ -49,14 +49,14 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			return stableInsetTop ?: 0
 		}
 
-	private val mNavigationBarHeight: Int
+	private val mBottomNavBarHeight: Int
 		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
 			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetBottom
 			return stableInsetBottom ?: 0
 		}
 
-	private val mNavigationBarWidth: Int
+	private val mRightNavBarHeight: Int
 		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
 			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
@@ -66,7 +66,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val windowRects: List<Rect>
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
-			var barHeights = mStatusBarHeight + mNavigationBarHeight;
+			var barHeights = mStatusBarHeight + mBottomNavBarHeight;
 			val windowBounds = windowRect;
 			return if (boundings == null || boundings.size == 0) {
 				if (rotationToOrientationString(rotation) == "portrait" || rotationToOrientationString(rotation) == "portraitFlipped") {
@@ -75,7 +75,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				} else {
 					//single screen landscape
 					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
-					windowBounds.right = windowBounds.right - mNavigationBarWidth
+					windowBounds.right = windowBounds.right - mRightNavBarHeight
 				}
 				listOf(windowBounds)
 			} else {
@@ -88,7 +88,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 					listOf(leftRect, rightRect)
 				} else {
 					// dual screen landscape mode
-					windowBounds.right = windowBounds.right - mNavigationBarWidth;
+					windowBounds.right = windowBounds.right - mRightNavBarHeight;
 					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight
 					hingeRect.top = hingeRect.top - mStatusBarHeight
 					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
