@@ -56,7 +56,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			return stableInsetBottom ?: 0
 		}
 
-	private val mRightNavBarHeight: Int
+	private val mSideNavBarHeight: Int
 		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
 			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
@@ -75,7 +75,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				} else {
 					//single screen landscape
 					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
-					windowBounds.right = windowBounds.right - mRightNavBarHeight
+					windowBounds.right = windowBounds.right - mSideNavBarHeight
 				}
 				listOf(windowBounds)
 			} else {
@@ -88,7 +88,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 					listOf(leftRect, rightRect)
 				} else {
 					// dual screen landscape mode
-					windowBounds.right = windowBounds.right - mRightNavBarHeight;
+					windowBounds.right = windowBounds.right - mSideNavBarHeight;
 					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight
 					hingeRect.top = hingeRect.top - mStatusBarHeight
 					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
