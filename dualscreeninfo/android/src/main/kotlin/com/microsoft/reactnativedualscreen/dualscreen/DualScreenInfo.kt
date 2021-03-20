@@ -1,12 +1,16 @@
 package com.microsoft.reactnativedualscreen.dualscreen
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Rect
+import android.os.Build
 import android.util.DisplayMetrics
-import android.view.View
-import android.view.WindowManager
-import android.view.Surface
-import android.view.Window
+import android.view.*
+import androidx.annotation.RequiresApi
+import androidx.core.view.WindowInsetsCompat
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Arguments.createMap
 import com.facebook.react.bridge.LifecycleEventListener
@@ -36,62 +40,64 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 				Rect(0, 0, 0, 0)
 			} else boundings[0]
 		}
-	private val isStatusBarVisible: Boolean
-		get() {
-			val rectangle = Rect()
-			val window: Window? = currentActivity?.window;
-			window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
-			val statusBarHeight = rectangle.top
-			return statusBarHeight != 0
-		}
+
 	private val mStatusBarHeight: Int
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			var statusBarHeight: Int = 0;
-			if(isStatusBarVisible)
-			{
-				val resourceId: Int = reactApplicationContext.resources.getIdentifier("status_bar_height", "dimen", "android")
-				if (resourceId > 0) {
-					statusBarHeight = reactApplicationContext.resources.getDimensionPixelSize(resourceId)
-				}
-				return statusBarHeight;
-			}
-			return statusBarHeight;
+
+			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetTop
+			return stableInsetTop ?: 0
 		}
 
-	private val mNavigationBarHeight: Int
+	private val mBottomNavBarHeight: Int
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val rectangle = Rect()
-			val displayMetrics = DisplayMetrics()
-			currentActivity?.window?.decorView?.getWindowVisibleDisplayFrame(rectangle)
-			currentActivity?.windowManager?.defaultDisplay?.getRealMetrics(displayMetrics);
-			return displayMetrics.heightPixels - (rectangle.top + rectangle.height());
+			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetBottom
+			return stableInsetBottom ?: 0
+		}
+
+	private val mSideNavBarHeight: Int
+		@RequiresApi(Build.VERSION_CODES.M)
+		get() {
+			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
+			return stableInsetRight ?: 0
 		}
 
 	private val windowRects: List<Rect>
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
-			val barHeights = mStatusBarHeight + mNavigationBarHeight
+			var barHeights = mStatusBarHeight + mBottomNavBarHeight;
 			val windowBounds = windowRect;
 			return if (boundings == null || boundings.size == 0) {
-				windowBounds.bottom = windowBounds.bottom - barHeights;
+				if (rotationToOrientationString(rotation) == "portrait" || rotationToOrientationString(rotation) == "portraitFlipped") {
+					//single screen portrait
+					windowBounds.bottom = windowRect.bottom - barHeights
+				} else {
+					//single screen landscape
+					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
+					windowBounds.right = windowBounds.right - mSideNavBarHeight
+				}
 				listOf(windowBounds)
 			} else {
-				val hingeRect = boundings[0]
+				val hingeRect = hinge
 				if (hingeRect.top == 0) {
+					//dual screen portrait mode
 					windowBounds.bottom = windowBounds.bottom - barHeights;
 					val leftRect = Rect(0, 0, hingeRect.left, windowBounds.bottom)
 					val rightRect = Rect(hingeRect.right, 0, windowBounds.right, windowBounds.bottom)
 					listOf(leftRect, rightRect)
 				} else {
-					hingeRect.bottom = hingeRect.bottom - barHeights;
-					hingeRect.top = hingeRect.top - mStatusBarHeight;
+					// dual screen landscape mode
+					windowBounds.right = windowBounds.right - mSideNavBarHeight;
+					hingeRect.bottom = hingeRect.bottom - mStatusBarHeight
+					hingeRect.top = hingeRect.top - mStatusBarHeight
+					windowBounds.bottom = windowBounds.bottom - mStatusBarHeight;
 					val topRect = Rect(0, 0, windowBounds.right, hingeRect.top)
 					val bottomRect = Rect(0, hingeRect.bottom, windowBounds.right, windowBounds.bottom)
 					listOf(topRect, bottomRect)
 				}
 			}
 		}
-		
 	private val windowRect: Rect
 		get() {
 			val windowRect = Rect()
@@ -99,6 +105,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 			rootView?.getDrawingRect(windowRect)
 			return windowRect
 		}
+
 	private val isDualScreenDevice = reactApplicationContext.packageManager.hasSystemFeature(FEATURE_NAME)
 	private var mIsSpanning: Boolean = false
 	private var mWindowRects: List<Rect> = emptyList()
@@ -127,7 +134,6 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	override fun onHostResume() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.addOnLayoutChangeListener(onLayoutChange)
-
 	}
 
 	override fun onHostPause() {
