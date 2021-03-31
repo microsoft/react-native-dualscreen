@@ -24,8 +24,13 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
         utilityStore.pushConfig(props.config);
       }
     }
+    const getPayloadAsync = async () => {
+      const payload = await DualScreenInfo.getPayload();
+      _handleSpanningChanged(payload);
+    }
 
     utilityStore.pushIsTwoPane(DualScreenInfo.isSpanning)
+    getPayloadAsync();
     DualScreenInfo.addEventListener('didUpdateSpanning', _handleSpanningChanged);
     return () => {
       DualScreenInfo.removeEventListener('didUpdateSpanning', _handleSpanningChanged);
