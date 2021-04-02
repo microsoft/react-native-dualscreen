@@ -12,6 +12,7 @@ declare module 'react-native' {
 			isDualScreenDevice: boolean
 			hingeWidth: number
 			orientation: DeviceOrientation
+			getPayload(): Promise<DualScreenInfoPayload>
 		}
 	}
 }
@@ -55,6 +56,10 @@ class RNDualScreenInfoModule implements IDualScreenInfoModule {
 
 	removeEventListener(type: DualScreenInfoEvent, handler: SpannedChangeHandler): void {
 		this.eventEmitter.removeListener(type, handler);
+	}
+
+	getPayload(): Promise<DualScreenInfoPayload> {
+		return this.getPayload();
 	}
 
 	get isDualScreenDevice(): boolean {
