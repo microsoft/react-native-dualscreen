@@ -117,12 +117,12 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	}
 
 	override fun getConstants(): Map<String, Any>? {
-		val constants: MutableMap<String, Any> = HashMap()
-		constants[HINGE_WIDTH_KEY] = 34
+        val constants: MutableMap<String, Any> = HashMap()
+    	constants[HINGE_WIDTH_KEY] = 34
 		constants[IS_DUALSCREEN_DEVICE_KEY] = isDualScreenDevice
 
-		return constants
-	}
+    	return constants
+    }
 
 	override fun onHostResume() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
