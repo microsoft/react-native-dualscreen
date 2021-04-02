@@ -59,7 +59,7 @@ class RNDualScreenInfoModule implements IDualScreenInfoModule {
 	}
 
 	getPayload(): Promise<DualScreenInfoPayload> {
-		return this.getPayload();
+		return NativeModules.DualScreenInfo.getPayload();
 	}
 
 	get isDualScreenDevice(): boolean {
