@@ -1,21 +1,14 @@
 package com.microsoft.reactnativedualscreen.dualscreen
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Build
-import android.util.DisplayMetrics
-import android.view.*
+import android.view.Surface
+import android.view.View
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.core.view.WindowInsetsCompat
-import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.*
 import com.facebook.react.bridge.Arguments.createMap
-import com.facebook.react.bridge.LifecycleEventListener
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.microsoft.device.display.DisplayMask
 
@@ -124,12 +117,12 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	}
 
 	override fun getConstants(): Map<String, Any>? {
-        val constants: MutableMap<String, Any> = HashMap()
-    	constants[HINGE_WIDTH_KEY] = 34
+		val constants: MutableMap<String, Any> = HashMap()
+		constants[HINGE_WIDTH_KEY] = 34
 		constants[IS_DUALSCREEN_DEVICE_KEY] = isDualScreenDevice
 
-    	return constants
-    }
+		return constants
+	}
 
 	override fun onHostResume() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
@@ -167,29 +160,29 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return (px.toDouble() / (metrics.density))
 	}
 
-    @ReactMethod
-    fun getPayload(promise: Promise) {
-        if (reactApplicationContext.hasActiveCatalystInstance()) {
-            val isSpanning = isSpanning()
+	@ReactMethod
+	fun getPayload(promise: Promise) {
+		if (reactApplicationContext.hasActiveCatalystInstance()) {
+			val isSpanning = isSpanning()
 
-            val params = createMap()
-            val windowRectsArray = Arguments.createArray()
+			val params = createMap()
+			val windowRectsArray = Arguments.createArray()
 
-            windowRects.forEach {
-                val rectMap = createMap()
-                rectMap.putDouble("width", convertPixelsToDp(it.right - it.left))
-                rectMap.putDouble("height", convertPixelsToDp(it.bottom - it.top))
-                rectMap.putDouble("x", convertPixelsToDp(it.left))
-                rectMap.putDouble("y", convertPixelsToDp(it.top))
-                windowRectsArray.pushMap(rectMap)
-            }
+			windowRects.forEach {
+				val rectMap = createMap()
+				rectMap.putDouble("width", convertPixelsToDp(it.right - it.left))
+				rectMap.putDouble("height", convertPixelsToDp(it.bottom - it.top))
+				rectMap.putDouble("x", convertPixelsToDp(it.left))
+				rectMap.putDouble("y", convertPixelsToDp(it.top))
+				windowRectsArray.pushMap(rectMap)
+			}
 
-            params.putBoolean("isSpanning", isSpanning)
-            params.putArray("windowRects", windowRectsArray)
-            params.putString("orientation", rotationToOrientationString(rotation))
-            promise.resolve(params);
-        }
-    }
+			params.putBoolean("isSpanning", isSpanning)
+			params.putArray("windowRects", windowRectsArray)
+			params.putString("orientation", rotationToOrientationString(rotation))
+			promise.resolve(params);
+		}
+	}
 
 	private fun emitUpdateStateEvent() {
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
