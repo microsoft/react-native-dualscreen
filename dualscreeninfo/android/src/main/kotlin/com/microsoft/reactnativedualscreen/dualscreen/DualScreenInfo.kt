@@ -160,29 +160,29 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return (px.toDouble() / (metrics.density))
 	}
 
-	@ReactMethod
-	fun getPayload(promise: Promise) {
-		if (reactApplicationContext.hasActiveCatalystInstance()) {
-			val isSpanning = isSpanning()
+    @ReactMethod
+    fun getPayload(promise: Promise) {
+        if (reactApplicationContext.hasActiveCatalystInstance()) {
+            val isSpanning = isSpanning()
 
-			val params = createMap()
-			val windowRectsArray = Arguments.createArray()
+            val params = createMap()
+            val windowRectsArray = Arguments.createArray()
 
-			windowRects.forEach {
-				val rectMap = createMap()
-				rectMap.putDouble("width", convertPixelsToDp(it.right - it.left))
-				rectMap.putDouble("height", convertPixelsToDp(it.bottom - it.top))
-				rectMap.putDouble("x", convertPixelsToDp(it.left))
-				rectMap.putDouble("y", convertPixelsToDp(it.top))
-				windowRectsArray.pushMap(rectMap)
-			}
+            windowRects.forEach {
+                val rectMap = createMap()
+                rectMap.putDouble("width", convertPixelsToDp(it.right - it.left))
+                rectMap.putDouble("height", convertPixelsToDp(it.bottom - it.top))
+                rectMap.putDouble("x", convertPixelsToDp(it.left))
+                rectMap.putDouble("y", convertPixelsToDp(it.top))
+                windowRectsArray.pushMap(rectMap)
+            }
 
-			params.putBoolean("isSpanning", isSpanning)
-			params.putArray("windowRects", windowRectsArray)
-			params.putString("orientation", rotationToOrientationString(rotation))
-			promise.resolve(params);
-		}
-	}
+            params.putBoolean("isSpanning", isSpanning)
+            params.putArray("windowRects", windowRectsArray)
+            params.putString("orientation", rotationToOrientationString(rotation))
+            promise.resolve(params);
+        }
+    }
 
 	private fun emitUpdateStateEvent() {
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
