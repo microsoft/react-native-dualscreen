@@ -19,7 +19,7 @@ const keyReducers = (
                 key: `${action.payload.screen}_${action.payload.key}`,
                 isMerge: action.payload.isMerge,
                 screen: action.payload.screen,
-                isExtended: action.payload.isExtended
+                extensionOptions: action.payload.extensionOptions
             }
             return {
                 ...state, //state retains state for all variables
@@ -111,7 +111,7 @@ function updateObjectInArray(keys: IKeyObject[], action: IKeyAction) {
             key: item.key,
             isMerge: item.isMerge,
             screen: action.payload.screen,
-            isExtended: item.isExtended
+            extensionOptions: item.extensionOptions
         }
 
         // Otherwise, this is the one we want - return an updated value

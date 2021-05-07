@@ -3,16 +3,17 @@ import twoPane from '../twoPane/twoPaneStore/twoPane.methods';
 import onePane from '../onePane/onePaneStore/onePane.methods';
 import react, { ReactElement } from 'react';
 import { IHeader } from '../shared/screenStore/headerStore/header.interface';
+import { IExtensionOptions } from './interfaces';
 
 
 /**
  * Pushes element to the top of the stack or replaces the original with the new element
  */
-const Add = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false) => {
+const Add = (key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false, extensionOptions?: IExtensionOptions) => {
   if (utility.isTwoPane()) {
-    twoPane.Add(key, element, header, isMergeTWO);
+    twoPane.Add(key, element, header, isMergeTWO, extensionOptions);
   } else {
-    onePane.Add(key, element, header, isMergeONE);
+    onePane.Add(key, element, header, isMergeONE, extensionOptions);
   }
 };
 

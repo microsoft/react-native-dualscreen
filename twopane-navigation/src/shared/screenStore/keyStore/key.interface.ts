@@ -1,4 +1,4 @@
-import { paneType } from "../../../utilities/interfaces";
+import {  IExtensionOptions, paneType } from "../../../utilities/interfaces";
 
 export interface IKeyState {
     keys: Array<IKeyObject>;
@@ -10,7 +10,7 @@ export interface IKeyAction {
         screen: paneType,
         key: string;
         isMerge: boolean;
-        isExtended: boolean;
+        extensionOptions?: IExtensionOptions
     };
 }
 
@@ -42,5 +42,5 @@ export interface IKeyObject {
     key: string,
     isMerge: boolean;
     screen: paneType;
-    isExtended:boolean;
+    extensionOptions?: IExtensionOptions
 }

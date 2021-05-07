@@ -1,16 +1,16 @@
 import { IKeyAction, IKeyState, IKeyObject } from '../key.interface';
-import { paneType } from '../../../../utilities/interfaces';
+import { IExtensionOptions, paneType } from '../../../../utilities/interfaces';
 import { store } from '../../../../appStore';
 import * as keyActions from '../key.actions';
 
-export const KeyActionBuilder = (type: string, screen: paneType, key: string, isMerge: boolean, isExtended:boolean = false): IKeyAction => {
+export const KeyActionBuilder = (type: string, screen: paneType, key: string, isMerge: boolean, extensionOptions?: IExtensionOptions): IKeyAction => {
     return {
         type: type,
         payload: {
             screen: screen,
             key: key,
             isMerge: isMerge,
-            isExtended: isExtended
+            extensionOptions
         }
     }
 }
@@ -27,12 +27,12 @@ export const mockKeyState = (screen: paneType, isMerge: boolean, prependKey: str
     }
 }
 
-export const keyObjectBuilder = (key: string, isMerge: boolean, screen: paneType, isExtended:boolean = false): IKeyObject => {
+export const keyObjectBuilder = (key: string, isMerge: boolean, screen: paneType, extensionOptions?: IExtensionOptions): IKeyObject => {
     return {
         key: key,
         isMerge: isMerge,
         screen: screen,
-        isExtended: isExtended
+        extensionOptions
     }
 }
 

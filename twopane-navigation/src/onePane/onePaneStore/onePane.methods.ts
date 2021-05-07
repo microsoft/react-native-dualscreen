@@ -1,5 +1,6 @@
 import { store } from '../../appStore';
 import {
+  IExtensionOptions,
   paneType
 } from '../../utilities/interfaces';
 import { pushKey, popToFront, popScreen, moveToFront, changeScreen } from '../../shared/screenStore/keyStore/key.actions';
@@ -9,8 +10,8 @@ import { ReactElement } from 'react';
 import { IHeader } from '../../shared/screenStore/headerStore/header.interface';
 import { IKeyState, IKeyObject } from '../../shared/screenStore/keyStore/key.interface';
 
-const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false, isExtended:boolean = false) => {
-    store.dispatch(pushKey(paneType.ONE, key, isMerge, isExtended));
+const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false, extensionOptions?: IExtensionOptions) => {
+    store.dispatch(pushKey(paneType.ONE, key, isMerge, extensionOptions));
     store.dispatch(pushElement(`${paneType.ONE}_${key}`, element));
     if (header) {
       store.dispatch(pushHeader(`${paneType.ONE}_${key}`, header));
@@ -19,7 +20,7 @@ const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isM
 /**
  * Pushes element to the top of the onePane stack or replaces the original with the new element
  */
-const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
+const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false, extensionOptions?: IExtensionOptions) => {
   const keys: IKeyState = store.getState().KeyReducers;
   const index = keys.keys.findIndex(val => val.key === `${paneType.ONE}_${key}`);
   if(index > -1) {
@@ -34,15 +35,8 @@ const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: bool
     }
     store.dispatch(moveToFront(paneType.ONE, `${paneType.ONE}_${key}`));
   } else {
-    AddPaneElement(key, element, header, isMerge)
+    AddPaneElement(key, element, header, isMerge, extensionOptions)
   }
-};
-
-/**
- * Pushes element to the top of the onePane stack thats extended over both onePane and twoPane
- */
-const AddExtended = (key: string, element: ReactElement, header?: IHeader) => {
-    AddPaneElement(key, element, header, false, true)
 };
 
 /**
@@ -118,7 +112,6 @@ const ReplaceHeader = (key: string, header: IHeader) => {
 
 const _onePaneFunctions = {
   Add,
-  AddExtended,
   AddOrMoveToFront,
   mergeToOppositePane,
   BackToHome,

@@ -4,7 +4,6 @@ import { StyleProp, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
 export interface IPaneComponent extends IBasePaneComponent {
   pane: paneType;
-  isExtended: boolean;
 }
 
 export type Style = StyleProp<ViewStyle>;
@@ -27,6 +26,12 @@ export interface IBasePaneComponent {
   key: string;
   paneElement: ReactElement;
   header?: IHeader;
+  extensionOptions?: IExtensionOptions
+}
+
+export interface IExtensionOptions {
+  isExtendedLandscape: boolean;
+  isExtendedPortrait: boolean;
 }
 
 export interface IEmptyAction {

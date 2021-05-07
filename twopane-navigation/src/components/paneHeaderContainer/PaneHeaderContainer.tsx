@@ -60,7 +60,6 @@ const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
                     }
                 />
             ) : (
-                    //</View>
                     <ScreenHeader
                         style={[
                             paneHeaderContainerStyles.HeaderDefault, configDefaultHeader!
@@ -83,14 +82,14 @@ const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
 
 const paneHeaderContainerStyles = StyleSheet.create({
     HeaderDefault: {
-        paddingHorizontal: 25,
-        backgroundColor: '#0078d4',
+      paddingHorizontal: 18,
+      backgroundColor: '#0078d4'
     },
     defaultIcon: {
-        width: 30,
-        height: 30,
-        tintColor: 'white'
+      width: 30,
+      height: 30,
+      tintColor: 'white'
     }
-});
+  });
 
 export default PaneHeaderContainer;

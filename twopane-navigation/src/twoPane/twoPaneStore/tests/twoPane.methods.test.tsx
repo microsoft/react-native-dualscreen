@@ -200,12 +200,12 @@ describe('twoPane methods', () => {
     const expectedState: IKeyState =
     {
       keys:
-        [{ key: 'TWO_test3', isMerge: true, screen: paneType.ONE, isExtended: false},
-        { key: 'TWO_test5', isMerge: true, screen: paneType.ONE, isExtended: false },
-        { key: 'TWO_test1', isMerge: true, screen: paneType.ONE, isExtended: false },
-        { key: 'TWO_test2', isMerge: false, screen: paneType.TWO, isExtended: false },
-        { key: 'TWO_TWO_first', isMerge: false, screen: paneType.TWO, isExtended: false },
-        { key: 'TWO_TWO_second', isMerge: false, screen: paneType.TWO, isExtended: false }]
+        [{ key: 'TWO_test3', isMerge: true, screen: paneType.ONE },
+        { key: 'TWO_test5', isMerge: true, screen: paneType.ONE },
+        { key: 'TWO_test1', isMerge: true, screen: paneType.ONE },
+        { key: 'TWO_test2', isMerge: false, screen: paneType.TWO },
+        { key: 'TWO_TWO_first', isMerge: false, screen: paneType.TWO  },
+        { key: 'TWO_TWO_second', isMerge: false, screen: paneType.TWO }]
     }
 
     const popScreenSpy = jest.spyOn(keyActions, 'popScreen')

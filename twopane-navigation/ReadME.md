@@ -68,8 +68,8 @@ const TwoPaneAppDefaultComponents: ITwoPaneAppProps = {
     paneElement: <OnePane/>,
     header: {
       title: 'OnePaneTitle'
-    }
-
+    },
+    extensionOptions: { isExtendedLandscape: true, isExtendedPortrait: false }
   },
   twoPaneDefault: {
     key: 'twoPane',
@@ -127,7 +127,7 @@ To navigate between panes we have a variety of built-in methods one can call. Fo
 
 ### Moving Forward
 
-- (one | two | auto)Pane.Add(key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false) - Pushes element to the top of the stack or replaces the original with the new element
+- (one | two | auto)Pane.Add(key: string, element: ReactElement, header?: IHeader, isMergeONE = false, isMergeTWO = false, extensionOptions?: IExtensionOptions) - Pushes element to the top of the stack or replaces the original with the new element
 
   - For this example we will be pushing to twoPane if both panes are active or we will be pushing to the onePane if only using one pane
 
@@ -139,7 +139,8 @@ To navigate between panes we have a variety of built-in methods one can call. Fo
       title: 'NextExampleScreen'
     },
     true,
-    true) 
+    true
+    ) 
 ```
 
   - Now if we run our application in twoPane mode we will see that we have only pushed the new screen to the twoPane Stack
@@ -246,6 +247,25 @@ now when we start with a TWO screen application and move it to ONE screen we can
 ![ScreenMerge Example](https://user-images.githubusercontent.com/68410905/91344506-e1ef0180-e792-11ea-92e5-9f01bae0d360.PNG)
 - Notice in twoPane how our header icon and text is now white where previously it was red. this is because we did not override the colors in our onePane config and because NextExampleScreen has now Merged into onePane it now takes on the default onePane stylings
 
+### Extending a Pane
+
+If you want a pane to span across both screens in a specific orientation, you can pass IExtensionOptions to any of the Add methods, or to the default pane components. 
+
+```
+onePane.Add(
+  'NextExampleScreen',
+  <NextExampleScreen />,
+  header: {
+    title: 'NextExampleScreen'
+  },
+  true,
+  { isExtendedLandscape: false, isExtendedPortrait: true }
+)
+
+```
+
+
+
 ## __Utilities__
 
 
@@ -291,8 +311,6 @@ and will call the appropriate action to the current pane
   If twoPane is active will call an action only to the twoPane stack
 
 #### Methods
-
-- (ONE)Pane.AddExtended - Pushes element to the top of the onePane stack thats extended over both onePane and twoPane
 
 - (ONE | TWO )Pane.mergeToOppositePane - When the apps active panes changes move panes marked as isMerged to onePane
 
