@@ -1,4 +1,4 @@
-import { IPaneComponent, paneType } from "../../utilities/interfaces";
+import { IExtensionOptions, IPaneComponent, paneType, Style } from "../../utilities/interfaces";
 import { StyleSheet, View} from "react-native";
 import PaneHeaderContainer from "../paneHeaderContainer/PaneHeaderContainer";
 import onePane from "../../onePane/onePaneStore/onePane.methods";
@@ -8,51 +8,79 @@ import { WindowRect, DualScreenInfo, DeviceOrientation } from "react-native-dual
 import { getUtilityStore } from "../../shared/utilityStore/utilityStore.selectors";
 
 interface IPaneRendererProps {
-    paneComponent: IPaneComponent[];
+    paneComponents: IPaneComponent[];
     paneRects: WindowRect[];
     orientation: DeviceOrientation;
-
 }
 
 const PaneRenderer = (props: IPaneRendererProps) => {
     const defaultConfig = getUtilityStore().config;
-    const {  paneComponent, paneRects, orientation } = props;
-    const isGoBackOne = paneComponent.filter(x => x.pane === paneType.ONE).length > 1;
-    const isGoBackTwo = paneComponent.filter(x => x.pane === paneType.TWO).length > 1;
-    
-    const renderStyles = (pane: paneType, isExtended: boolean) => {
-        if(pane === paneType.TWO)
+    const {  paneComponents, paneRects, orientation } = props;
+    const isGoBackOne = paneComponents.filter(x => x.pane === paneType.ONE).length > 1;
+    const isGoBackTwo = paneComponents.filter(x => x.pane === paneType.TWO).length > 1;
+    const firstPane = paneComponents[0];
+    const isPaneOneExtended = () => {
+        if (
+          firstPane.pane === paneType.ONE &&
+          firstPane.extensionOptions?.isExtendedLandscape &&
+          (orientation === DeviceOrientation.Landscape ||
+            orientation === DeviceOrientation.LandscapeFlipped)
+        ) {
+          return true;
+        } else if (
+          firstPane.pane === paneType.ONE &&
+          firstPane.extensionOptions?.isExtendedPortrait &&
+          (orientation === DeviceOrientation.Portrait ||
+            orientation === DeviceOrientation.PortraitFlipped)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      };
+    const renderStyles = (pane: paneType, extensionOptions?: IExtensionOptions) => {
+        if (pane === paneType.TWO)
         {
-            if(paneRects.length > 1)
+            if ((orientation === DeviceOrientation.Landscape || orientation === DeviceOrientation.LandscapeFlipped) && extensionOptions?.isExtendedLandscape && paneRects.length > 1)
+            {    
+                return Object.assign({},extendedStyles(paneRects[0], paneRects[0].height + paneRects[1].height).extendedPaneVertical, defaultConfig?.twoPane?.paneBody!)
+            } 
+            else if ((orientation === DeviceOrientation.Portrait || orientation === DeviceOrientation.PortraitFlipped) && extensionOptions?.isExtendedPortrait && paneRects.length > 1) 
             {
+                return Object.assign({},extendedStyles(paneRects[0], paneRects[0].width * 2).extendedPaneHorizontal, defaultConfig?.twoPane?.paneBody!)
+            }          
+            else if(paneRects.length > 1)
+            {
+                if (isPaneOneExtended()) {
+                    return Object.assign({},twoPaneStyles(paneRects[1]).paneOneExtended, defaultConfig?.twoPane?.paneBody!);
+                }
                 return Object.assign({},twoPaneStyles(paneRects[1]).twoPane, defaultConfig?.twoPane?.paneBody!);
             }
             return Object.assign({},twoPaneStyles(paneRects[0]).twoPaneManual, defaultConfig?.twoPane?.paneBody!);
 
         } else {
-            if(isExtended) {
-                if(orientation === DeviceOrientation.Landscape || orientation === DeviceOrientation.LandscapeFlipped)
-                {
-                    if(paneRects.length > 1)
-                    {
-                        return Object.assign({},extendedStyles(paneRects[0], paneRects[0].height + paneRects[1].height).extendedPaneVertical, defaultConfig?.onePane?.paneBody!)
-                    }
-                    return Object.assign({},extendedStyles(paneRects[0], paneRects[0].height).extendedPaneVertical, defaultConfig?.onePane?.paneBody!)
-                }
+            if ((orientation === DeviceOrientation.Landscape || orientation === DeviceOrientation.LandscapeFlipped) && extensionOptions?.isExtendedLandscape && paneRects.length > 1)
+            {   
+                return Object.assign({},extendedStyles(paneRects[0], paneRects[0].height + paneRects[1].height).extendedPaneVertical, defaultConfig?.onePane?.paneBody!)
+                
+            } 
+            else if ((orientation === DeviceOrientation.Portrait || orientation === DeviceOrientation.PortraitFlipped) && extensionOptions?.isExtendedPortrait && paneRects.length > 1) 
+            {
                 return Object.assign({},extendedStyles(paneRects[0], paneRects[0].width * 2).extendedPaneHorizontal, defaultConfig?.onePane?.paneBody!)
             }
             return Object.assign({},onePaneStyles(paneRects[0]).onePane, defaultConfig?.onePane?.paneBody!)
         }
+        
     }
 
 // TODO MOVE TO ONE RENDER
     return (
         <Fragment>
             {
-                paneComponent.map((val: IPaneComponent) =>
+                paneComponents.map((val: IPaneComponent) =>
                 <View key={val.key}>
-                        <View style={renderStyles(val.pane, val.isExtended)}>
-                            <View style={generalStyles.header}>
+                        <View style={renderStyles(val.pane, val.extensionOptions)}>
+                            <View style={generalStyles(paneType.ONE ? defaultConfig.onePane?.paneHeader! : defaultConfig.twoPane?.paneHeader!).header}>
                                 <PaneHeaderContainer
                                     isGoBack={ val.pane === paneType.ONE ? isGoBackOne : isGoBackTwo}
                                     screenHeader={val.header}
@@ -63,7 +91,7 @@ const PaneRenderer = (props: IPaneRendererProps) => {
                                 />
                             </View>
                             <View
-                                style={generalStyles.body}>
+                                style={generalStyles(paneType.ONE ? defaultConfig.onePane?.paneHeader! : defaultConfig.twoPane?.paneHeader!).body}>
                                 {val.paneElement}
                             </View>
                         </View>
@@ -74,14 +102,21 @@ const PaneRenderer = (props: IPaneRendererProps) => {
     )
 }
 
-const generalStyles = StyleSheet.create({
+const generalStyles = (headerConfigStyle: Style) =>
+  StyleSheet.create({
     header: {
-        height: '10%'
+      position: 'absolute',
+      top: 0,
+      width: '100%'
     },
     body: {
-        height: '90%',
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: StyleSheet.flatten(headerConfigStyle).height ?? 56
     }
-})
+  });
 
 const onePaneStyles = (paneRects : WindowRect) => StyleSheet.create({
     onePane: {
@@ -127,6 +162,12 @@ const twoPaneStyles = (paneRects : WindowRect) => StyleSheet.create({
         left: paneRects.width + DualScreenInfo.hingeWidth,
         height: paneRects.height,
         width: paneRects.width,
+    },
+    paneOneExtended: {
+        left: 0,
+        height: 0,
+        width: 0,
+        top: 0
     }
 });
 

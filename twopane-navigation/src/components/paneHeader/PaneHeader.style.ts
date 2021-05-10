@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export const PaneHeaderStyles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'flex-start',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 56
   },
   title: {
     fontSize: 20,
@@ -14,6 +14,6 @@ export const PaneHeaderStyles = StyleSheet.create({
     marginLeft: 6
   },
   leftButton: {
-    padding: 10
+    paddingRight: 30
   }
 });

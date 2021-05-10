@@ -200,12 +200,12 @@ describe('onePane methods', () => {
         const expectedState: IKeyState =
         {
             keys:
-                [{ key: 'ONE_test2', isMerge: false, screen: paneType.ONE, isExtended: false},
-                { key: 'ONE_ONE_first', isMerge: false, screen: paneType.ONE, isExtended: false },
-                { key: 'ONE_ONE_second', isMerge: false, screen: paneType.ONE, isExtended: false },
-                { key: 'ONE_test3', isMerge: true, screen: paneType.TWO, isExtended: false },
-                { key: 'ONE_test5', isMerge: true, screen: paneType.TWO, isExtended: false },
-                { key: 'ONE_test1', isMerge: true, screen: paneType.TWO, isExtended: false }]
+                [{ key: 'ONE_test2', isMerge: false, screen: paneType.ONE },
+                { key: 'ONE_ONE_first', isMerge: false, screen: paneType.ONE },
+                { key: 'ONE_ONE_second', isMerge: false, screen: paneType.ONE },
+                { key: 'ONE_test3', isMerge: true, screen: paneType.TWO },
+                { key: 'ONE_test5', isMerge: true, screen: paneType.TWO },
+                { key: 'ONE_test1', isMerge: true, screen: paneType.TWO }]
         }
 
         const popScreenSpy = jest.spyOn(keyActions, 'popScreen')
@@ -252,31 +252,6 @@ describe('onePane methods', () => {
         // Assert
         expect(replaceHeaderSpy).toBeCalled();
         expect(replaceHeaderSpy).toBeCalledTimes(1);
-    });
-
-    it('AddExtended calls', () => {
-        // Arrange
-        store.dispatch(resetApp())
-        const expectedKeyStore:IKeyState = {
-            keys: [{
-            key:'ONE_test',
-            isMerge: false,
-            screen: paneType.ONE,
-            isExtended: true
-            }]
-        }
-
-        const expectedPaneStore:IPaneElementState = {
-            PaneElements: {'ONE_test': <Fragment /> }
-        }
-        // Act
-        const _onePaneAdd = onePane.AddExtended('test', <Fragment />);
-        const finalState: IKeyState = store.getState().KeyReducers;
-        const finalPane: IPaneElementState = store.getState().PaneElementReducer;
-
-        //Assert
-        expect(finalState).toStrictEqual(expectedKeyStore);
-        expect(finalPane).toStrictEqual(expectedPaneStore);
     });
 
 });

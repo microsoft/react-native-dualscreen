@@ -1,4 +1,4 @@
-import { paneType } from "../../../utilities/interfaces";
+import { IExtensionOptions, paneType } from "../../../utilities/interfaces";
 import { IKeyAction, IScreenOnlyAction, IKeyScreenAction } from "./key.interface";
 import { PUSH_KEY, POP_KEY, MOVE_TO_FRONT_KEY, REMOVE_KEY, CHANGE_SCREEN_KEY, POP_TO_FRONT_KEY } from "./key.types";
 
@@ -6,14 +6,14 @@ export const pushKey = (
     screen: paneType,
     key: string,
     isMerge: boolean,
-    isExtended: boolean = false
+    extensionOptions?: IExtensionOptions
 ): IKeyAction => ({
     type: PUSH_KEY,
     payload: {
         screen: screen,
         key: key,
         isMerge: isMerge,
-        isExtended: isExtended
+        extensionOptions
     }
 });
 

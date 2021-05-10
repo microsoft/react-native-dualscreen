@@ -1,5 +1,6 @@
 import { store } from '../../appStore';
 import {
+  IExtensionOptions,
   paneType
 } from '../../utilities/interfaces';
 import { pushKey, popToFront, popScreen, moveToFront, changeScreen } from '../../shared/screenStore/keyStore/key.actions';
@@ -10,8 +11,8 @@ import { IKeyState, IKeyObject } from '../../shared/screenStore/keyStore/key.int
 import { ReactElement } from 'react';
 
 
-const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
-    store.dispatch(pushKey(paneType.TWO, key, isMerge));
+const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false, extensionOptions?: IExtensionOptions) => {
+    store.dispatch(pushKey(paneType.TWO, key, isMerge, extensionOptions));
     store.dispatch(pushElement(`${paneType.TWO}_${key}`, element));
     if (header) {
       store.dispatch(pushHeader(`${paneType.TWO}_${key}`, header));
@@ -21,7 +22,7 @@ const AddPaneElement= (key: string, element: ReactElement, header?: IHeader, isM
 /**
  * Pushes element to the top of the twoPane stack or replaces the original with the new element
  */
-const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
+const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false, extensionOptions?: IExtensionOptions) => {
   const keys: IKeyState = store.getState().KeyReducers;
   const index = keys.keys.findIndex(val => val.key === `${paneType.TWO}_${key}`);
   if(index > -1) {
@@ -37,14 +38,14 @@ const Add = (key: string, element: ReactElement, header?: IHeader, isMerge: bool
     store.dispatch(moveToFront(paneType.TWO, `${paneType.TWO}_${key}`));
   
   } else {
-    AddPaneElement(key, element, header, isMerge)
+    AddPaneElement(key, element, header, isMerge, extensionOptions)
   }
 };
 
 /**
  * Pushes element to the top of the twoPane stack or moves the original to the top of the stack
  */
-const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false,) => {
+const AddOrMoveToFront = (key: string, element: ReactElement, header?: IHeader, isMerge: boolean = false) => {
   const keys: IKeyState = store.getState().KeyReducers;
   const twoPaneState: IKeyObject[] = keys.keys.filter(x => x.screen === paneType.TWO)
 

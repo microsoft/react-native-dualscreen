@@ -25,7 +25,7 @@ const TwoPaneHub = () => {
         paneElement: twoPaneElementState.PaneElements[val.key],
         header: headerState.headers[val.key],
         pane: val.screen,
-        isExtended: val.isExtended
+        extensionOptions: val.extensionOptions
       }
     })
   }, [keyState, twoPaneElementState, headerState])
@@ -34,7 +34,7 @@ const TwoPaneHub = () => {
     <Fragment>
       { utilityState.paneRects.length > 0 &&
         <PaneRenderer
-          paneComponent={screenStack} 
+          paneComponents={screenStack} 
           paneRects={utilityState.paneRects}
           orientation={utilityState.orientation}/>
       }

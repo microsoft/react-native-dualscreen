@@ -14,23 +14,25 @@ const TwoPaneApp = (props: ITwoPaneAppProps) => {
   const hasOnePaneDefault: boolean = screenState.some(val => val.key === (`ONE_${props.onePaneDefault.key}`));
   const hasTwoPaneDefault: boolean = screenState.some(val => val.key === (`TWO_${props.twoPaneDefault.key}`));
 
+  const getPayloadAsync = async () => {
+    const payload = await DualScreenInfo.getPayload();
+    _handleSpanningChanged(payload);
+  }
+
   useEffect(() => {
+    getPayloadAsync();
+    
     if (!hasOnePaneDefault && !hasTwoPaneDefault) {
-      onePane.Add(props.onePaneDefault.key, props.onePaneDefault.paneElement, props?.onePaneDefault?.header!);
-      twoPane.Add(props.twoPaneDefault.key, props.twoPaneDefault.paneElement, props?.twoPaneDefault?.header!);
+      onePane.Add(props.onePaneDefault.key, props.onePaneDefault.paneElement, props?.onePaneDefault?.header!, false, props?.onePaneDefault?.extensionOptions);
+      twoPane.Add(props.twoPaneDefault.key, props.twoPaneDefault.paneElement, props?.twoPaneDefault?.header!, false, props?.twoPaneDefault?.extensionOptions);
 
       if(props.config !== undefined)
       {
         utilityStore.pushConfig(props.config);
       }
     }
-    const getPayloadAsync = async () => {
-      const payload = await DualScreenInfo.getPayload();
-      _handleSpanningChanged(payload);
-    }
 
     utilityStore.pushIsTwoPane(DualScreenInfo.isSpanning)
-    getPayloadAsync();
     DualScreenInfo.addEventListener('didUpdateSpanning', _handleSpanningChanged);
     return () => {
       DualScreenInfo.removeEventListener('didUpdateSpanning', _handleSpanningChanged);
