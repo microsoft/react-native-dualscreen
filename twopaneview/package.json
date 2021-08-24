@@ -18,8 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microsoft/react-native-dualscreen.git",
-    "baseUrl": "https://github.com/microsoft/react-native-dualscreen"
+    "url": "https://github.com/microsoft/react-native-dualscreen.git",
+    "directory": "twopaneview"
   },
   "keywords": [
     "react-native",
