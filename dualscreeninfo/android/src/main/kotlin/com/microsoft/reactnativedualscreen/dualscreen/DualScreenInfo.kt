@@ -35,24 +35,23 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 
 	private val mStatusBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-
-			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetTop
+			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.top
 			return stableInsetTop ?: 0
 		}
 
 	private val mBottomNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetBottom
+			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.bottom
 			return stableInsetBottom ?: 0
 		}
 
 	private val mSideNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
+			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.right
 			return stableInsetRight ?: 0
 		}
 
