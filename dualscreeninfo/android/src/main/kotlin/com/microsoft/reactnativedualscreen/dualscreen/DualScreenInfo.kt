@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.os.Build
 import android.view.Surface
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import com.facebook.react.bridge.*
