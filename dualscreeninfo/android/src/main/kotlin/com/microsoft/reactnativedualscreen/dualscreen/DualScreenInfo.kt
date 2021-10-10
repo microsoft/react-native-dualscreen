@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.os.Build
 import android.view.Surface
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import com.facebook.react.bridge.*
@@ -24,7 +25,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val rotation: Int
 		get() {
 			val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
-			return wm?.defaultDisplay?.rotation ?: Surface.ROTATION_0
+			return reactApplicationContext.display?.rotation ?: Surface.ROTATION_0
 		}
 	private val hinge: Rect
 		get() {
