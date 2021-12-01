@@ -73,12 +73,23 @@ const PaneRenderer = (props: IPaneRendererProps) => {
         
     }
 
-// TODO MOVE TO ONE RENDER
+    const isAccessible = (component: IPaneComponent) => {
+        const isLastPaneOne = component.pane === paneType.ONE && paneComponents.filter(x => x.pane === paneType.ONE).pop()?.key === component.key;
+        const isLastPaneTwo = component.pane === paneType.TWO && paneComponents.filter(x => x.pane === paneType.TWO).pop()?.key === component.key;
+
+        if ((paneRects.length > 1 && (isLastPaneOne || isLastPaneTwo && !isPaneOneExtended())) || (paneRects.length === 1 && isLastPaneOne)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     return (
         <Fragment>
             {
                 paneComponents.map((val: IPaneComponent) =>
-                <View key={val.key}>
+                    <View importantForAccessibility={isAccessible(val) ? 'auto' : 'no-hide-descendants'} key={val.key}>
                         <View style={renderStyles(val.pane, val.extensionOptions)}>
                             <View style={generalStyles(paneType.ONE ? defaultConfig.onePane?.paneHeader! : defaultConfig.twoPane?.paneHeader!).header}>
                                 <PaneHeaderContainer
@@ -95,7 +106,7 @@ const PaneRenderer = (props: IPaneRendererProps) => {
                                 {val.paneElement}
                             </View>
                         </View>
-                </View>
+                    </View>
                 )
             }
         </Fragment >
