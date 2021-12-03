@@ -81,8 +81,9 @@ const PaneRenderer = (props: IPaneRendererProps) => {
             component.pane === paneType.TWO &&
             paneTwoComponents.pop()?.key === component.key;
         /*
-            If app is in single screen mode enable for top element of pane one. 
-            If app is in two screen mode enable for top element of pane one, and top element of pane two but only if pane one is not extended across both screens.
+            If app is in single screen mode and component is at the top of the pane one stack, return true.
+            If app is in two screen mode and component is at the top of pane one stack, return true.
+                If component is at the top of pane two stack and pane one is not extended across both screens, return true.
         */
         if (
             (paneRects.length === 1 && isTopPaneOne) ||
