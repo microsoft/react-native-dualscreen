@@ -16,8 +16,8 @@ interface IPaneRendererProps {
 const PaneRenderer = (props: IPaneRendererProps) => {
     const defaultConfig = getUtilityStore().config;
     const {  paneComponents, paneRects, orientation } = props;
-    const isGoBackOne = paneComponents.filter(x => x.pane === paneType.ONE).length > 1;
-    const isGoBackTwo = paneComponents.filter(x => x.pane === paneType.TWO).length > 1;
+    const paneOneComponents = paneComponents.filter(x => x.pane === paneType.ONE);
+    const paneTwoComponents = paneComponents.filter(x => x.pane === paneType.TWO);
     const firstPane = paneComponents[0];
     const isPaneOneExtended = () => {
         if (
@@ -73,27 +73,37 @@ const PaneRenderer = (props: IPaneRendererProps) => {
         
     }
 
-    const isAccessible = (component: IPaneComponent) => {
-        const isLastPaneOne = component.pane === paneType.ONE && paneComponents.filter(x => x.pane === paneType.ONE).pop()?.key === component.key;
-        const isLastPaneTwo = component.pane === paneType.TWO && paneComponents.filter(x => x.pane === paneType.TWO).pop()?.key === component.key;
-
-        if ((paneRects.length > 1 && (isLastPaneOne || isLastPaneTwo && !isPaneOneExtended())) || (paneRects.length === 1 && isLastPaneOne)) {
+    const isComponentDisplayed = (component: IPaneComponent) => {
+        const isTopPaneOne =
+            component.pane === paneType.ONE &&
+            paneOneComponents.pop()?.key === component.key;
+        const isTopPaneTwo =
+            component.pane === paneType.TWO &&
+            paneTwoComponents.pop()?.key === component.key;
+        /*
+            If app is in single screen mode enable for top element of pane one. 
+            If app is in two screen mode enable for top element of pane one, and top element of pane two but only if pane one is not extended across both screens.
+        */
+        if (
+            (paneRects.length === 1 && isTopPaneOne) ||
+            (paneRects.length > 1 &&
+                (isTopPaneOne || (isTopPaneTwo && !isPaneOneExtended())))
+        ) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
-    }
+    };
 
     return (
         <Fragment>
             {
                 paneComponents.map((val: IPaneComponent) =>
-                    <View importantForAccessibility={isAccessible(val) ? 'auto' : 'no-hide-descendants'} key={val.key}>
+                    <View importantForAccessibility={isComponentDisplayed(val) ? 'auto' : 'no-hide-descendants'} key={val.key}>
                         <View style={renderStyles(val.pane, val.extensionOptions)}>
                             <View style={generalStyles(paneType.ONE ? defaultConfig.onePane?.paneHeader! : defaultConfig.twoPane?.paneHeader!).header}>
                                 <PaneHeaderContainer
-                                    isGoBack={ val.pane === paneType.ONE ? isGoBackOne : isGoBackTwo}
+                                    isGoBack={ val.pane === paneType.ONE ? paneOneComponents.length > 1 : paneTwoComponents.length > 1}
                                     screenHeader={val.header}
                                     goBack={() => (val.pane === paneType.ONE ? onePane.GoBack() : twoPane.GoBack())}
                                     configDefaultHeader={val.pane === paneType.ONE ? defaultConfig.onePane?.paneHeader! : defaultConfig.twoPane?.paneHeader!}
