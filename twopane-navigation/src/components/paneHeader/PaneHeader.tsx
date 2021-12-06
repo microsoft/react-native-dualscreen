@@ -16,7 +16,7 @@ const PaneHeader = (props: IPaneHeaderProps) => {
       {props?.leftIcon! !== undefined && (
         <Fragment>
           <TouchableOpacity
-            accessibilityLabel={'header_button'}
+            accessibilityLabel={'Open Drawer/Navigation Menu'}
             style={PaneHeaderStyles.leftButton}
             onPress={() => props?.IconPress!()} //element
           >
