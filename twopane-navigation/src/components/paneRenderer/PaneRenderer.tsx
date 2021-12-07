@@ -163,15 +163,15 @@ const PaneRenderer = (props: IPaneRendererProps) => {
     return (
         <Fragment>
             {paneComponents.map((val: IPaneComponent) => (
-                <View
-                    importantForAccessibility={
-                        isComponentDisplayed(val)
-                            ? 'auto'
-                            : 'no-hide-descendants'
-                    }
-                    key={val.key}
-                >
-                    <View style={renderStyles(val.pane, val.extensionOptions)}>
+                <View key={val.key}>
+                    <View
+                        importantForAccessibility={
+                            isComponentDisplayed(val)
+                                ? 'auto'
+                                : 'no-hide-descendants'
+                        }
+                        style={renderStyles(val.pane, val.extensionOptions)}
+                    >
                         <View
                             style={
                                 generalStyles(
