@@ -92,7 +92,7 @@ const GoBack = () => {
 
   store.dispatch(removeHeaderByKey(twoPaneState.peek().key));
   store.dispatch(removePaneElementByKey(twoPaneState.peek().key));
-  store.dispatch(popScreen(paneType.TWO));
+  store.dispatch(popScreen(twoPaneState.peek().key));
 
 };
 

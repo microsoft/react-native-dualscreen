@@ -1,3 +1,4 @@
+import { IKeyOnlyAction } from 'src';
 import { IExtensionOptions, paneType } from "../../../utilities/interfaces";
 import { IKeyAction, IScreenOnlyAction, IKeyScreenAction } from "./key.interface";
 import { PUSH_KEY, POP_KEY, MOVE_TO_FRONT_KEY, REMOVE_KEY, CHANGE_SCREEN_KEY, POP_TO_FRONT_KEY } from "./key.types";
@@ -31,10 +32,10 @@ export const popToFront = (screen: paneType): IScreenOnlyAction => ({
 /**
  * Go back one element in the stack
  */
-export const popScreen = (screen: paneType): IScreenOnlyAction => ({
+export const popScreen = (key: string): IKeyOnlyAction => ({
     type: POP_KEY,
     payload: {
-        screen: screen
+        key: key
     }
 });
 
