@@ -91,7 +91,7 @@ const GoBack = () => {
 
   store.dispatch(removeHeaderByKey(onePaneState.peek().key));
   store.dispatch(removePaneElementByKey(onePaneState.peek().key));
-  store.dispatch(popScreen(paneType.ONE));
+  store.dispatch(popScreen(onePaneState.peek().key));
 
 };
 

@@ -43,26 +43,13 @@ const keyReducers = (
             };
         }
         case POP_KEY: {
-            const onePaneState = state.keys.filter(x => x.screen === paneType.ONE);
-            const twoPaneState = state.keys.filter(x => x.screen === paneType.TWO);
-
-            if (action.payload.screen === paneType.ONE) {
-                //safety guard
-                if(onePaneState.length > 1)
-                {
-                    onePaneState.pop();
-                }
-            } else {
-                //safety guard
-                if(twoPaneState.length > 1)
-                {
-                    twoPaneState.pop();
-                }
-            }
+            const newKeys = state.keys;
+            const keyIndexToRemove = newKeys.findIndex(x => x.key === action.payload.key);
+            newKeys.splice(keyIndexToRemove, 1);
 
             return {
                 ...state,
-                keys: [...onePaneState, ...twoPaneState]
+                keys: newKeys
             };
         }
         case MOVE_TO_FRONT_KEY: {

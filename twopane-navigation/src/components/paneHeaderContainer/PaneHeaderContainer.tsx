@@ -19,7 +19,7 @@ const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
     const { isGoBack, screenHeader, goBack, configDefaultHeader, configDefaultHeaderText, configDefaultHeaderIcon } = props;
 
     const backActionHandler = () => {
-        if(isGoBack)
+        if(isGoBack && screenHeader?.canGoBack !== false)
         {
             goBack();
         } else{
@@ -29,7 +29,7 @@ const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
                 onPress: () => null,
                 style: "cancel"
               },
-              { text: "YES", onPress: () => BackHandler.exitApp() }
+              { text: "Yes", onPress: () => BackHandler.exitApp() }
             ]);
         }
         return true;
@@ -39,7 +39,7 @@ const PaneHeaderContainer = (props: IPaneHeaderContainerProps) => {
 
     return (
         <View style={{ flex: 1 }}>
-            {isGoBack ? (
+            {isGoBack && screenHeader?.canGoBack !== false ? (
                 <ScreenHeader
                     style={[
                             paneHeaderContainerStyles.HeaderDefault, configDefaultHeader!

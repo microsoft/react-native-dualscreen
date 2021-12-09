@@ -25,12 +25,7 @@ interface IPaneRendererProps {
 const PaneRenderer = (props: IPaneRendererProps) => {
     const defaultConfig = getUtilityStore().config;
     const { paneComponents, paneRects, orientation } = props;
-    const paneOneComponents = paneComponents.filter(
-        (x) => x.pane === paneType.ONE
-    );
-    const paneTwoComponents = paneComponents.filter(
-        (x) => x.pane === paneType.TWO
-    );
+
     const firstPane = paneComponents[0];
     const isPaneOneExtended = () => {
         if (
@@ -138,6 +133,12 @@ const PaneRenderer = (props: IPaneRendererProps) => {
     };
 
     const isComponentDisplayed = (component: IPaneComponent) => {
+        const paneOneComponents = paneComponents.filter(
+            (x) => x.pane === paneType.ONE
+        );
+        const paneTwoComponents = paneComponents.filter(
+            (x) => x.pane === paneType.TWO
+        );
         const isTopPaneOne =
             component.pane === paneType.ONE &&
             paneOneComponents.pop()?.key === component.key;
@@ -162,68 +163,78 @@ const PaneRenderer = (props: IPaneRendererProps) => {
 
     return (
         <Fragment>
-            {paneComponents.map((val: IPaneComponent) => (
-                <View key={val.key}>
-                    <View
-                        importantForAccessibility={
-                            isComponentDisplayed(val)
-                                ? 'auto'
-                                : 'no-hide-descendants'
-                        }
-                        style={renderStyles(val.pane, val.extensionOptions)}
-                    >
+            {paneComponents.map((val: IPaneComponent) => {
+                return (
+                    <View key={val.key}>
                         <View
-                            style={
-                                generalStyles(
-                                    paneType.ONE
-                                        ? defaultConfig.onePane?.paneHeader!
-                                        : defaultConfig.twoPane?.paneHeader!
-                                ).header
+                            importantForAccessibility={
+                                isComponentDisplayed(val)
+                                    ? 'auto'
+                                    : 'no-hide-descendants'
                             }
+                            style={renderStyles(val.pane, val.extensionOptions)}
                         >
-                            <PaneHeaderContainer
-                                isGoBack={
-                                    val.pane === paneType.ONE
-                                        ? paneOneComponents.length > 1
-                                        : paneTwoComponents.length > 1
+                            <View
+                                style={
+                                    generalStyles(
+                                        paneType.ONE
+                                            ? defaultConfig.onePane?.paneHeader!
+                                            : defaultConfig.twoPane?.paneHeader!
+                                    ).header
                                 }
-                                screenHeader={val.header}
-                                goBack={() =>
-                                    val.pane === paneType.ONE
-                                        ? onePane.GoBack()
-                                        : twoPane.GoBack()
+                            >
+                                <PaneHeaderContainer
+                                    isGoBack={
+                                        val.pane === paneType.ONE
+                                            ? paneComponents.filter(
+                                                  (x) => x.pane === paneType.ONE
+                                              ).length > 1
+                                            : paneComponents.filter(
+                                                  (x) => x.pane === paneType.TWO
+                                              ).length > 1
+                                    }
+                                    screenHeader={val.header}
+                                    goBack={() =>
+                                        val.pane === paneType.ONE
+                                            ? onePane.GoBack()
+                                            : twoPane.GoBack()
+                                    }
+                                    configDefaultHeader={
+                                        val.pane === paneType.ONE
+                                            ? defaultConfig.onePane?.paneHeader!
+                                            : defaultConfig.twoPane?.paneHeader!
+                                    }
+                                    configDefaultHeaderText={
+                                        val.pane === paneType.ONE
+                                            ? defaultConfig.onePane
+                                                  ?.paneHeaderText!
+                                            : defaultConfig.twoPane
+                                                  ?.paneHeaderText!
+                                    }
+                                    configDefaultHeaderIcon={
+                                        val.pane === paneType.ONE
+                                            ? defaultConfig.onePane
+                                                  ?.paneHeaderIcon!
+                                            : defaultConfig.twoPane
+                                                  ?.paneHeaderIcon!
+                                    }
+                                />
+                            </View>
+                            <View
+                                style={
+                                    generalStyles(
+                                        paneType.ONE
+                                            ? defaultConfig.onePane?.paneHeader!
+                                            : defaultConfig.twoPane?.paneHeader!
+                                    ).body
                                 }
-                                configDefaultHeader={
-                                    val.pane === paneType.ONE
-                                        ? defaultConfig.onePane?.paneHeader!
-                                        : defaultConfig.twoPane?.paneHeader!
-                                }
-                                configDefaultHeaderText={
-                                    val.pane === paneType.ONE
-                                        ? defaultConfig.onePane?.paneHeaderText!
-                                        : defaultConfig.twoPane?.paneHeaderText!
-                                }
-                                configDefaultHeaderIcon={
-                                    val.pane === paneType.ONE
-                                        ? defaultConfig.onePane?.paneHeaderIcon!
-                                        : defaultConfig.twoPane?.paneHeaderIcon!
-                                }
-                            />
-                        </View>
-                        <View
-                            style={
-                                generalStyles(
-                                    paneType.ONE
-                                        ? defaultConfig.onePane?.paneHeader!
-                                        : defaultConfig.twoPane?.paneHeader!
-                                ).body
-                            }
-                        >
-                            {val.paneElement}
+                            >
+                                {val.paneElement}
+                            </View>
                         </View>
                     </View>
-                </View>
-            ))}
+                );
+            })}
         </Fragment>
     );
 };

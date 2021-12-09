@@ -6,6 +6,8 @@ export interface IHeader {
     IconPress?: () => void;
     style?: StyleProp<ViewStyle>; //expand this out
     leftIcon?: ReactElement;
+    canGoBack?: boolean;
+    buttonAccessibilityLabel?: string;
 }
 
 export interface IHeaderObject {
