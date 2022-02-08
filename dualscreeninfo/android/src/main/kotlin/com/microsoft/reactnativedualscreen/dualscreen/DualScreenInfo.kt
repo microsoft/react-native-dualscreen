@@ -36,24 +36,39 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 
 	private val mStatusBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.R)
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsets(WindowInsets.Type.systemBars())?.top
-			return stableInsetTop ?: 0
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+				val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsets(WindowInsets.Type.systemBars())?.top
+				return stableInsetTop ?: 0
+			} else {
+				val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetTop
+				return stableInsetTop ?: 0
+			}
 		}
 
 	private val mBottomNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.R)
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsets(WindowInsets.Type.systemBars())?.bottom
-			return stableInsetBottom ?: 0
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+				val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsets(WindowInsets.Type.systemBars())?.bottom
+				return stableInsetBottom ?: 0
+			} else {
+				val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetBottom
+				return stableInsetBottom ?: 0
+			}
 		}
 
 	private val mSideNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.R)
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsets(WindowInsets.Type.systemBars())?.right
-			return stableInsetRight ?: 0
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+				val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsets(WindowInsets.Type.systemBars())?.right
+				return stableInsetRight ?: 0
+			} else {
+				val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
+				return stableInsetRight ?: 0
+			}
 		}
 
 	private val windowRects: List<Rect>
