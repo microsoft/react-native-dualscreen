@@ -24,8 +24,12 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 	private val rotation: Int
 		get() {
-			val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
-			return currentActivity?.display?.rotation ?: Surface.ROTATION_0
+			return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+				currentActivity?.display?.rotation ?: Surface.ROTATION_0
+			} else {
+				val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+				wm?.defaultDisplay?.rotation ?: Surface.ROTATION_0
+			}
 		}
 	private val hinge: Rect
 		get() {
