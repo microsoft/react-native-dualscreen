@@ -16,7 +16,7 @@
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",
     "@react-native-community/viewpager": "git+https://github.com/thewulf7/react-native-viewpager.git#97224cf",
-    "react": "16.9.0",
+
     "react-native": "0.61.5",
     "react-native-dualscreeninfo": "^0.1.0",
     "react-native-elements": "^1.2.7",
@@ -26,12 +26,12 @@
     "react-native-screens": "^2.0.0-alpha.29",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.16",
-    "react-native-windows": "^0.60.0-vnext.127"
+    "react-navigation-stack": "^2.0.16"
+
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
+    "@babel/core": "7.16.5",
+    "@babel/runtime": "7.16.5",
     "@types/jest": "^24.0.24",
     "@types/react-native": "^0.60.25",
     "@types/react-test-renderer": "16.9.1",

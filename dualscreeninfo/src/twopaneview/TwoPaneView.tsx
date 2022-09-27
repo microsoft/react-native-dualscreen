@@ -9,15 +9,7 @@ export interface TwoPaneViewProps {
 
 export const RNTwoPaneView = ({ leftComponent, rightComponent}: TwoPaneViewProps) => {
   return (
-    <View style={_styles.containerStyle}>
-      <View style={_styles.innerContainerStyle}>
-        {leftComponent}
-      </View>
-      <Hinge/>
-      <View style={_styles.innerContainerStyle}>
-        {rightComponent}
-      </View>
-    </View>
+    ""
   );
 };
 
