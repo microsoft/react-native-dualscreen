@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { DualScreenInfo, DualScreenInfoPayload } from 'react-native-dualscreeninfo'
 import MasterDetail from './MasterDetail'
-import TwoPage from './TwoPage'
-import CompanionPane from './CompanionPane'
+//import TwoPage from './TwoPage'
+//import CompanionPane from './CompanionPane'
 import DualScreenContext from './DualScreenContext'
 
 export default function App() {
@@ -19,9 +19,9 @@ export default function App() {
         <DualScreenContext.Provider
             value={{ isDualMode }}
         >
-            {/*<MasterDetail />*/}
+            <MasterDetail />
             {/*<CompanionPane />*/}
-            <TwoPage />
+            {/*<TwoPage />*/}
         </DualScreenContext.Provider>
     )
 }
