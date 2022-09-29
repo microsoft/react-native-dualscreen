@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { NativeSyntheticEvent, View } from 'react-native'
-import ViewPager, { ViewPagerOnPageSelectedEventData } from '@react-native-community/viewpager'
-import { PricingCard } from 'react-native-elements'
 import { Hinge, DualScreenInfo } from 'react-native-dualscreeninfo'
+import { Text } from 'react-native';
 import DualScreenContext from '../DualScreenContext'
 
 type Slide = {
@@ -51,30 +50,6 @@ export default function () {
     const pageMargin = DualScreenInfo.hingeWidth / 2
 
     return (
-        <ViewPager
-            style={{ flex: 1 }}
-            initialPage={currentSlide}
-            pageWidth={context.isDualMode ? 0.5 : 1.0}
-            pageMargin={pageMargin}
-            onPageSelected={(event: NativeSyntheticEvent<ViewPagerOnPageSelectedEventData>) => {
-                setCurrentSlide(event.nativeEvent.position)
-            }}
-        >
-            {list.map((slide: Slide, i: number) => (
-                <View key={i} style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1 }}>
-                        <PricingCard
-                            color='#4f9deb'
-                            title={slide.title}
-                            price={slide.price}
-                            info={slide.info}
-                            button={slide.button}
-                        />
-                    </View>
-                    {context.isDualMode && <Hinge />}
-                    {context.isDualMode && <View style={{ flex: 1 }} />}
-                </View>
-            ))}
-        </ViewPager>
+        <Text>Page</Text>
     )
 }

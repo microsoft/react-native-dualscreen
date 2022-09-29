@@ -5,7 +5,6 @@ import android.util.Log;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
-import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 public class MainActivity extends ReactActivity {
 
@@ -18,13 +17,15 @@ public class MainActivity extends ReactActivity {
         return "ReactNativeDualScreenExample";
     }
 
+    // https://docs.swmansion.com/react-native-gesture-handler/docs/guides/migrating-off-rnghenabledroot/
+
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
        return new ReactActivityDelegate(this, getMainComponentName()) {
           @Override
           protected ReactRootView createRootView() {
-              Log.i("RNFOLD","createRootView");
-            return new RNGestureHandlerEnabledRootView(MainActivity.this);
+            Log.i("RNFOLD","createRootView");
+            return new ReactRootView(getContext());
           }
        };
     }

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { NativeSyntheticEvent, View } from 'react-native'
-import ViewPager, { ViewPagerOnPageSelectedEventData } from '@react-native-community/viewpager'
+import PagerView, { PagerViewOnPageSelectedEventData } from 'react-native-pager-view'
 import { ListItem, PricingCard } from 'react-native-elements'
 import { Hinge } from 'react-native-dualscreeninfo'
 import DualScreenContext from '../DualScreenContext'
@@ -44,7 +44,7 @@ export default function () {
     let viewPagerRef: ViewPager | null
 
     const viewPager = (
-        <ViewPager
+        <PagerView
             style={{ flex: 1 }}
             ref={(ref) => viewPagerRef = ref}
             initialPage={currentSlide}
@@ -65,19 +65,19 @@ export default function () {
                     </View>
                 ))
             }
-        </ViewPager>
+        </PagerView>
     )
 
     if (!context.isDualMode) {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }} collapsable={false}>
                 {viewPager}
             </View>
         )
     }
 
     return (
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{ flex: 1, flexDirection: 'row' }} collapsable={false}>
             <View style={{ flex: 1 }}>
                 {viewPager}
             </View>
