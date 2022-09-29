@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ListItem } from 'react-native-elements'
+import { ListItem, Avatar } from 'react-native-elements'
 import { View } from 'react-native'
 import { Person } from '../models'
 import { NavigationStackProp } from 'react-navigation-stack'
@@ -9,6 +9,7 @@ interface HomeScreenProps {
     displayForDual?: boolean
     navigation: NavigationStackProp<{}>
 }
+
 
 const list: Array<Person> = [
     {
@@ -47,6 +48,7 @@ export default function HomeScreen({ displayForDual, navigation }: HomeScreenPro
             {
                 list.map((person, i) => (
                     <ListItem key={i} onPress={onItemClick(person)}>
+                        <Avatar rounded={true} source={{ uri: person.avatar_url }} />
                         <ListItem.Content>
                         <ListItem.Title>{person.name}</ListItem.Title>
                         <ListItem.Subtitle>{person.subtitle}</ListItem.Subtitle>
