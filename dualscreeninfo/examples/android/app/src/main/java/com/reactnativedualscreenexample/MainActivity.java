@@ -24,7 +24,6 @@ public class MainActivity extends ReactActivity {
        return new ReactActivityDelegate(this, getMainComponentName()) {
           @Override
           protected ReactRootView createRootView() {
-            Log.i("RNFOLD","createRootView");
             return new ReactRootView(getContext());
           }
        };

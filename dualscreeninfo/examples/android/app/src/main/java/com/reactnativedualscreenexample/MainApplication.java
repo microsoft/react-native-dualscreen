@@ -44,7 +44,6 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    Log.i("RNFOLD","createRootView");
     SoLoader.init(this, /* native exopackage */ false);
   }
 }
