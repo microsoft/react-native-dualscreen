@@ -46,14 +46,13 @@ export default function HomeScreen({ displayForDual, navigation }: HomeScreenPro
         <View>
             {
                 list.map((person, i) => (
-                    <ListItem
-                        key={i}
-                        leftAvatar={{ source: { uri: person.avatar_url } }}
-                        title={person.name}
-                        subtitle={person.subtitle}
-                        bottomDivider={true}
-                        onPress={onItemClick(person)}
-                    />
+                    <ListItem key={i} onPress={onItemClick(person)}>
+                        <ListItem.Content>
+                        <ListItem.Title>{person.name}</ListItem.Title>
+                        <ListItem.Subtitle>{person.subtitle}</ListItem.Subtitle>
+                        </ListItem.Content>
+                    </ListItem>
+
                 ))
             }
         </View>
