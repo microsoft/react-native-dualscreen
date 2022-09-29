@@ -42,7 +42,6 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val mStatusBarHeight: Int
 		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-
 			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.top
 			return stableInsetTop ?: 0
 		}
@@ -57,7 +56,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val mSideNavBarHeight: Int
 		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
+			currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.right
 			return stableInsetRight ?: 0
 		}
 
@@ -110,7 +109,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private var mWindowRects: List<Rect> = emptyList()
 	private var mRotation: Int = Surface.ROTATION_0
 
-	@RequiresApi(Build.VERSION_CODES.M)
+	@RequiresApi(Build.VERSION_CODES.R)
 	private val onLayoutChange = View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
 		emitUpdateStateEvent()
 	}
