@@ -16,7 +16,7 @@
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.70.1",
-    "react-native-dualscreeninfo": "^0.1.0",
+    "react-native-dualscreeninfo": "^0.3.2",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^2.6.2",
     "react-native-pager-view": "^6.0.0",
