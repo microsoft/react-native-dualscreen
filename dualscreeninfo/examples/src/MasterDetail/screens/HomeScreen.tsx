@@ -13,17 +13,17 @@ interface HomeScreenProps {
 const list: Array<Person> = [
     {
         name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+        avatar_url: 'https://randomuser.me/api/portraits/women/44.jpg',
         subtitle: 'Vice President',
-        phone: '(717) 369-1197',
-        email: 'skippy@verizon.net'
+        phone: '(717) 555-1197',
+        email: 'skippy@contoso.com'
     },
     {
         name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+        avatar_url: 'https://randomuser.me/api/portraits/men/86.jpg',
         subtitle: 'Vice Chairman',
-        phone: '(457) 765-6833',
-        email: 'meder@yahoo.ca'
+        phone: '(457) 555-6833',
+        email: 'meder@contoso.com'
     }
 ]
 
