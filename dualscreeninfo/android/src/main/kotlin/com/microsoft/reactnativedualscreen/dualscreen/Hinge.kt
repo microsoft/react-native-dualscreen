@@ -22,7 +22,11 @@ class Hinge(context: Context) : View(context) {
             // Hinge's coordinates of its 4 edges in different mode
             // Double Landscape Rect(0, 1350 - 1800, 1434)
             // Double Portrait  Rect(1350, 0 - 1434, 1800)
-            var rects = mDisplayMask.getBoundingRectsForRotation(rotation);
+            Log.i("RNFOLD","mDisplayMask rects for rotation " + rotation.toString())
+            val rect = mDisplayMask.getBoundingRectsForRotation(rotation)[0]
+            return rect
+
+            /*var rects = mDisplayMask.getBoundingRectsForRotation(rotation);
             if (rects.count() > 0) {
                 Log.i("RNFOLD","rects exist for rotation " + rotation.toString())
                 val rect = mDisplayMask.getBoundingRectsForRotation(rotation)[0]
@@ -30,7 +34,7 @@ class Hinge(context: Context) : View(context) {
             } else {
                 Log.i("RNFOLD","NO rects for rotation" + rotation.toString())
                 return Rect()
-            }
+            }*/
         }
 
     override fun onDraw(canvas: Canvas?) {

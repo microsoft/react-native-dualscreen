@@ -240,10 +240,12 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	@ReactMethod
 	fun addListener(type: String?) {
 		// Keep: Required for RN built in Event Emitter Calls.
+		Log.i("RNFOLD","addListener:" + type)
 	}
 
 	@ReactMethod
 	fun removeListeners(type: Int?) {
 		// Keep: Required for RN built in Event Emitter Calls.
+		Log.i("RNFOLD","removeListeners:" + type)
 	}
 }
