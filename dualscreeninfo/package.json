@@ -59,7 +59,13 @@
     ]
   },
   "files": [
+    "android",
+    "ios",
     "src",
-    "lib"
+    "lib",
+    "tslint.json",
+    "*.md",
+    "*.podspec",
+    "LICENSE"
   ]
 }
