@@ -50,6 +50,39 @@ export default function () {
     const pageMargin = DualScreenInfo.hingeWidth / 2
 
     return (
-        <Text>Page</Text>
+        <Text>NOT IMPLEMENTED - VIEW SOURCE FOR DETAILS</Text>
     )
+
+    /*
+    The default function previously returned the following code. 
+    ViewPager is no longer supported, and the replacement PagerView
+    does not have the same functionality (esp `pageWidth`). This is 
+    left for reference until it can be re-implemented.
+
+    <ViewPager
+            style={{ flex: 1 }}
+            initialPage={currentSlide}
+            pageWidth={context.isDualMode ? 0.5 : 1.0}
+            pageMargin={pageMargin}
+            onPageSelected={(event: NativeSyntheticEvent<ViewPagerOnPageSelectedEventData>) => {
+                setCurrentSlide(event.nativeEvent.position)
+            }}
+        >
+            {list.map((slide: Slide, i: number) => (
+                <View key={i} style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1 }}>
+                        <PricingCard
+                            color='#4f9deb'
+                            title={slide.title}
+                            price={slide.price}
+                            info={slide.info}
+                            button={slide.button}
+                        />
+                    </View>
+                    {context.isDualMode && <Hinge />}
+                    {context.isDualMode && <View style={{ flex: 1 }} />}
+                </View>
+            ))}
+        </ViewPager>
+    */
 }
