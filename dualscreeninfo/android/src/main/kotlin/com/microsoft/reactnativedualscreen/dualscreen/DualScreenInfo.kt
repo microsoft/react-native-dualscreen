@@ -1,13 +1,17 @@
 package com.microsoft.reactnativedualscreen.dualscreen
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Build
-import android.view.Surface
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.WindowInsetsCompat
 import com.facebook.react.bridge.*
 import com.facebook.react.bridge.Arguments.createMap
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
@@ -25,7 +29,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val rotation: Int
 		get() {
 			val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
-			return currentActivity?.display?.rotation ?: Surface.ROTATION_0
+			return wm?.defaultDisplay?.rotation ?: Surface.ROTATION_0
 		}
 	private val hinge: Rect
 		get() {
@@ -36,27 +40,29 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 
 	private val mStatusBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.R)
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.top
+
+			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetTop
 			return stableInsetTop ?: 0
 		}
 
 	private val mBottomNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.R)
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.bottom
+			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetBottom
 			return stableInsetBottom ?: 0
 		}
 
 	private val mSideNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.R)
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
-			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.right
+			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
 			return stableInsetRight ?: 0
 		}
 
 	private val windowRects: List<Rect>
+		@RequiresApi(Build.VERSION_CODES.M)
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
 			var barHeights = mStatusBarHeight + mBottomNavBarHeight;
@@ -104,12 +110,14 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private var mWindowRects: List<Rect> = emptyList()
 	private var mRotation: Int = Surface.ROTATION_0
 
+	@RequiresApi(Build.VERSION_CODES.M)
 	private val onLayoutChange = View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
 		emitUpdateStateEvent()
 	}
 
 	override fun getName() = "DualScreenInfo"
 
+	@RequiresApi(Build.VERSION_CODES.M)
 	override fun initialize() {
 		super.initialize()
 		reactApplicationContext.addLifecycleEventListener(this)
@@ -124,11 +132,13 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
     	return constants
     }
 
+	@RequiresApi(Build.VERSION_CODES.M)
 	override fun onHostResume() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.addOnLayoutChangeListener(onLayoutChange)
 	}
 
+	@RequiresApi(Build.VERSION_CODES.M)
 	override fun onHostPause() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.removeOnLayoutChangeListener(onLayoutChange)
@@ -160,7 +170,8 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return (px.toDouble() / (metrics.density))
 	}
 
-    @ReactMethod
+    @RequiresApi(Build.VERSION_CODES.M)
+	@ReactMethod
     fun getPayload(promise: Promise) {
         if (reactApplicationContext.hasActiveCatalystInstance()) {
             val isSpanning = isSpanning()
@@ -184,7 +195,9 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
         }
     }
 
+	@RequiresApi(Build.VERSION_CODES.M)
 	private fun emitUpdateStateEvent() {
+		Log.i("RNFOLD","emitUpdateStateEvent")
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
 			// Don't emit an event to JS if the dimensions haven't changed
 			val isSpanning = isSpanning()
@@ -214,6 +227,23 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 						.getJSModule(RCTDeviceEventEmitter::class.java)
 						.emit("didUpdateSpanning", params)
 			}
+			Log.i("RNFOLD","isSpanning:" + isSpanning)
+			Log.i("RNFOLD","windowRects:" + newWindowRects.toString())
 		}
+	}
+
+
+	//https://stackoverflow.com/questions/69538962/new-nativeeventemitter-was-called-with-a-non-null-argument-without-the-requir
+	// WARN  `new NativeEventEmitter()` was called with a non-null argument without the required `addListener` method.
+	// WARN  `new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.
+
+	@ReactMethod
+	fun addListener(type: String?) {
+		// Keep: Required for RN built in Event Emitter Calls.
+	}
+
+	@ReactMethod
+	fun removeListeners(type: Int?) {
+		// Keep: Required for RN built in Event Emitter Calls.
 	}
 }
