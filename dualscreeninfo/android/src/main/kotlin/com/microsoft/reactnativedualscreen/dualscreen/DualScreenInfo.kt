@@ -28,8 +28,8 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 	private val rotation: Int
 		get() {
-			val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
-			return wm?.defaultDisplay?.rotation ?: Surface.ROTATION_0
+			//val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+			return currentActivity?.display?.rotation ?: Surface.ROTATION_0
 		}
 	private val hinge: Rect
 		get() {
@@ -40,29 +40,29 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 
 	private val mStatusBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
 
-			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetTop
+			val stableInsetTop = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.top
 			return stableInsetTop ?: 0
 		}
 
 	private val mBottomNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetBottom
+			val stableInsetBottom = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.bottom
 			return stableInsetBottom ?: 0
 		}
 
 	private val mSideNavBarHeight: Int
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
 			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.stableInsetRight
 			return stableInsetRight ?: 0
 		}
 
 	private val windowRects: List<Rect>
-		@RequiresApi(Build.VERSION_CODES.M)
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
 			var barHeights = mStatusBarHeight + mBottomNavBarHeight;
@@ -117,7 +117,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 
 	override fun getName() = "DualScreenInfo"
 
-	@RequiresApi(Build.VERSION_CODES.M)
+	@RequiresApi(Build.VERSION_CODES.R)
 	override fun initialize() {
 		super.initialize()
 		reactApplicationContext.addLifecycleEventListener(this)
@@ -132,13 +132,13 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
     	return constants
     }
 
-	@RequiresApi(Build.VERSION_CODES.M)
+	@RequiresApi(Build.VERSION_CODES.R)
 	override fun onHostResume() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.addOnLayoutChangeListener(onLayoutChange)
 	}
 
-	@RequiresApi(Build.VERSION_CODES.M)
+	@RequiresApi(Build.VERSION_CODES.R)
 	override fun onHostPause() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.removeOnLayoutChangeListener(onLayoutChange)
@@ -170,7 +170,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return (px.toDouble() / (metrics.density))
 	}
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.R)
 	@ReactMethod
     fun getPayload(promise: Promise) {
         if (reactApplicationContext.hasActiveCatalystInstance()) {
@@ -195,7 +195,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
         }
     }
 
-	@RequiresApi(Build.VERSION_CODES.M)
+	@RequiresApi(Build.VERSION_CODES.R)
 	private fun emitUpdateStateEvent() {
 		Log.i("RNFOLD","emitUpdateStateEvent")
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
