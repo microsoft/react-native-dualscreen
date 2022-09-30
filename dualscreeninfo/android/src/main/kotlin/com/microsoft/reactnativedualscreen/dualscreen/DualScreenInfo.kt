@@ -56,7 +56,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private val mSideNavBarHeight: Int
 		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
-			currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.right
+			val stableInsetRight = currentActivity?.window?.decorView?.rootView?.rootWindowInsets?.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())?.right
 			return stableInsetRight ?: 0
 		}
 
@@ -170,7 +170,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	}
 
     @RequiresApi(Build.VERSION_CODES.R)
-	@ReactMethod
+    @ReactMethod
     fun getPayload(promise: Promise) {
         if (reactApplicationContext.hasActiveCatalystInstance()) {
             val isSpanning = isSpanning()
