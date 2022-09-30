@@ -3,7 +3,13 @@ import { NativeSyntheticEvent, View } from 'react-native'
 import { Hinge, DualScreenInfo } from 'react-native-dualscreeninfo'
 import { Text } from 'react-native';
 import DualScreenContext from '../DualScreenContext'
+/*
+NOTE: as part of the RN 0.60 -> 0.70 upgrade, switching from PagerView to ViewPager
+broke the assumption for how this sample could work (no pageWidth property).
 
+TODO: fix this sample to work with ViewPager or some other mechanism to show the
+two pages side-by-side with fling gesture navigation.
+*/
 type Slide = {
     title: string
     price: string
