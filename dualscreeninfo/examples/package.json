@@ -1,6 +1,6 @@
 {
   "name": "ReactNativeDualScreenExample",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -14,32 +14,30 @@
     "generate:android:bundle": "npm run build && react-native bundle --platform android --dev false --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle"
   },
   "dependencies": {
-    "@react-native-community/masked-view": "^0.1.6",
-    "@react-native-community/viewpager": "git+https://github.com/thewulf7/react-native-viewpager.git#97224cf",
-    "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-dualscreeninfo": "^0.1.0",
-    "react-native-elements": "^1.2.7",
-    "react-native-gesture-handler": "^1.5.3",
-    "react-native-reanimated": "^1.7.0",
-    "react-native-safe-area-context": "^0.6.2",
-    "react-native-screens": "^2.0.0-alpha.29",
-    "react-native-vector-icons": "^6.6.0",
-    "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.16",
-    "react-native-windows": "^0.60.0-vnext.127"
+    "react": "18.2.0",
+    "react-native": "0.70.1",
+    "react-native-dualscreeninfo": "^0.3.2",
+    "react-native-elements": "^3.4.2",
+    "react-native-gesture-handler": "^2.6.2",
+    "react-native-pager-view": "^6.0.0",
+    
+    "react-native-safe-area-context": "^4.4.1",
+    "react-native-screens": "^3.17.0",
+    "react-native-vector-icons": "^9.2.0",
+    "react-navigation": "^4.4.4",
+    "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
-    "@types/jest": "^24.0.24",
-    "@types/react-native": "^0.60.25",
-    "@types/react-test-renderer": "16.9.1",
+    "@babel/core": "^7.16.5",
+    "@babel/runtime": "^7.16.5",
+    "@types/jest": "^25.1.1",
+    "@types/react-native": "^0.70.1",
+    "@types/react-test-renderer": "18.0.0",
     "@typescript-eslint/parser": "^2.12.0",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "metro-react-native-babel-preset": "^0.56.0",
-    "react-test-renderer": "16.9.0",
-    "typescript": "^3.7.3"
+    "babel-jest": "^25.1.0",
+    "jest": "^25.1.0",
+    "metro-react-native-babel-preset": "^0.72.3",
+    "react-test-renderer": "18.2.0",
+    "typescript": "^4.8.4"
   }
 }

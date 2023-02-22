@@ -1,13 +1,13 @@
 # react-native-dualscreeninfo
 
-React Native package for dual screen devices support (Surface Duo)
+React Native package for dual-screen devices support (Surface Duo)
 
 ## Status
 
 - Android:
   - 10+
 - react-native:
-  - supported versions "<strong>&gt;= 0.60.5</strong>"
+  - supported versions "<strong>&gt;= 0.70.1</strong>"
 
 ## Installation
 
@@ -19,7 +19,7 @@ React Native package for dual screen devices support (Surface Duo)
   buildscript {
     ext {
       ...
-  +   kotlinVersion = "1.3.50"
+  +   kotlinVersion = "1.6.0"
     }
   ...
 
@@ -32,12 +32,12 @@ React Native package for dual screen devices support (Surface Duo)
 
 `$ yarn add react-native-dualscreeninfo`
 
-### 2. Modify android:configChanges of your activity, in AndroidManifest.xml
+### 2. Modify `android:configChanges` of your activity, in AndroidManifest.xml
 
 `android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"`
 
 
-## Example
+### 3. Start with this sample code
 
 ```jsx
 import React, { useState, useEffect } from 'react'
@@ -77,8 +77,26 @@ export default function App() {
 
 ```
 
+## Examples on GitHub
+
+Uncomment a different element in **dualscreeninfo\examples\src\App.tsx** to swap between example views:
+
+```tsx
+  <MasterDetail />
+  {/*<CompanionPane />*/}
+  {/*<TwoPage />*/}
+```
+
+### List detail
+
+![List screen](screenshots/listdetail-single-sml.png) ![List detail screens](screenshots/listdetail-spanned-sml.png)
+
+### Companion pane
+
+![Companion pane single screen](screenshots/companionpane-single-sml.png) ![Companion pane dual-screen](screenshots/companionpane-spanning-sml.png)
+
 ## Reference
 
 [API Documentation](https://github.com/react-native-community/discussions-and-proposals/issues/189)
 
-[Dual-Screen](https://aka.ms/dualscreendocs)
+[Dual-screen developer docs](https://aka.ms/dualscreendocs)

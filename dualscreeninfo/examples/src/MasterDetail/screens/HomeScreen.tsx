@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ListItem } from 'react-native-elements'
+import { ListItem, Avatar } from 'react-native-elements'
 import { View } from 'react-native'
 import { Person } from '../models'
 import { NavigationStackProp } from 'react-navigation-stack'
@@ -10,20 +10,21 @@ interface HomeScreenProps {
     navigation: NavigationStackProp<{}>
 }
 
+
 const list: Array<Person> = [
     {
         name: 'Amy Farha',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+        avatar_url: 'https://randomuser.me/api/portraits/women/44.jpg',
         subtitle: 'Vice President',
-        phone: '(717) 369-1197',
-        email: 'skippy@verizon.net'
+        phone: '(717) 555-1197',
+        email: 'skippy@contoso.com'
     },
     {
         name: 'Chris Jackson',
-        avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+        avatar_url: 'https://randomuser.me/api/portraits/men/86.jpg',
         subtitle: 'Vice Chairman',
-        phone: '(457) 765-6833',
-        email: 'meder@yahoo.ca'
+        phone: '(457) 555-6833',
+        email: 'meder@contoso.com'
     }
 ]
 
@@ -46,14 +47,14 @@ export default function HomeScreen({ displayForDual, navigation }: HomeScreenPro
         <View>
             {
                 list.map((person, i) => (
-                    <ListItem
-                        key={i}
-                        leftAvatar={{ source: { uri: person.avatar_url } }}
-                        title={person.name}
-                        subtitle={person.subtitle}
-                        bottomDivider={true}
-                        onPress={onItemClick(person)}
-                    />
+                    <ListItem key={i} onPress={onItemClick(person)}>
+                        <Avatar rounded={true} source={{ uri: person.avatar_url }} />
+                        <ListItem.Content>
+                        <ListItem.Title>{person.name}</ListItem.Title>
+                        <ListItem.Subtitle>{person.subtitle}</ListItem.Subtitle>
+                        </ListItem.Content>
+                    </ListItem>
+
                 ))
             }
         </View>

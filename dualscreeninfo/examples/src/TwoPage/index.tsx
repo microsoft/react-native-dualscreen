@@ -1,10 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { NativeSyntheticEvent, View } from 'react-native'
-import ViewPager, { ViewPagerOnPageSelectedEventData } from '@react-native-community/viewpager'
-import { PricingCard } from 'react-native-elements'
 import { Hinge, DualScreenInfo } from 'react-native-dualscreeninfo'
+import { Text } from 'react-native';
 import DualScreenContext from '../DualScreenContext'
+/*
+NOTE: as part of the RN 0.60 -> 0.70 upgrade, switching from PagerView to ViewPager
+broke the assumption for how this sample could work (no pageWidth property).
 
+TODO: fix this sample to work with ViewPager or some other mechanism to show the
+two pages side-by-side with fling gesture navigation.
+*/
 type Slide = {
     title: string
     price: string
@@ -51,7 +56,16 @@ export default function () {
     const pageMargin = DualScreenInfo.hingeWidth / 2
 
     return (
-        <ViewPager
+        <Text>NOT IMPLEMENTED - VIEW SOURCE FOR DETAILS</Text>
+    )
+
+    /*
+    The default function previously returned the following code. 
+    ViewPager is no longer supported, and the replacement PagerView
+    does not have the same functionality (esp `pageWidth`). This is 
+    left for reference until it can be re-implemented.
+
+    <ViewPager
             style={{ flex: 1 }}
             initialPage={currentSlide}
             pageWidth={context.isDualMode ? 0.5 : 1.0}
@@ -76,5 +90,5 @@ export default function () {
                 </View>
             ))}
         </ViewPager>
-    )
+    */
 }

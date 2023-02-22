@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { NativeSyntheticEvent, View } from 'react-native'
-import ViewPager, { ViewPagerOnPageSelectedEventData } from '@react-native-community/viewpager'
+import PagerView, { PagerViewOnPageSelectedEventData } from 'react-native-pager-view'
 import { ListItem, PricingCard } from 'react-native-elements'
 import { Hinge } from 'react-native-dualscreeninfo'
 import DualScreenContext from '../DualScreenContext'
@@ -41,14 +41,14 @@ const list = [
 export default function () {
     const [ currentSlide, setCurrentSlide ] = useState(0)
     const context = useContext(DualScreenContext)
-    let viewPagerRef: ViewPager | null
+    let viewPagerRef: PagerView | null
 
     const viewPager = (
-        <ViewPager
+        <PagerView
             style={{ flex: 1 }}
             ref={(ref) => viewPagerRef = ref}
             initialPage={currentSlide}
-            onPageSelected={(event: NativeSyntheticEvent<ViewPagerOnPageSelectedEventData>) => {
+            onPageSelected={(event: NativeSyntheticEvent<PagerViewOnPageSelectedEventData>) => {
                 setCurrentSlide(event.nativeEvent.position)
             }}
         >
@@ -65,19 +65,19 @@ export default function () {
                     </View>
                 ))
             }
-        </ViewPager>
+        </PagerView>
     )
 
     if (!context.isDualMode) {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }} collapsable={false}>
                 {viewPager}
             </View>
         )
     }
 
     return (
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{ flex: 1, flexDirection: 'row' }} collapsable={false}>
             <View style={{ flex: 1 }}>
                 {viewPager}
             </View>
@@ -85,15 +85,14 @@ export default function () {
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 {
                     list.map((slide, i) => (
-                        <ListItem
-                            key={i}
-                            title={slide.title}
-                            bottomDivider={true}
-                            onPress={() => {
-                                viewPagerRef && viewPagerRef.setPage(i)
-                                setCurrentSlide(i)
-                            }}
-                        />
+                        <ListItem key={i} bottomDivider={true} onPress={() => {
+                            viewPagerRef && viewPagerRef.setPage(i)
+                            setCurrentSlide(i)
+                        }}>
+                            <ListItem.Content>
+                                <ListItem.Title>{slide.title}</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
                     ))
                 }
             </View>

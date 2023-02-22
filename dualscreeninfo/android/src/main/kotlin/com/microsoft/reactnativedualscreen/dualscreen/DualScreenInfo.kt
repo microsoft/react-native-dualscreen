@@ -1,13 +1,17 @@
 package com.microsoft.reactnativedualscreen.dualscreen
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Build
-import android.view.Surface
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.WindowInsetsCompat
 import com.facebook.react.bridge.*
 import com.facebook.react.bridge.Arguments.createMap
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
@@ -24,7 +28,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 	private val rotation: Int
 		get() {
-			val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+			//val wm = currentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager?
 			return currentActivity?.display?.rotation ?: Surface.ROTATION_0
 		}
 	private val hinge: Rect
@@ -57,6 +61,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		}
 
 	private val windowRects: List<Rect>
+		@RequiresApi(Build.VERSION_CODES.R)
 		get() {
 			val boundings = mDisplayMask?.getBoundingRectsForRotation(rotation)
 			var barHeights = mStatusBarHeight + mBottomNavBarHeight;
@@ -104,12 +109,14 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 	private var mWindowRects: List<Rect> = emptyList()
 	private var mRotation: Int = Surface.ROTATION_0
 
+	@RequiresApi(Build.VERSION_CODES.R)
 	private val onLayoutChange = View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
 		emitUpdateStateEvent()
 	}
 
 	override fun getName() = "DualScreenInfo"
 
+	@RequiresApi(Build.VERSION_CODES.R)
 	override fun initialize() {
 		super.initialize()
 		reactApplicationContext.addLifecycleEventListener(this)
@@ -124,11 +131,13 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
     	return constants
     }
 
+	@RequiresApi(Build.VERSION_CODES.R)
 	override fun onHostResume() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.addOnLayoutChangeListener(onLayoutChange)
 	}
 
+	@RequiresApi(Build.VERSION_CODES.R)
 	override fun onHostPause() {
 		val rootView: View? = currentActivity?.window?.decorView?.rootView
 		rootView?.removeOnLayoutChangeListener(onLayoutChange)
@@ -160,6 +169,7 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 		return (px.toDouble() / (metrics.density))
 	}
 
+    @RequiresApi(Build.VERSION_CODES.R)
     @ReactMethod
     fun getPayload(promise: Promise) {
         if (reactApplicationContext.hasActiveCatalystInstance()) {
@@ -184,7 +194,9 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
         }
     }
 
+	@RequiresApi(Build.VERSION_CODES.R)
 	private fun emitUpdateStateEvent() {
+		Log.i("RNFOLD","emitUpdateStateEvent")
 		if (reactApplicationContext.hasActiveCatalystInstance()) {
 			// Don't emit an event to JS if the dimensions haven't changed
 			val isSpanning = isSpanning()
@@ -214,6 +226,25 @@ class DualScreenInfo constructor(context: ReactApplicationContext) : ReactContex
 						.getJSModule(RCTDeviceEventEmitter::class.java)
 						.emit("didUpdateSpanning", params)
 			}
+			Log.i("RNFOLD","isSpanning:" + isSpanning)
+			Log.i("RNFOLD","windowRects:" + newWindowRects.toString())
 		}
+	}
+
+
+	//https://stackoverflow.com/questions/69538962/new-nativeeventemitter-was-called-with-a-non-null-argument-without-the-requir
+	// WARN  `new NativeEventEmitter()` was called with a non-null argument without the required `addListener` method.
+	// WARN  `new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.
+
+	@ReactMethod
+	fun addListener(type: String?) {
+		// Keep: Required for RN built in Event Emitter Calls.
+		Log.i("RNFOLD","addListener:" + type)
+	}
+
+	@ReactMethod
+	fun removeListeners(type: Int?) {
+		// Keep: Required for RN built in Event Emitter Calls.
+		Log.i("RNFOLD","removeListeners:" + type)
 	}
 }
